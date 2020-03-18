@@ -2,6 +2,6 @@
 
 ## Goals
 
-#. OOP
-#. The object class
-#. List comprehension
+1. OOP
+2. The object class
+3. List comprehension
