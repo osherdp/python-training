@@ -47,7 +47,7 @@ Define a property which displays the matrix as a tuple:
 ((1, 2), (3, 4))
 ```
 
-> :notes: You can read about properties using `help(property)` in any Python shell.
+> :pencil: You can read about properties using `help(property)` in any Python shell.
 
 Enable creation of the unity matrix (ones on the main diagonal and all the rest are zeros), using a `classmethod`:
 
@@ -65,7 +65,7 @@ Another `classmethod` that creates a matrix which is full of ones:
 Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1)))
 ```
 
-> :note:
+> :pencil:
   If you are not familiar with matrix multiplication operation, it probably doesn't work as you think.
   Read about it somewhere before implementing it.
 
