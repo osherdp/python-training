@@ -17,6 +17,7 @@ The purpose of this exercise is to implement class for the datatype `Matrix` whi
 * List comprehension usage is recommended where appropriate.
 
 > :warning: Consulting with others regarding technical work is generally a good idea. With regular work, it's encouraged to pair programming and helping each other.
+
   **However**, when it comes to learning a language, this is not the case. Attempting to tackle exercises alone is a hugh part of learning, even if the result is not perfect. If you'll get something wrong, the reviewer will let you know.
   Please refrain from consulting with others when working on training exercises.
 
@@ -67,6 +68,7 @@ Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1)))
 
 > :pencil:
   If you are not familiar with matrix multiplication operation, it probably doesn't work as you think.
+
   Read about it somewhere before implementing it.
 
 Multiplication:
