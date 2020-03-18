@@ -120,7 +120,7 @@ Iteration over its lines:
 
 ```
 >>> for line in a:
-        print(line)
+...     print(line)
 (1, 2)
 (3, 4)
 ```
