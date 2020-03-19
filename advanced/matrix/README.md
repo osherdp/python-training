@@ -1,4 +1,4 @@
-# Matric Exercise
+# Matrix Exercise
 
 ## Goals
 
