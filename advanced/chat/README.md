@@ -34,7 +34,7 @@ Usage example:
 
 ```
 $ python chat.py --help
-Run the client component of the chat.
+Run the chat against another endpoint.
 
 Usage:
     chat.py <local-port> <remote-host> <remote-port> [--username <name>]
