@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        tox-environments: [flake8, pytest]
+        tox-environment: [flake8, pytest]
         python-version: [3.7]
     steps:
     - uses: actions/checkout@v2
