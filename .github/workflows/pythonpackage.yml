@@ -15,12 +15,13 @@ jobs:
     strategy:
       matrix:
         tox-environments: [flake8, pytest]
+        python-version: [3.7]
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ python-version }}
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
-        python-version: 3.7
+        python-version: ${{ matrix.python-version }}
     - name: Install tox
       run: |
         python -m pip install --upgrade pip
