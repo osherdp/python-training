@@ -10,3 +10,4 @@
 
 ### [Matrix Exercise](advanced/matrix/README.md)
 ### [Calculator Exercise](advanced/calculator/README.md)
+### [Chat Exercise](advanced/chat/README.md)
