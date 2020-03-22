@@ -8,6 +8,11 @@
 * [Basic Python book](https://data.cyber.org.il/python/python_book.pdf), covering all relevant topics. **Without chapter 11 (programming games with PyGame**)
 * [Transforming Code into Beautiful, Idiomatic Python](https://www.youtube.com/watch?v=OSGv2VnC0go) - an amazing lecture for beginners, by Raymond Hettinger
 
+## Basic
+
+### [Stam Exercise](basic/stam/README.md)
+### [ATM Exercise](basic/atm/README.md)
+
 ## Advanced
 
 ### [Matrix Exercise](advanced/matrix/README.md)
