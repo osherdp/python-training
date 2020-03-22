@@ -1,4 +1,4 @@
-# Calculator Exercise
+# Stam Exercise
 
 ## Goals
 
