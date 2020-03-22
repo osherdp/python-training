@@ -1,4 +1,4 @@
-# Calculator Exercise
+# ATM Exercise
 
 ## Goals
 
