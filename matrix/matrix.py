@@ -103,7 +103,7 @@ class Matrix:
         """
         return [tuple([operation(self.tuples[i][j], other.tuples[i][j]) for j
                        in range(len(self.tuples))]) for i in range(len(
-            self.tuples))]
+                        self.tuples))]
 
     def _calculate_scalar_on_matrix(self, other, operation):
         """Does mathematical operation on scalar and matrix.
@@ -146,8 +146,8 @@ class Matrix:
 
             return Matrix(*matrix_data)
 
-        elif any([isinstance(other, int) or isinstance(other, float)]) and any([
-            operation == operator.mul, operation == operator.truediv]):
+        elif any([isinstance(other, int) or isinstance(other, float)]) and any(
+                [operation == operator.mul, operation == operator.truediv]):
             return Matrix(*self._calculate_scalar_on_matrix(other, operation))
 
         else:
