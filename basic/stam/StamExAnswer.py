@@ -1,6 +1,5 @@
 """This program reads a file, edits it and saves it in a new location"""
 import os
-
 FIRST_NAME = "Keren"
 LAST_NAME = "Guez"
 
@@ -26,8 +25,8 @@ def stam(filename, output_file):
         output_file (str) : the path of the new file to be saved
 
     """
-    last_backslash = output_file.rfind("\\")
-    if os.path.exists(filename) and os.path.exists(output_file[:last_backslash]):
+    last_slash = output_file.rfind("\\")
+    if os.path.exists(filename) and os.path.exists(output_file[:last_slash]):
         with open(filename, 'r') as file:
             new_concat_lines_lis = (add_vals(line[:-1])+"\n"
                                     if line[-1:] == "\n"
@@ -38,7 +37,6 @@ def stam(filename, output_file):
                     new_file.write(line)
     else:
         print(f"either the original file path or the output path don't exist")
-
 
 
 def main():
