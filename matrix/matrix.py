@@ -171,7 +171,8 @@ class Matrix:
     def _check_bool_matrix(self, matrix, operation):
         """Returns true if all the items in the matrix are true else false."""
         func = {operator.eq: all, operator.ne: any}.get(operation)
-        return func([item for line_data in matrix.tuples for item in line_data])
+        return func(
+            [item for line_data in matrix.tuples for item in line_data])
 
     def __eq__(self, other):
         """Compares two matrices. Returns true if they are equal else false."""
