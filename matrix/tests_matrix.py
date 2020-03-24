@@ -4,13 +4,18 @@ import pytest
 from matrix import Matrix
 
 
-@pytest.mark.usefixtures("Matrix")
+@pytest.fixture(scope="module")
+def db_class(request):
+    # set a class attribute on the invoking test context
+    request.cls.db = Matrix()
+
+
 class TestMatrix(unittest.TestCase):
     """Unit tests for Matrix class."""
 
     def test_initialization(self):
-        Matrix((1, 2), (3, 4))
-        Matrix((1, 2), (5.5, 4))
+        self.assertIsInstance(Matrix((1, 2), (3, 4)), Matrix)
+        self.assertIsInstance(Matrix((1, 2), (5.5, 4)), Matrix)
 
         with self.assertRaises(ValueError):
             Matrix((1, 2), (3, [4, 5, 6]))
@@ -140,7 +145,3 @@ class TestMatrix(unittest.TestCase):
                              Matrix((1, 1), (2, 3)): 3})
 
         self.assertNotEqual(hash(Matrix.ones(2)), hash(Matrix.unity(2)))
-
-
-if __name__ == '__main__':
-    unittest.main()
