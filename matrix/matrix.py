@@ -37,8 +37,7 @@ class Matrix:
             return False
 
         # checks if the given data is of a n * n matrix.
-        current_length = len(next(iter(data)))
-        if not all([current_length == len(data) for _ in data]):
+        if not all([len(line) == len(data) for line in data]):
             return False
 
         return True
@@ -104,7 +103,7 @@ class Matrix:
         """
         return [tuple([operation(self.tuples[i][j], other.tuples[i][j]) for j
                        in range(len(self.tuples))]) for i in range(len(
-                        self.tuples))]
+            self.tuples))]
 
     def _calculate_scalar_on_matrix(self, other, operation):
         """Does mathematical operation on scalar and matrix.
@@ -117,7 +116,7 @@ class Matrix:
             List of tuples which contains the calculated matrix data.
         """
         return [tuple([operation(self.tuples[i][j], other) for j in range(
-                    len(self.tuples))]) for i in range(len(self.tuples))]
+            len(self.tuples))]) for i in range(len(self.tuples))]
 
     def _operations_on_matrix(self, other, operation):
         """Does all the operation that can be done on a matrix.
@@ -136,22 +135,27 @@ class Matrix:
         """
         if isinstance(other, Matrix):
 
-            if len(self.tuples) != len(other.tuples):
+            if len(self.tuples) != len(other.tuples) and not any(
+                    [operation == operator.eq, operation == operator.ne]):
                 raise ValueError("Matrices length don't match")
 
             matrix_data = self._calculate_matrix_on_matrix(other, operation)
-            
+
             if operation == operator.eq or operation == operator.ne:
                 return self._bool_operation(operation, matrix_data)
-            
+
             return Matrix(*matrix_data)
 
-        elif isinstance(other, int) or isinstance(other, float):
+        elif any([isinstance(other, int) or isinstance(other, float)]) and any([
+            operation == operator.mul, operation == operator.truediv]):
             return Matrix(*self._calculate_scalar_on_matrix(other, operation))
+
+        else:
+            raise ValueError(f"{operation} not supported on {type(other)}")
 
     def __add__(self, other):
         """Adds two matrices."""
-        return self._operations_on_matrix(other, operator.mul)
+        return self._operations_on_matrix(other, operator.add)
 
     def __sub__(self, other):
         """Subtract two matrices."""
