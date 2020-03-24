@@ -4,15 +4,9 @@ from matrix import Matrix
 
 
 class TestMatrix(unittest.TestCase):
-    def _test_initialization(self, *data):
-        try:
-            Matrix(*data)
-        except ValueError:
-            self.fail("Initialization raised ValueError")
-
     def test_initialization(self):
-        self._test_initialization((1, 2), (3, 4))
-        self._test_initialization((1, 2), (5.5, 4))
+        Matrix((1, 2), (3, 4))
+        Matrix((1, 2), (5.5, 4))
 
         with self.assertRaises(ValueError):
             Matrix((1, 'a'), (3, 4))
@@ -175,15 +169,12 @@ class TestMatrix(unittest.TestCase):
             self.assertEqual(line, (1, 1))
 
     def test_hash(self):
-        try:
-            d = {Matrix((1, 1), (2, 2)): 2, Matrix((1, 1), (2, 3)): 3}
+        d = {Matrix((1, 1), (2, 2)): 2, Matrix((1, 1), (2, 3)): 3}
 
-        except TypeError:
-            self.fail('unhashable type')
+        self.assertEqual(d, {Matrix((1, 1), (2, 2)): 2,
+                             Matrix((1, 1), (2, 3)): 3})
 
-        else:
-            self.assertEqual(d, {Matrix((1, 1), (2, 2)): 2,
-                                 Matrix((1, 1), (2, 3)): 3})
+        self.assertNotEqual(hash(Matrix.ones(2)), hash(Matrix.unity(2)))
 
 
 if __name__ == '__main__':

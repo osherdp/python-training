@@ -13,9 +13,7 @@ class Matrix:
     __slots__ = '_matrix'
 
     def __init__(self, *lines):
-        if not self._is_valid_data(*lines):
-            raise ValueError('Data is not valid')
-
+        self._validate(*lines)
         super(Matrix, self).__setattr__('_matrix', tuple(lines))
 
     def __setattr__(self, key, value):
@@ -23,24 +21,22 @@ class Matrix:
         raise AttributeError(f'{self.__class__} instance cannot be modified')
 
     @staticmethod
-    def _is_valid_data(*data: tuple) -> bool:
+    def _validate(*data: tuple):
         """Checks if the data given is valid. Valid data is defined if it
         contains tuples of the same length (Matrix only supports n * n) and
         their value is an integer."""
         # check if each line is a tuple.
         if not all([isinstance(line_data, tuple) for line_data in data]):
-            return False
+            raise ValueError("Matrix lines must be tuple")
 
-        # check if each item in each line is an int.
+        # check if each item in each line is an int or float.
         if not all([any([isinstance(item, int), isinstance(item, float)]) for
                     line_data in data for item in line_data]):
-            return False
+            raise ValueError("Matrix items must be int or float")
 
         # checks if the given data is of a n * n matrix.
         if not all([len(line) == len(data) for line in data]):
-            return False
-
-        return True
+            raise ValueError("Matrix must be even-sided")
 
     @classmethod
     def unity(cls, number_lines: int):
@@ -83,13 +79,8 @@ class Matrix:
             'not equal', return true if one or more items are not equal to
             their parallel item/s in other, else false.
         """
-        if operation == operator.eq:
-            return all(
-                [item for line_data in data for item in line_data])
-
-        elif operation == operator.ne:
-            return any(
-                [item for line_data in data for item in line_data])
+        func = {operator.eq: all, operator.ne: any}.get(operation)
+        return func([item for line_data in data for item in line_data])
 
     def _calculate_matrix_on_matrix(self, other, operation):
         """Does mathematical operation on two matrices.
