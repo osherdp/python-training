@@ -22,7 +22,7 @@ def stam(filename, output_file):
     """The function gets a file, edits it and saves it to a new location
 
     Args:
-        filename (str): the full path to the file that will be edited
+        filename (str): the path to the file that will be edited
         output_file (str) : the path of the new file to be saved
 
     """
