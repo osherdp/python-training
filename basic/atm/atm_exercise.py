@@ -55,8 +55,10 @@ def cash_withdrawal(customers_data, customer_id):
         customers_data (dict): Dictionary with the atm file's data.
         customer_id (str): The specific customer id to work on.
     """
-    amount_to_withdrawal = get_a_number("Enter the amount you want to withdrawal.")
-    new_balance = get_balance(customers_data, customer_id) - amount_to_withdrawal
+    msg = "Enter the amount you want to withdrawal."
+    amount_to_withdrawal = get_a_number(msg)
+    curr_balance = get_balance(customers_data, customer_id)
+    new_balance = curr_balance - amount_to_withdrawal
     customers_data[customer_id][BALANCE_KEY] = new_balance
     print(f"withdrawal was successful {customer_id} now has {new_balance}$")
 
@@ -147,14 +149,15 @@ def atm(filename):
     data = get_data_from_file(filename)
     if data != -1:
         while True:
-            customer_id = input("enter the customer ID of the customer you want (-1 to turn off).\n")
+            msg = "enter the customer ID of the customer you want (-1 to turn off).\n"
+            customer_id = input(msg)
             if customer_id == "-1":
                 break
             elif customer_id not in data:
                 print("The ID you entered doesn't exist on the file, try again.")
                 continue
             while True:
-                operation = input("""What operation do you want to do?(-1 to stop for the customer)
+                operation = input("""What operation do you want to do?(-1 to stop)
                 1 to check balance
                 2 to withdrawal
                 3 for cash deposit
