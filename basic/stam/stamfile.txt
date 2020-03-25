@@ -1,0 +1,6 @@
+this
+is
+a
+file
+for a python exercise
+changed
