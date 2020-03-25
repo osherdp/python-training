@@ -149,12 +149,13 @@ def atm(filename):
     data = get_data_from_file(filename)
     if data != -1:
         while True:
-            msg = "enter the customer ID of the customer you want (-1 to turn off).\n"
+            msg = "enter the ID of the customer you want (-1 to turn off).\n"
             customer_id = input(msg)
             if customer_id == "-1":
                 break
             elif customer_id not in data:
-                print("The ID you entered doesn't exist on the file, try again.")
+                err_msg = "The ID you entered doesn't exist on the file, try again."
+                print(err_msg)
                 continue
             while True:
                 operation = input("""What operation do you want to do?(-1 to stop)
