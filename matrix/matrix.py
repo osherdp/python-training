@@ -41,7 +41,7 @@ class Matrix:
         is 0's.
         """
         return cls(*[tuple((0,) * j + (1,) + (0,) * i) for j, i in enumerate(
-            range(dimension - 1, -1, -1))])
+            reversed(range(dimension)))])
 
     @classmethod
     def ones(cls, dimension):
