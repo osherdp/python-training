@@ -154,7 +154,7 @@ def atm(filename):
             if customer_id == "-1":
                 break
             elif customer_id not in data:
-                err_msg = "The ID you entered doesn't exist on the file, try again."
+                err_msg = "The ID you entered doesn't exist, try again."
                 print(err_msg)
                 continue
             while True:
