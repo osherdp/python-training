@@ -1,5 +1,5 @@
 
-"""A script that gets a file name, copy it's content with an addition of my first name at the beginning of every
+"""Gets a file name, copy it's content with an addition of my first name at the beginning of every
 line and my last name at the end and then it saves the new content as a different file."""
 
 import sys
