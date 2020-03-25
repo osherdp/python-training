@@ -1,3 +1,10 @@
+"""Matrix class unit test.
+
+This module uses unittest and pytest to generate tests for the Matrix class
+from matrix.py. Aspects which are tested: initialization, immutability,
+mathematical operations, boolean operations, iterations and is hashable.
+"""
+
 import unittest
 
 import pytest
@@ -66,10 +73,10 @@ class TestMatrix(unittest.TestCase):
         with self.assertRaises(ValueError):
             m1 + m3
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(AttributeError):
             m1 + 10
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(AttributeError):
             m1 + 0.5
 
     def test_sub(self):
@@ -82,10 +89,10 @@ class TestMatrix(unittest.TestCase):
         with self.assertRaises(ValueError):
             m1 - m3
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(AttributeError):
             m1 - 10
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(AttributeError):
             m1 - 0.5
 
     def test_mul(self):
@@ -104,7 +111,7 @@ class TestMatrix(unittest.TestCase):
         with self.assertRaises(ValueError):
             m1 * m3
 
-        with self.assertRaises(TypeError):
+        with self.assertRaises(AttributeError):
             m1 * (1, 2)
 
     def test_div(self):
@@ -115,10 +122,10 @@ class TestMatrix(unittest.TestCase):
         self.assertEqual(m1 / 10, Matrix((0.1, 0.2), (0.3, 0.4)))
         self.assertEqual(m1 / 0.5, Matrix((2, 4), (6, 8)))
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             m1 / m2
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             m1 / m3
 
         with self.assertRaises(TypeError):
@@ -145,3 +152,7 @@ class TestMatrix(unittest.TestCase):
                              Matrix((1, 1), (2, 3)): 3})
 
         self.assertNotEqual(hash(Matrix.ones(2)), hash(Matrix.unity(2)))
+
+
+if __name__ == '__main__':
+    unittest.main()
