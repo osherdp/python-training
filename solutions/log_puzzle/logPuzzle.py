@@ -73,16 +73,16 @@ def organized_url_lst(lst_url, urls_file_name):
     for url in lst_url:
         photo_name = finding_photo_name(url)
         if photo_name not in dict_name_vs_url:
+            dict_name_vs_url[photo_name] = url
 
-            # The photo name would be sorted according to the urls_file_name.
-            if urls_file_name == r"logo_data.cyber.org.il":
-                dict_name_vs_url[photo_name] = url
-            if urls_file_name == "message_data.cyber.org.il":
-                dict_name_vs_url[photo_name[7:]] = url
+    # The photo name would be sorted according to the urls_file_name.
+    lst_name_sorted = []
+    if urls_file_name == r"logo_data.cyber.org.il":
+        lst_name_sorted = sorted(dict_name_vs_url.keys())
+    if urls_file_name == "message_data.cyber.org.il":
+        lst_name_sorted = sorted(dict_name_vs_url.keys(), key=lambda s: s[7:])
 
-    lst_name_sorted = sorted(dict_name_vs_url.keys())
     sorted_url_lst = []
-
     for name in lst_name_sorted:
         sorted_url_lst.append(dict_name_vs_url[name])
     return sorted_url_lst
@@ -153,7 +153,7 @@ def main():
     The parameters given to pychar in this format:
     "--todir" dest_directory urls_file_name
 
-    dest_directory - destination directory of the wanted html file. (path from root)
+    dest_directory - destination directory of the wanted html file. (path from root) example "logPuzzle.html"
     urls_file_name - "logo_data.cyber.org.il" or "message_data.cyber.org.il"
     """
     args = sys.argv[1:]
