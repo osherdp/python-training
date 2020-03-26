@@ -63,8 +63,7 @@ def cash_withdrawal(customers_data, customer_id):
     if amount_to_withdrawal <= curr_balance:
         new_balance = curr_balance - amount_to_withdrawal
         customers_data[customer_id][BALANCE_KEY] = new_balance
-        success = f"withdrawal was successful {customer_id} now has {new_balance}$"
-        print(success)
+        print(f"operation was successful {customer_id} now has {new_balance}$")
     else:
         print("You cannot draw more money than what you have in the bank.")
 
