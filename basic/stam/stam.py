@@ -1,4 +1,5 @@
 import sys
+
 __author__ = 'Nurick'
 
 
@@ -11,7 +12,7 @@ def clear_file(path):
 def main():
     """take file name from argument and copies it to file name in second argument
     in addition - adds 'first_name' to the beginning if each line and 'last_name' to the end of each line"""
-    path = '/'.join(sys.argv[0].split('/')[:-1])+'/'
+    path = '/'.join(sys.argv[0].split('/')[:-1]) + '/'
     try:
         org_file_name = sys.argv[1]
     except:
@@ -32,7 +33,6 @@ def main():
         with open(new_file, 'a') as nfh:
             for line in ofh:
                 nfh.write(first_name + ' ' + line.rstrip() + ' ' + last_name + '\n')
-
 
 
 if __name__ == '__main__':
