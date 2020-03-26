@@ -1,4 +1,8 @@
 """atm program which allows users to preform actions on customers."""
+import sys
+from functools import partial
+
+ATM_FILE = 1
 PASS_KEY = "atm_password"
 BALANCE_KEY = "balance"
 
@@ -43,7 +47,7 @@ def get_balance(customers_data, customer_id):
         int: The given customer's balance.
     """
     balance = customers_data[customer_id][BALANCE_KEY]
-    return float(balance)
+    return balance
 
 
 def cash_withdrawal(customers_data, customer_id):
@@ -86,7 +90,7 @@ def change_password(customers_data, customer_id):
     """
     new_pass = input("Enter a new password.\n")
     customers_data[customer_id][PASS_KEY] = new_pass
-    print(f"Password was changed to {new_pass}")
+    print(f"Password was changed successfully")
 
 
 def get_data_from_file(filename):
@@ -98,17 +102,13 @@ def get_data_from_file(filename):
     Returns:
          dict: Dictionary of all customer's data from the file.
     """
-    try:
-        with open(filename, "r") as atm_file:
-            customers = {}
-            for line in atm_file:
-                customer_id, the_pass, balance = line.split()
-                customer = {PASS_KEY: the_pass, BALANCE_KEY: balance}
-                customers[customer_id] = customer
-        return customers
-    except FileNotFoundError as e:
-        print(e)
-        return -1
+    with open(filename, "r") as atm_file:
+        customers = {}
+        for line in atm_file:
+            customer_id, the_pass, balance = line.split()
+            customer = {PASS_KEY: the_pass, BALANCE_KEY: float(balance)}
+            customers[customer_id] = customer
+    return customers
 
 
 def execute_choice(customers_data, customer_id, choice):
@@ -152,16 +152,13 @@ def operations_for_customer(data, customer_id):
         data (dict): Dictionary with data from the atm file.
         customer_id (str): The specific customer id to work on.
     """
-    while True:
-        operation = input("""What operation do you want to do?(-1 to stop)
+    msg = """What operation do you want to do?(-1 to stop)
         1 to check balance
         2 to withdrawal
         3 for cash deposit
-        4 to change password\n""")
-        if operation == "-1":
-            break
-
-        elif operation not in "1234":
+        4 to change password\n"""
+    for operation in iter(partial(input, msg), "-1"):
+        if operation not in "1234":
             print("you have to enter one of the options, try again.")
             continue
         execute_choice(data, customer_id, operation)
@@ -174,15 +171,9 @@ def atm(filename):
         filename (str): The path to the file with the bank details.
     """
     data = get_data_from_file(filename)
-    if data == -1:
-        return
-
-    while True:
-        msg = "enter the ID of the customer you want (-1 to turn off).\n"
-        customer_id = input(msg)
-        if customer_id == "-1":
-            break
-        elif customer_id not in data:
+    msg = "enter the ID of the customer you want (-1 to turn off).\n"
+    for customer_id in iter(partial(input, msg), "-1"):
+        if customer_id not in data and customer_id != "-1":
             err_msg = "The ID you entered doesn't exist, try again."
             print(err_msg)
             continue
@@ -193,8 +184,13 @@ def atm(filename):
 
 
 def main():
-    path = r"C:\Users\keren\Desktop\atmDetails.txt"
-    atm(path)
+    """Get file path and call atm function"""
+    try:
+        path = sys.argv[ATM_FILE]
+        atm(path)
+    except Exception as e:
+        print(e)
+        sys.exit()
 
 
 if __name__ == "__main__":
