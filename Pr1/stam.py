@@ -8,7 +8,6 @@ FILE_NAME_NEW = "D:/Python Training/Pr1/stam_new.txt"
 def write_to_file(file_name, FILE_NAME_NEW, first_name, last_name):
     """ Read from file stam.txt line by line
      and write to file stam_new.txt with the first and last name
-
     """
 
     try:  # if stam.txt exist
