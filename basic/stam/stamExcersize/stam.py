@@ -47,6 +47,5 @@ if __name__ == '__main__':
     try:
         originalfile_path = sys.argv[ORIGINAL_FILE_LOCATION]
     except IndexError:
-        print('No Path Given')
-        sys.exit()
+        raise ValueError('No Path Given')
     main()
