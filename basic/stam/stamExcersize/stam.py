@@ -37,11 +37,9 @@ def manipulate(original, new):
 
 def main():
     try:
-        original_file = open(originalfile_path, 'r')
-        new_file = open(newfile_path, 'w')
-        manipulate(original_file, new_file)
-        original_file.close()
-        new_file.close()
+        with open(originalfile_path, 'r') as original_file:
+            with open(NEW_FILE_NAME, 'w') as new_file:
+                manipulate(original_file, new_file)
     except FileNotFoundError:
         print("Given path isn't a file")
         sys.exit()
@@ -50,8 +48,6 @@ def main():
 if __name__ == '__main__':
     try:
         originalfile_path = sys.argv[ORIGINAL_FILE_LOCATION]
-        newfile_path = path.join(os.getcwd(), NEW_FILE_NAME)
     except IndexError:
-        print('No path given')
-        sys.exit()
+        raise ValueError('No Path Given')
     main()
