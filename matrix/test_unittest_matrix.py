@@ -13,6 +13,7 @@ from matrix import Matrix
 class TestMatrixCreate(unittest.TestCase):
     """Test the creation of a matrix and that an instance can't be modified.
     """
+
     def test_initialization(self):
         """Test init function of Matrix."""
         self.assertIsInstance(Matrix(((1, 2), (3, 4))), Matrix)
@@ -34,6 +35,7 @@ class TestMatrixCreate(unittest.TestCase):
 
 class TestMatrixFunctions(unittest.TestCase):
     """Test the built-in functions of Matrix."""
+
     def test_representation(self):
         """Test __str__  and __repr__ functions."""
         data = ((1, 1, 1), (2, 2, 2), (3, 3, 3))
@@ -50,8 +52,11 @@ class TestMatrixFunctions(unittest.TestCase):
         self.assertEqual(m.tuples, data)
 
     def test_unity(self):
-        """Test unity() which should return a matrix with 1's in the main
-        diagonal and 0's elsewhere.
+        """Test unity().
+
+         Note:
+             unity() returns a matrix with 1's in the main diagonal and 0's
+             elsewhere.
         """
         self.assertEqual(
             Matrix.unity(2), Matrix(((1, 0), (0, 1))))
@@ -70,6 +75,7 @@ class TestMatrixFunctions(unittest.TestCase):
 
 class TestMatrixOperators(unittest.TestCase):
     """Test the mathematical and boolean operations supported by Matrix."""
+
     def test_add(self):
         """Test addition operator."""
         m1 = Matrix.ones(3)
@@ -156,6 +162,7 @@ class TestMatrixOperators(unittest.TestCase):
 
 class TestMatrixIteration(unittest.TestCase):
     """Test iteration support of Matrix."""
+
     def test_iteration(self):
         """Test __iter__ function."""
         self.assertEqual(tuple(Matrix.ones(2)), ((1, 1), (1, 1)))
@@ -163,6 +170,7 @@ class TestMatrixIteration(unittest.TestCase):
 
 class TestMatrixHashable(unittest.TestCase):
     """Test hash support of Matrix."""
+
     def test_hash(self):
         """Test __hash__ function and uses dictionary keys."""
         d = {Matrix(((1, 1), (2, 2))): 2, Matrix(((1, 1), (2, 3))): 3}
@@ -173,5 +181,22 @@ class TestMatrixHashable(unittest.TestCase):
         self.assertNotEqual(hash(Matrix.ones(2)), hash(Matrix.unity(2)))
 
 
+def main():
+    """Group tests cases to one test suite."""
+    tests_to_run = [
+        TestMatrixCreate, TestMatrixFunctions,
+        TestMatrixOperators, TestMatrixIteration, TestMatrixHashable
+    ]
+
+    loader = unittest.TestLoader()
+
+    suites = [loader.loadTestsFromTestCase(test_class) for test_class in
+              tests_to_run]
+
+    return unittest.TestSuite(suites)
+
+
 if __name__ == '__main__':
-    unittest.main()
+    """Run the test suite."""
+    runner = unittest.TextTestRunner()
+    runner.run(main())
