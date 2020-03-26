@@ -40,14 +40,15 @@ def main():
         with open(originalfile_path, 'r') as original_file:
             with open(NEW_FILE_NAME, 'w') as new_file:
                 manipulate(original_file, new_file)
-    except FileNotFoundError:
-        print("Given path isn't a file")
+    except Exception as e:
+        print(e)
         sys.exit()
 
 
 if __name__ == '__main__':
     try:
         originalfile_path = sys.argv[ORIGINAL_FILE_LOCATION]
-    except IndexError:
-        raise ValueError('No Path Given')
+    except IndexError as e:
+        print('No Path Given')
+        sys.exit()
     main()
