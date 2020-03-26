@@ -65,17 +65,17 @@ Another `classmethod` that creates a matrix which is full of ones:
 Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1)))
 ```
 
-> :pencil:
-  If you are not familiar with matrix multiplication operation, it probably doesn't work as you think.
-
-  Read about it somewhere before implementing it.
-
 Multiplication:
 
 ```
 >>> a * b
 Matrix(((15, 21), (33, 47)))
 ```
+
+> :warning:
+  If you are not familiar with matrix multiplication operation, it probably doesn't work as you think.
+
+  Read about it somewhere before implementing it.
 
 Addition:
 
