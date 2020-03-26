@@ -33,8 +33,6 @@ def manipulate(original, new):
     for line in original.readlines():
         new_line = NEW_LINE_FORMAT.format(line.strip())
         new.writelines(new_line)
-    original.close()
-    new.close()
 
 
 def main():
