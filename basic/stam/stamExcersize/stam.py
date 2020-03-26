@@ -1,6 +1,4 @@
 import sys
-import os
-from os import path
 
 ORIGINAL_FILE_LOCATION = 1
 NEW_LINE_FORMAT = 'Maya {} Gal-Yam\n'
@@ -48,7 +46,7 @@ def main():
 if __name__ == '__main__':
     try:
         originalfile_path = sys.argv[ORIGINAL_FILE_LOCATION]
-    except IndexError as e:
+    except IndexError:
         print('No Path Given')
         sys.exit()
     main()
