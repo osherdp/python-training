@@ -1,6 +1,7 @@
 """atm program which allows users to preform actions on customers."""
-import sys
 from functools import partial
+
+import sys
 
 ATM_FILE = 1
 PASS_KEY = "atm_password"
