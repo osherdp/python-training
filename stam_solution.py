@@ -1,5 +1,6 @@
-"""Gets a file name, copy it's content with an addition of my first name at the beginning of every
-line and my last name at the end and then it saves the new content as a different file."""
+"""Gets a file name, copy it's content with an addition of
+   my first name at the beginning of every line and my last
+   name at the end and then it saves the new content as a different file."""
 
 import sys
 import os
@@ -21,7 +22,8 @@ def get_full_path():
 
 
 def edit_text(lines):
-    """Gets the file's lines and adds first name at the beginning and last name at the end.
+    """Gets the file's lines and adds first name at
+     the beginning and last name at the end.
     Args:
         lines(list): The original file lines.
     Returns:
