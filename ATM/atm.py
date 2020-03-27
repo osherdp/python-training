@@ -166,9 +166,11 @@ def main():
         if enter_password(dictionary, consumer_id) is True:
             # if the password is correct
             while True:
-                action = input('Press:\n1 -- see balance\n2 -- cash withdraw\n' +
+                action = input('Press:\n1 -- see balance\n' +
+                               '2 -- cash withdraw\n' +
                                '3-- cash deposit\n' +
-                               '4 -- change password\nSTOP --  if you are done\n')
+                               '4 -- change password\n' + 
+                               'STOP --  if you are done\n')
                 if action == '1':
                     balance = check_the_balance(dictionary, consumer_id)
                     print('Your balance is: {}'.format(balance))
