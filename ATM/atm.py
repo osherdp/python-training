@@ -24,7 +24,7 @@ def change_password(dictionary, consumer_id):
     :return: the updated dictionary
     """
     new_pass = input('Please enter a new password: ')
-    temp_dict = dictionary[consumer_id] # temp_dict = {password: balance}
+    temp_dict = dictionary[consumer_id]  # temp_dict = {password: balance}
     for password, balance in temp_dict.items():
         temp_dict[new_pass] = temp_dict.pop(password)  # update password
     dictionary[consumer_id] = temp_dict  # update the dictionary
@@ -102,7 +102,8 @@ def enter_password(dictionary, consumer_id):
                 print('OK, we proceed ')
                 return True
             else:
-                print('Wrong password, you have {} more tries'.format(times - 1))
+                print('Wrong password, you have {} more tries'
+                      .format(times - 1))
                 times -= 1
                 if times == 0:
                     return False
@@ -129,7 +130,8 @@ def read_file(file_name):
     """
     Read from the file (atm.txt) line by line
     and create dictionary: {ID: {password: balance}}
-    I used try and except. If the file doesn't exist, the program won't collapse
+    I used try and except. If the file doesn't exist,
+    the program won't collapse
     :param file_name:
     :return: dictionary
     """
@@ -138,7 +140,8 @@ def read_file(file_name):
         with open(file_name, 'r') as atm_file:
             for line in atm_file:
                 my_list = line.split()
-                dictionary[my_list[ID]] = {my_list[PASSWORD]: int(my_list[BALANCE])}
+                dictionary[my_list[ID]] = \
+                    {my_list[PASSWORD]: int(my_list[BALANCE])}
         return dictionary
     except Exception as error:
         print(error)
@@ -160,7 +163,8 @@ def main():
         if consumer_id == '-1':
             print('Turning off the ATM...')
             break
-        if enter_password(dictionary, consumer_id) is True:  # if the password is correct
+        if enter_password(dictionary, consumer_id) is True:
+            # if the password is correct
             while True:
                 action = input('Press:\n1 -- see balance\n2 -- cash withdraw\n' +
                                '3-- cash deposit\n' +
