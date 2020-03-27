@@ -35,7 +35,7 @@ or represent it via the `repr()` function, and printing it via `str()`:
 
 ```
 >>> a
-Matrix((1, 2), (3, 4))
+Matrix(((1, 2), (3, 4)))
 >>> print(a)
 ((1, 2), (3, 4))
 ```
