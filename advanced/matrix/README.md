@@ -27,8 +27,8 @@ The purpose of this exercise is to implement class for the datatype `Matrix` whi
 You can initialize the matrix using a `tuple` of `tuple`s:
 
 ```
->>> a = Matrix((1, 2), (3, 4))
->>> b = Matrix((3, 5), (6, 8))
+>>> a = Matrix(((1, 2), (3, 4)))
+>>> b = Matrix(((3, 5), (6, 8)))
 ```
 
 or represent it via the `repr()` function, and printing it via `str()`:
