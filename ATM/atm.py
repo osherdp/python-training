@@ -24,9 +24,9 @@ def change_password(dictionary, consumer_id):
     :return: the updated dictionary
     """
     new_pass = input('Please enter a new password: ')
-    temp_dict = dictionary[consumer_id]  # temp_dict = {password: balance} of the current user
+    temp_dict = dictionary[consumer_id] # temp_dict = {password: balance}
     for password, balance in temp_dict.items():
-        temp_dict[new_pass] = temp_dict.pop(password)  # update the new password
+        temp_dict[new_pass] = temp_dict.pop(password)  # update password
     dictionary[consumer_id] = temp_dict  # update the dictionary
     return dictionary
 
@@ -43,7 +43,7 @@ def cash_deposit(dictionary, consumer_id):
     cash = int(cash)
     if cash < 0:
         print('Can''t do this, please enter a positive number!')
-    temp_dict = dictionary[consumer_id]  # temp_dict = {password: balance} of the current user
+    temp_dict = dictionary[consumer_id]  # temp_dict = {password: balance}
     for password, balance in temp_dict.items():
         balance += cash  # add the cash amount to his balance
         temp_dict[password] = balance  # update the dictionary
@@ -63,7 +63,7 @@ def cash_withdrawal(dictionary, consumer_id):
     cash = int(cash)
     if cash < 0:
         print('Can''t do this, please enter a positive number! ')
-    temp_dict = dictionary[consumer_id]  # temp_dict = {password: balance} of the current user
+    temp_dict = dictionary[consumer_id]  # temp_dict = {password: balance}
     for password, balance in temp_dict.items():
         balance -= cash  # sub the cash amount from his balance
         temp_dict[password] = balance  # update the dictionary
@@ -78,7 +78,7 @@ def check_the_balance(dictionary, consumer_id):
     :param consumer_id: current user's ID
     :return: the balance of the account
     """
-    temp_dict = dictionary[consumer_id]  # temp_dict = {password: balance} of the current user
+    temp_dict = dictionary[consumer_id]  # temp_dict = {password: balance}
     for password, balance in temp_dict.items():
         return balance
     return None  # the program never reaches to this point
@@ -86,8 +86,9 @@ def check_the_balance(dictionary, consumer_id):
 
 def enter_password(dictionary, consumer_id):
     """
-    Ask for the user's password. If the user makes 3 mistakes, the function returns False
-    Otherwise, return True
+    Ask for the user's password.
+    If the user makes 3 mistakes, the function returns False,
+    otherwise, return True
     :param dictionary:
     :param consumer_id: current user's ID
     :return: True/False
@@ -126,7 +127,8 @@ def who_are_you(dictionary):
 
 def read_file(file_name):
     """
-    Read from the file (atm.txt) line by line, and create dictionary: {ID: {password: balance}}
+    Read from the file (atm.txt) line by line
+    and create dictionary: {ID: {password: balance}}
     I used try and except. If the file doesn't exist, the program won't collapse
     :param file_name:
     :return: dictionary
@@ -147,7 +149,7 @@ def main():
     1) call read_file(file_name) to create dictionary
     2) call who_are_you(dictionary) to recognize the user
     3) call enter_password(dictionary, consumer_id)
-        a) if the password is correct in 3 tries then let the user choose an action
+        a) if the password is correct in 3 tries then choose an action
         b) else: Message about it, and go to step 2)
     :return:
     """
@@ -160,7 +162,8 @@ def main():
             break
         if enter_password(dictionary, consumer_id) is True:  # if the password is correct
             while True:
-                action = input('Press:\n1 -- see balance\n2 -- cash withdraw\n3 -- cash deposit\n' +
+                action = input('Press:\n1 -- see balance\n2 -- cash withdraw\n' +
+                               '3-- cash deposit\n' +
                                '4 -- change password\nSTOP --  if you are done\n')
                 if action == '1':
                     balance = check_the_balance(dictionary, consumer_id)
