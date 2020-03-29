@@ -1,12 +1,12 @@
 """atm program which allows users to preform actions on customers."""
 import sys
 
-from functools import partial
 import csv
+from functools import partial
 
-PASS_KEY = "atm_password"
-BALANCE_KEY = "balance"
 ATM_FILE = 1
+BALANCE_KEY = "balance"
+PASS_KEY = "atm_password"
 
 
 def check_balance(customers_data, customer_id):
@@ -92,9 +92,14 @@ def change_password(customers_data, customer_id):
         customers_data (dict): Dictionary with the atm file's data.
         customer_id (str): The specific customer id to work on.
     """
-    new_pass = input("Enter a new password.\n")
-    customers_data[customer_id][PASS_KEY] = new_pass
-    print(f"Password was changed successfully")
+    old_pass = input("Enter old passwords for identification\n")
+    if old_pass == customers_data[customer_id][PASS_KEY]:
+        new_pass = input("Enter a new password.\n")
+        customers_data[customer_id][PASS_KEY] = new_pass
+        print(f"Password was changed successfully")
+
+    else:
+        print("The password is incorrect so the action was canceled")
 
 
 def get_data_from_file(filename):
@@ -125,17 +130,14 @@ def execute_choice(customers_data, customer_id, choice):
         customer_id (str): The specific customer id to work on.
         choice (str): The user's desired function to execute.
     """
-    if choice == "1":
-        check_balance(customers_data, customer_id)
+    switch_choice = {
+        "1": check_balance,
+        "2": cash_withdrawal,
+        "3": cash_deposit,
+        "4": change_password
+    }
 
-    elif choice == "2":
-        cash_withdrawal(customers_data, customer_id)
-
-    elif choice == "3":
-        cash_deposit(customers_data, customer_id)
-
-    else:
-        change_password(customers_data, customer_id)
+    switch_choice[choice](customers_data, customer_id)
 
 
 def update_file(filename, data):
@@ -198,10 +200,9 @@ def main():
 
     except IndexError:
         print("Wrong number of parameters(1 expected).")
+
     except FileNotFoundError:
         print(f"the path '{path}' is invalid")
-    except Exception as e:
-        print(e)
 
 
 if __name__ == "__main__":
