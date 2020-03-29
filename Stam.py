@@ -1,23 +1,13 @@
-
 """Gets a file name, copy it's content with an addition of my first name at the beginning of every
 line and my last name at the end and then it saves the new content as a different file."""
 
 import sys
 import os
 
-
 NAME = 1
 FILE = sys.argv[NAME]
-
-
-def main():
-    full_file_path = get_full_path()
-    with open(full_file_path, 'r') as original_file:
-        content = original_file.read()
-    address = full_file_path[0:(full_file_path.find(str(FILE)) - 1)]
-    lines = content.split('\n')
-    new_lines = edit_text(lines)
-    print(new_lines, address)
+FIRST_NAME = 'Maya'
+LAST_NAME = 'Reuveni'
 
 
 def get_full_path():
@@ -43,7 +33,7 @@ def edit_text(lines):
     new_lines = ''
     for i in lines:
         if i:
-            edited_line = 'Maya' + ' ' + i + ' ' + 'Reuveni'
+            edited_line = '{} {} {}'.format(FIRST_NAME, i, LAST_NAME)
             new_lines = new_lines + '\n' + edited_line
         else:
             edited_line = i
@@ -57,11 +47,20 @@ def save_new_file(new_lines, address):
           new_lines(str): The edited content of the original file.
           address(str): The location of the file.
       """
-    new_file_name = 'Maya_' + str(FILE)
+    new_file_name = '{}_{}'.format(FIRST_NAME, str(FILE))
     new_file_path = os.path.join(address, new_file_name)
-    new_file = open(new_file_path, 'w')
-    new_file.write(new_lines)
-    new_file.close()
+    with open(new_file_path, 'w') as new_file:
+        new_file.write(new_lines)
+
+
+def main():
+    full_file_path = get_full_path()
+    with open(full_file_path, 'r') as original_file:
+        content = original_file.read()
+    address = full_file_path[0:(full_file_path.find(str(FILE)) - 1)]
+    lines = content.split('\n')
+    new_lines = edit_text(lines)
+    print(new_lines, address)
 
 
 if __name__ == '__main__':
