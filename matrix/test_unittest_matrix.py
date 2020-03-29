@@ -18,9 +18,6 @@ class TestMatrixCreate(unittest.TestCase):
         self.assertIsInstance(Matrix(((1, 2), (3, 4))), Matrix)
         self.assertIsInstance(Matrix(((1, 2), (5.5, 4))), Matrix)
 
-        # with self.assertRaises(TypeError):
-        #     Matrix(((1, 2), (3, [4, 5, 6])))
-
         with self.assertRaises(ValueError):
             Matrix(((1, 2), (3, 4, 5)))
 
@@ -41,7 +38,7 @@ class TestMatrixFunctions(unittest.TestCase):
         m = Matrix(data)
 
         self.assertEqual(str(m), str(data))
-        self.assertEqual(repr(m), f'Matrix{m.tuples}')
+        self.assertEqual(eval(repr(m)), f'Matrix({m.tuples})')
 
     def test_tuples(self):
         """Test tuple which should return the matrix data as tuple."""
@@ -180,22 +177,5 @@ class TestMatrixHashable(unittest.TestCase):
         self.assertNotEqual(hash(Matrix.ones(2)), hash(Matrix.unity(2)))
 
 
-def main():
-    """Group tests cases to one test suite."""
-    tests_to_run = [
-        TestMatrixCreate, TestMatrixFunctions,
-        TestMatrixOperators, TestMatrixIteration, TestMatrixHashable
-    ]
-
-    loader = unittest.TestLoader()
-
-    suites = [loader.loadTestsFromTestCase(test_class) for test_class in
-              tests_to_run]
-
-    return unittest.TestSuite(suites)
-
-
 if __name__ == '__main__':
-    """Run the test suite."""
-    runner = unittest.TextTestRunner()
-    runner.run(main())
+    unittest.main()

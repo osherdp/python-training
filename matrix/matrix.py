@@ -41,7 +41,7 @@ class Matrix:
         return cls(((1,) * dimension,) * dimension)
 
     def __repr__(self):
-        return f'{self.__class__.__name__}{self._matrix}'
+        return f"'{self.__class__.__name__}({self._matrix})'"
 
     def __str__(self):
         """Return a string presentation of the matrix instance."""
@@ -144,8 +144,3 @@ class Matrix:
     def __hash__(self):
         """Enable to use a matrix as key of a dictionary."""
         return hash(self.tuples)
-
-
-m1 = ((1, 2), (3, 4))
-m2 = Matrix.ones(3)
-print(repr(m2))
