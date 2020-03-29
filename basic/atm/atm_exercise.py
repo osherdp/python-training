@@ -85,6 +85,24 @@ def cash_deposit(customers_data, customer_id):
     print(f"withdrawal was successful {customer_id} now has {new_balance}$.")
 
 
+def pass_identification(customers_data, customer_id):
+    """Check that the password entered is the correct one
+
+    Args:
+        customers_data (dict): Dictionary with the atm file's data.
+        customer_id (str): The specific customer id to work on.
+
+    Returns:
+        True: password is the correct one
+        False: password is not correct
+    """
+    password = input("Enter the customer's password to perform this action\n")
+    if password == customers_data[customer_id][PASS_KEY]:
+        return True
+
+    return False
+
+
 def change_password(customers_data, customer_id):
     """Change the given customer's password.
 
@@ -92,14 +110,9 @@ def change_password(customers_data, customer_id):
         customers_data (dict): Dictionary with the atm file's data.
         customer_id (str): The specific customer id to work on.
     """
-    old_pass = input("Enter old passwords for identification\n")
-    if old_pass == customers_data[customer_id][PASS_KEY]:
-        new_pass = input("Enter a new password.\n")
-        customers_data[customer_id][PASS_KEY] = new_pass
-        print(f"Password was changed successfully")
-
-    else:
-        print("The password is incorrect so the action was canceled")
+    new_pass = input("Enter a new password.\n")
+    customers_data[customer_id][PASS_KEY] = new_pass
+    print(f"Password was changed successfully")
 
 
 def get_data_from_file(filename):
@@ -137,7 +150,11 @@ def execute_choice(customers_data, customer_id, choice):
         "4": change_password
     }
 
-    switch_choice[choice](customers_data, customer_id)
+    if pass_identification(customers_data, customer_id):
+        switch_choice[choice](customers_data, customer_id)
+
+    else:
+        print("The password is incorrect so the action was canceled")
 
 
 def update_file(filename, data):
@@ -194,6 +211,7 @@ def atm(filename):
 
 def main():
     """Get file path and call atm function."""
+    path = ""
     try:
         path = sys.argv[ATM_FILE]
         atm(path)
