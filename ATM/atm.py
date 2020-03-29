@@ -12,8 +12,8 @@ def update_file(file_name, dictionary):
     with open(file_name, 'w') as atm_file:
         for key in dictionary:
             my_list = dictionary[key]
-            atm_file.write('{} {} {}\n'.format(key, my_list[PASSWORD]
-                                               , my_list[BALANCE]))
+            atm_file.write('{} {} {}\n'.format(key, my_list[PASSWORD],
+                                               my_list[BALANCE]))
 
 
 def change_password(dictionary, consumer_id):
