@@ -42,6 +42,9 @@ operators = {
 
     '~': Operator(operator.neg, 6),
     '!': Operator(math.factorial, 7),
+
+    '(': Operator(None, 8),
+    ')': Operator(None, 8)
 }
 
 
