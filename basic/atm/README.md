@@ -22,3 +22,9 @@ To turn off the ATM, enter `-1` as the customer ID. When the ATM will be turned 
 
 * Use a simple file for the customers data. Each customer will be a single line and their information will come in a known order separated by a comma or a space.
 * Use dictionaries to find the user data based on the customer-ID.
+
+
+
+
+
+
