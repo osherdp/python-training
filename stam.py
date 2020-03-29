@@ -14,7 +14,8 @@ def add_name_to_line(text_lines, pre_text, succeeding_text):
     line in text_lines list of strings and adds succeeding_text to
     the end of each line
     """
-    out_text = ['{} {} {}\n'.format(pre_text, line.rstrip('\n'), succeeding_text)
+    out_text = ['{} {} {}\n'.format(pre_text, line.rstrip('\n'),
+                                    succeeding_text)
                 for line in text_lines]
     return out_text
 
