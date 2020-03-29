@@ -1,11 +1,12 @@
 """atm program which allows users to preform actions on customers."""
-from functools import partial
-
 import sys
 
-ATM_FILE = 1
+from functools import partial
+import csv
+
 PASS_KEY = "atm_password"
 BALANCE_KEY = "balance"
+ATM_FILE = 1
 
 
 def check_balance(customers_data, customer_id):
@@ -26,12 +27,13 @@ def get_a_number(message_input):
         message_input (str): The user input message.
 
     Returns:
-        int: Number given by user.
+        float: Number given by user.
     """
     while True:
         number = input(message_input + "\n")
         try:
             return float(number)
+
         except ValueError:
             print("This is not a number, try again.")
             continue
@@ -45,7 +47,7 @@ def get_balance(customers_data, customer_id):
         customer_id (str): The specific customer id to work on.
 
     Returns:
-        int: The given customer's balance.
+        float: The given customer's balance.
     """
     balance = customers_data[customer_id][BALANCE_KEY]
     return balance
@@ -65,6 +67,7 @@ def cash_withdrawal(customers_data, customer_id):
         new_balance = curr_balance - amount_to_withdrawal
         customers_data[customer_id][BALANCE_KEY] = new_balance
         print(f"operation was successful {customer_id} now has {new_balance}$")
+
     else:
         print("You cannot draw more money than what you have in the bank.")
 
@@ -103,12 +106,14 @@ def get_data_from_file(filename):
     Returns:
          dict: Dictionary of all customer's data from the file.
     """
-    with open(filename, "r") as atm_file:
+    with open(filename, newline='') as csv_atm_file:
         customers = {}
-        for line in atm_file:
-            customer_id, the_pass, balance = line.split()
+        customers_info = csv.reader(csv_atm_file, delimiter=' ', quotechar='|')
+        for line in customers_info:
+            customer_id, the_pass, balance = line
             customer = {PASS_KEY: the_pass, BALANCE_KEY: float(balance)}
             customers[customer_id] = customer
+
     return customers
 
 
@@ -162,6 +167,7 @@ def operations_for_customer(data, customer_id):
         if operation not in "1234":
             print("you have to enter one of the options, try again.")
             continue
+
         execute_choice(data, customer_id, operation)
 
 
@@ -185,13 +191,17 @@ def atm(filename):
 
 
 def main():
-    """Get file path and call atm function"""
+    """Get file path and call atm function."""
     try:
         path = sys.argv[ATM_FILE]
         atm(path)
+
+    except IndexError:
+        print("Wrong number of parameters(1 expected).")
+    except FileNotFoundError:
+        print(f"the path '{path}' is invalid")
     except Exception as e:
         print(e)
-        sys.exit()
 
 
 if __name__ == "__main__":
