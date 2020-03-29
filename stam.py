@@ -4,7 +4,8 @@ __author__ = 'Yaron'
 import sys
 INPUT_FILENAME_ARG_NUM = 1
 OUTPUT_FILENAME_ARG_NUM = 2
-
+FIRST_NAME = 'Yaron'
+LAST_NAME = 'Cohen'
 
 def add_name_to_line(text_lines, pre_text, succeeding_text):
     """
@@ -12,10 +13,12 @@ def add_name_to_line(text_lines, pre_text, succeeding_text):
     line in text_lines list of strings and adds succeeding_text to
     the end of each line
     """
-    for ind in range(len(text_lines)):
-        text_lines[ind] = pre_text+' '+text_lines[ind].rstrip('\n')\
-                          + ' '+succeeding_text+'\n'
-    return text_lines
+    # for ind in range(len(text_lines)):
+    #     text_lines[ind] = pre_text+' '+text_lines[ind].rstrip('\n')\
+    #                       + ' '+succeeding_text+'\n'
+    out_text = ['{} {} {}\n'.format(pre_text,line.rstrip('\n'),succeeding_text)
+                for line in text_lines]
+    return out_text
 
 
 def main():
@@ -27,15 +30,16 @@ def main():
     try:
         input_f_name = sys.argv[INPUT_FILENAME_ARG_NUM]
         output_f_name = sys.argv[OUTPUT_FILENAME_ARG_NUM]
-        in_file = open(input_f_name, 'r')
-        out_file = open(output_f_name, 'w')
-    except Exception as e:
-        print(e)
+    except:
+        print('Error - Not enough inputs')
         return
-    text = in_file.readlines()
+    with open(input_f_name,'r') as in_file:
+        text = in_file.readlines()
 
-    new_text = add_name_to_line(text, 'Yaron', 'Cohen')
-    out_file.write(''.join(new_text))
+    new_text = add_name_to_line(text, FIRST_NAME, LAST_NAME)
+
+    with open(output_f_name, 'w') as out_file:
+        out_file.writelines(new_text)
 
 
 if __name__ == '__main__':
