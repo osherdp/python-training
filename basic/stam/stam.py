@@ -1,10 +1,10 @@
 """Reads a file, edits it and saves it in a new location."""
 import sys
 
-INPUT_FILE = 1
-OUTPUT_FILE = 2
 FIRST_NAME = "Keren"
 LAST_NAME = "Guez"
+OUTPUT_FILE = 2
+INPUT_FILE = 1
 
 
 def stam(filename, output_file):
@@ -27,6 +27,11 @@ def main():
         path = sys.argv[INPUT_FILE]
         new_path_to_save = sys.argv[OUTPUT_FILE]
         stam(path, new_path_to_save)
+
+    except IndexError:
+        print("Wrong numbers of parameters in script(should be 2).")
+    except FileNotFoundError as e:
+        print(f"The path '{e.filename}' was not found")
     except Exception as e:
         print(e)
 
