@@ -10,7 +10,6 @@ def main():
             with open(sys.argv[FILE2], 'w') as f2:
                 f_content = f1.read().split('\n')
                 print(f_content)
-
                 new_content = (list(map(lambda x: 'liel'
                                 + ' ' + x + ' ' + 'yaakobov', f_content)))
                 print(new_content)
