@@ -69,10 +69,11 @@ def update_file(file, customers):
     file.seek(0)
     file.truncate()
     for key in customers:
-        file.writelines(CUSTOMER_LINE_FORMAT.format(customers[key][NAME_INDEX],
-                                                    customers[key][PASSWORD_INDEX],
-                                                    customers[key][BALANCE_INDEX],
-                                                    key))
+        file.writelines(
+            CUSTOMER_LINE_FORMAT.format(customers[key][NAME_INDEX],
+                                        customers[key][PASSWORD_INDEX],
+                                        customers[key][BALANCE_INDEX],
+                                        key))
 
 
 def main():
