@@ -15,7 +15,7 @@ def main():
                 print(new_content)
 
                 for i in new_content:
-                    #print(i)
+                    # print(i)
                     f2.writelines("{}\n".format(i))
 
         with open(sys.argv[FILE2], 'r') as f:
@@ -23,6 +23,7 @@ def main():
 
     except Exception as e:
         print(e)
+
 
 if __name__ == '__main__':
     main()
