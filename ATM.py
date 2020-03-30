@@ -1,5 +1,6 @@
 __author__ = 'Adi Kadar Levi'
-BANK_DATA_PATH = r'C:\Users\Elior Mor Yosef\Documents\GitHub\python-training\python-training\bank.txt'
+BANK_DATA_PATH = r'C:\Users\Elior Mor Yosef\Documents\GitHub' \
+                 r'\python-training\python-training\bank.txt'
 
 
 def passwords_dictionary():
@@ -41,7 +42,8 @@ def check_balance(id_num, balance_data):
 
 
 def withdraw(user_id, amount_to_withdraw, pass_dict, balance_dict):
-    balance_dict[user_id] = float(balance_dict[user_id]) - float(amount_to_withdraw)
+    balance_dict[user_id] = float(balance_dict[user_id]) -\
+                            float(amount_to_withdraw)
     with open(BANK_DATA_PATH, 'w') as new_bank:
         for key in pass_dict:
             print(key, pass_dict[key], balance_dict[key], file=new_bank)
@@ -49,7 +51,8 @@ def withdraw(user_id, amount_to_withdraw, pass_dict, balance_dict):
 
 
 def deposit(user_id, amount_to_deposit, pass_dict, balance_dict):
-    balance_dict[user_id] = float(amount_to_deposit) + float(balance_dict[user_id])
+    balance_dict[user_id] = float(amount_to_deposit) + \
+                            float(balance_dict[user_id])
     with open(BANK_DATA_PATH, 'w') as new_bank:
         for key in pass_dict:
             print(key, pass_dict[key], balance_dict[key], file=new_bank)
@@ -92,12 +95,14 @@ def main():
             elif choose == '2':
                 amount = input('How much would you like to deposit?\n')
                 deposit(id_num, amount, pass_dict, bal_dict)
-                print('now your balance is {}'.format(check_balance(id_num, bal_dict)))
+                print('now your balance is {}'.format(check_balance
+                                                      (id_num, bal_dict)))
                 break
             elif choose == '3':
                 amount = input('How much would you like to withdraw?\n')
                 withdraw(id_num, amount, pass_dict, bal_dict)
-                print('now your balance is {}'.format(check_balance(id_num, bal_dict)))
+                print('now your balance is {}'.format
+                      (check_balance(id_num, bal_dict)))
                 break
             elif choose == '4':
                 new_password = '0'
