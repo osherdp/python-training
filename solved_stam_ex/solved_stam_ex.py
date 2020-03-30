@@ -14,7 +14,6 @@ def main():
                     lambda x: 'liel' + ' ' + x + ' ' + 'yaakobov',
                     f_content)))
                 print(new_content)
-
                 for i in new_content:
                     # print(i)
                     f2.writelines("{}\n".format(i))
