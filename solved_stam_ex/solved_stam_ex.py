@@ -11,9 +11,9 @@ def main():
                 f_content = f1.read().split('\n')
                 print(f_content)
 
-                new_content = (list(map(lambda x: 'liel' + ' ' + x + ' ' + 'yaakobov', f_content)))
+                new_content = (list(map(lambda x: 'liel'
+                                + ' ' + x + ' ' + 'yaakobov', f_content)))
                 print(new_content)
-
                 for i in new_content:
                     # print(i)
                     f2.writelines("{}\n".format(i))
