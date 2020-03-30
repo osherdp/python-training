@@ -1,6 +1,19 @@
 """Matrix data type class."""
 
 
+def _operation_method(func):
+    def operation_wrapper(self, other):
+        dimension = len(self.tuples)
+
+        if len(other.tuples) != dimension:
+            raise ValueError(
+                f"Dimension {len(other.tuples)} don't match {dimension}")
+
+        return func(self, other)
+
+    return operation_wrapper
+
+
 class Matrix:
     """An immutable object representing a matrix data-type.
 
@@ -19,21 +32,21 @@ class Matrix:
         """Check if the data given is valid.
 
         note:
-            Valid data is defined if it contains tuples of the same length
-            (Matrix only supports n * n), items can't be iterable.
+            Valid data is defined if it contains tuples of the same length,
+            Supports only squared matrices.
         """
-        # if any(hasattr(item, '__len__') for line in data for item in line):
-        #     raise TypeError("Matrix item type not supported")
-
         if not all([len(line) == len(data) for line in data]):
             raise ValueError("Matrix must be even-sided")
 
     @classmethod
     def unity(cls, dimension: int):
         """Generate a matrix with a main diagonal of 1's, elsewhere 0's."""
-        return cls(
-            tuple(tuple((0,) * i + (1,) + (0,) * (dimension - i - 1))
-                  for i in range(dimension)))
+        unity_matrix = []
+
+        for i in range(dimension):
+            unity_matrix.append((0,) * i + (1,) + (0,) * (dimension - i - 1))
+
+        return cls(tuple(unity_matrix))
 
     @classmethod
     def ones(cls, dimension):
@@ -52,6 +65,7 @@ class Matrix:
         """Return the matrix instance as a tuple of tuples."""
         return self._matrix
 
+    @_operation_method
     def _add_matrix(self, other):
         """Add two matrices.
 
@@ -62,20 +76,15 @@ class Matrix:
             Matrix: the result of the addition.
         """
         dimension = len(self.tuples)
+        empty_data = tuple([] for i in range(dimension))
 
-        if len(other.tuples) != dimension:
-            raise ValueError("Matrices length don't match")
+        for i in range(dimension):
+            for j in range(dimension):
+                empty_data[i].append(self.tuples[i][j] + other.tuples[i][j])
 
-        calculated_data = [[0 for i in range(dimension)]
-                           for j in range(dimension)]
+        return Matrix(tuple(map(tuple, empty_data)))
 
-        for i in range(len(self.tuples)):
-            for j in range(len(self.tuples)):
-                calculated_data[i][j] = self.tuples[i][j] + other.tuples[i][j]
-
-        calculated_data = [tuple(line) for line in calculated_data]
-        return Matrix(tuple(calculated_data))
-
+    @_operation_method
     def _matrix_mul_matrix(self, other):
         """Multiply two matrices.
 
@@ -86,22 +95,14 @@ class Matrix:
             Matrix: the product.
         """
         dimension = len(self.tuples)
-
-        if len(other.tuples) != dimension:
-            raise ValueError(
-                f"Dimension {len(other.tuples)} don't match {dimension}")
-
-        calculated_data = [[0 for i in range(dimension)]
-                           for j in range(dimension)]
+        empty_data = tuple([0] * dimension for i in range(dimension))
 
         for i in range(dimension):
             for k in range(dimension):
                 for j in range(dimension):
-                    calculated_data[i][j] += self.tuples[i][k] * \
-                                             other.tuples[k][j]
+                    empty_data[i][j] += self.tuples[i][k] * other.tuples[k][j]
 
-        calculated_data = [tuple(line) for line in calculated_data]
-        return Matrix(tuple(calculated_data))
+        return Matrix(tuple(map(tuple, empty_data)))
 
     def __add__(self, other):
         """Add two matrices."""
@@ -133,8 +134,7 @@ class Matrix:
         return self.tuples == other.tuples
 
     def __ne__(self, other):
-        """Compare two matrices. Return true if they are not equal else
-        false."""
+        """Compare two matrices. The opposite of equal."""
         return not self == other
 
     def __iter__(self):
