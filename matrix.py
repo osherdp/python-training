@@ -13,7 +13,6 @@ class Matrix:
         # Check if n x n
         for tup in self.data:
             if len(self.data) != len(tup):
-                # exit("matrices must have an equal number of columns and rows.(n X n) ")
                 raise ValueError("not a valid matrix. (not nXn)")
             else:
                 continue
@@ -107,7 +106,8 @@ class Matrix:
                         for num, i2 in zip(l, range(len(self.data))):
                             post_addition.append(num * t[i2])
 
-                for number1, number2 in zip(post_addition[::2], post_addition[1::2]):
+                for number1, number2 in zip(post_addition[::2],
+                                            post_addition[1::2]):
                     new_list.append(number1 + number2)
 
             else:
@@ -186,7 +186,8 @@ class Matrix:
 
     @staticmethod
     def unity(num):
-        """ Display tuple of tuples with 1 & 0 so that the ones create a diagonal if seen as a square.
+        """ Display tuple of tuples with 1 & 0
+        so that the ones create a diagonal if seen as a square.
 
         Args:
             num: the amount of ones the user wants
