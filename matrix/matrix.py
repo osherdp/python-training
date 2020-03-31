@@ -84,7 +84,7 @@ class Matrix:
             Matrix: the result of the addition.
         """
         dimension = len(self.tuples)
-        empty_data = tuple([] * dimension for i in range(dimension))
+        empty_data = tuple([] for i in range(dimension))
 
         for i in range(dimension):
             for j in range(dimension):
