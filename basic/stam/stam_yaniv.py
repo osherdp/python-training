@@ -1,11 +1,11 @@
 # Stam Exercise
 
-## Goals
+# Goals
 
 # 1. Using files in python.
 # 2. String manipulation.
 
-## Introduction
+# Introduction
 
 # In this exercise, you should write a program that receive a file name and will:
 # 1. Add your first name to the beginning of each line.
@@ -13,7 +13,7 @@
 
 # Then you should save the newly created file to a new location.
 
-## Recommendations & Notes
+# Recommendations & Notes
 
 # * Use the `dir()` function on the open file object to see what attributes does it have.
 # * Read about `readlines` method of file-objects.
@@ -30,8 +30,8 @@ def stam_func(file):
     line_by_line_file = input_file3.readline()
     input_file2 = open(r'C:\Users\yaniv\OneDrive\Desktop\python_targil_stam\targil_stam_metukan.txt', 'a')
     while line_by_line_file != '':
-        line_by_line_file = input_file3.readline ()
-        str1 = "yaniv {} starkman".format (line_by_line_file)
+        line_by_line_file = input_file3.readline()
+        str1 = "yaniv {} starkman".format(line_by_line_file)
         str1 = str1.replace("\n", "")
         input_file2.write(str1 + "\n")
     print("Done")
