@@ -16,7 +16,8 @@ def main():
     last_name = 'yaakobov'
 
     try:
-        with open(sys.argv[PATH_FILE_WITH_CONTENT], 'r') as pointer_file_with_content:
+        with open(sys.argv[PATH_FILE_WITH_CONTENT], 'r') \
+                as pointer_file_with_content:
             with open(sys.argv[PATH_EMPTY_FILE], 'w') as pointer_empty_file:
 
                 for line in pointer_file_with_content:
