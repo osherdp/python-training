@@ -128,7 +128,8 @@ def main():
                 new_password = '0'
                 while len(new_password) != 4:
                     new_password = input('please enter 4 digit password\n')
-                user.set_change_password(new_password, id_num, pass_dict, bal_dict)
+                user.set_change_password(new_password, id_num, pass_dict,
+                                         bal_dict)
                 print('password successfully changed')
                 break
             else:
