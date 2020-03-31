@@ -51,7 +51,7 @@ def users_input():
                 customer_id = str(customer_input)
                 customer_access = customer_access_to_class[customer_id]
 
-            except:
+            except TypeError:
                 print ('wrong ID')
                 users_input()
 
