@@ -1,5 +1,6 @@
 __author__ = 'Adi Kadar Levi'
 
+
 class ATM:
     def __init__(self):
         self.id_num = 0
@@ -11,24 +12,22 @@ class ATM:
     def get_passwords_dictionary(self):
         bank_data_path = r'C:\Users\Elior Mor Yosef\Documents\GitHub' \
                          r'\python-training\python-training\bank.txt'
-        pass_dict = {}
+
         with open(bank_data_path, 'r') as bank_data:
             for line in bank_data:
                 words = line.split()
                 self.__pass_dict[words[0]] = words[1]
         return self.__pass_dict
 
-
     def get_balance_dictionary(self):
         bank_data_path = r'C:\Users\Elior Mor Yosef\Documents\GitHub' \
                          r'\python-training\python-training\bank.txt'
-        bal_dict = {}
+
         with open(bank_data_path, 'r') as bank_data:
             for line in bank_data:
                 words = line.split()
                 self.__bal_dict[words[0]] = words[2]
         return self.__bal_dict
-
 
     def check_id(self, id_input):
         if id_input not in self.get_passwords_dictionary().keys():
@@ -36,43 +35,48 @@ class ATM:
             return False
         return True
 
-
-    def check_password(self,user_id, input_password, pass_data):
+    @staticmethod
+    def check_password(user_id, input_password, pass_data):
         while pass_data[user_id] != input_password:
             print('password incorrect\n')
             input_password = input('please enter your password\n')
-
 
     def get_balance(self, id_num, balance_data):
         self.balance = balance_data[id_num]
         return float(self.balance)
         pass
 
-
-    def set_withdraw(self, user_id, amount_to_withdraw, pass_dict, balance_dict):
+    @staticmethod
+    def set_withdraw(user_id, amount_to_withdraw, pass_dict,
+                     balance_dict):
         bank_data_path = r'C:\Users\Elior Mor Yosef\Documents\GitHub' \
                          r'\python-training\python-training\bank.txt'
 
-        balance_dict[user_id] = float(balance_dict[user_id]) -\
-                                float(amount_to_withdraw)
+        balance_dict[user_id] = float(balance_dict
+                                      [user_id]) - float(amount_to_withdraw)
+
         with open(bank_data_path, 'w') as new_bank:
             for key in pass_dict:
                 print(key, pass_dict[key], balance_dict[key], file=new_bank)
         pass
 
-    def set_deposit(self, user_id, amount_to_deposit, pass_dict, balance_dict):
+    @staticmethod
+    def set_deposit(user_id, amount_to_deposit, pass_dict,
+                    balance_dict):
         bank_data_path = r'C:\Users\Elior Mor Yosef\Documents\GitHub' \
                          r'\python-training\python-training\bank.txt'
-        balance_dict[user_id] = float(amount_to_deposit) + \
-                                float(balance_dict[user_id])
+        balance_dict[user_id] = float(amount_to_deposit) + float(balance_dict
+                                                                 [user_id])
+
         with open(bank_data_path, 'w') as new_bank:
             for key in pass_dict:
                 print(key, pass_dict[key], balance_dict[key], file=new_bank)
         pass
 
-    def set_change_password(self, new_password, user_id, pass_dict, balance_dict):
+    @staticmethod
+    def set_change_password(new_password, user_id, pass_dict, balance_dict):
         bank_data_path = r'C:\Users\Elior Mor Yosef\Documents\GitHub' \
-                             r'\python-training\python-training\bank.txt'
+                         r'\python-training\python-training\bank.txt'
 
         pass_dict[user_id] = new_password
         with open(bank_data_path, 'w') as new_bank:
