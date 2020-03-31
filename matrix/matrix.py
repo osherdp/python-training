@@ -49,12 +49,8 @@ class Matrix:
     @classmethod
     def unity(cls, dimension: int):
         """Generate a matrix with a main diagonal of 1's, elsewhere 0's."""
-        unity_matrix = ()
-
-        for i in range(dimension):
-            unity_matrix += ((0,) * i + (1,) + (0,) * (dimension - i - 1),)
-
-        return cls(unity_matrix)
+        return cls(tuple((0,) * i + (1,) + (0,) * (dimension - i - 1) for i
+                         in range(dimension)))
 
     @classmethod
     def ones(cls, dimension):
