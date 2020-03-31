@@ -59,7 +59,8 @@ class ATM:
     def update_data(self):
         with open(BANK_DATA_PATH, 'w') as new_bank:
             for key in self.pass_dict:
-                new_bank.write(f"{key} {self.pass_dict[key]} {self.balance_dict[key]}\n")
+                new_bank.write(f"{key} {self.pass_dict[key]} "
+                               f"{self.balance_dict[key]}\n")
 
 
 def main():
@@ -90,7 +91,8 @@ def main():
             user.deposit(user.id_num, amount, user.balance_dict)
             user.update_data()
             print('now your balance is {}'.format(user.get_balance
-                                                  (id_num, user.balance_dict)))
+                                                  (id_num,
+                                                   user.balance_dict)))
 
         elif user.choice == withdraw_choice:
             amount = input('How much would you like to withdraw?\n')
