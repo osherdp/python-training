@@ -22,11 +22,12 @@ def add_name(file_path, first_name, last_name, other_path):
             with open(other_path, 'w') as new_file:
                 for line in file_pointer:
                     new_file.write("{} {} {}\n".
-                                   format(first_name, line.rstrip(), last_name))
+                                   format(first_name,
+                                          line.rstrip(), last_name))
 
         print("new file saved in:" + other_path)
 
-    except:
+    except(RuntimeError, TypeError, NameError):
         pass
 
 
