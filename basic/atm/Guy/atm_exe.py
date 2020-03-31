@@ -66,7 +66,7 @@ def main():
     user_input_id = raw_input("Welcome to ATM! Please insert your customer-ID \nFor Turning-off ATM please enter -1 \n")
     while user_input_id != '-1':
         # check id - if not valid print error
-        if not user_input_id in bank_dict:
+        if not (user_input_id in bank_dict):
             print "Error - not a valid ID \n"
         else:
             user_input_psw = raw_input("Please insert your password \n")
