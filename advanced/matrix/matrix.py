@@ -18,7 +18,7 @@ class Matrix:
         if isinstance(self.__matrix, tuple):
             for mat_tuple in self.__matrix:
                 if not isinstance(mat_tuple, tuple):
-                    raise TypeError("The given object is not a tuple's matrix.")
+                    raise TypeError("The object is not a tuple's matrix.")
 
         else:
             raise TypeError("The given object is not a tuple's matrix.")
@@ -84,7 +84,7 @@ class Matrix:
             Returns:
                 tuple: Result matrix of the multiplication between 2 matrices.
         """
-        result = [tuple(sum(num_a * num_b for num_a, num_b in zip(a_row, b_col))
+        result = [tuple(sum(n_a * n_b for n_a, n_b in zip(a_row, b_col))
                         for b_col in zip(*sec_mat))
                   for a_row in self.tuples]
         return tuple(result)
