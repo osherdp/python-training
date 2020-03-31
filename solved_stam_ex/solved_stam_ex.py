@@ -21,7 +21,8 @@ def main():
             with open(sys.argv[PATH_EMPTY_FILE], 'w') as pointer_empty_file:
 
                 for line in pointer_file_with_content:
-                    pointer_empty_file.write(f"{firs_name} {line.rstrip()} {last_name}\n")
+                    pointer_empty_file.write(f"{firs_name} {line.rstrip()}"
+                                             f" {last_name}\n")
 
     except FileNotFoundError:
         print("The path you entered is not correct. Please check it")
