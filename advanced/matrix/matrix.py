@@ -1,6 +1,3 @@
-"""An implementation of the class for the data type 'Matrix'."""
-
-
 class Matrix:
     """A class used to represent an immutable n*n matrix.
 
@@ -11,17 +8,17 @@ class Matrix:
         """Check that matrix has equal number of rows and columns."""
         for mat_tuple in self.__matrix:
             if len(mat_tuple) != len(self.__matrix):
-                raise ValueError("The matrix is not n*n.")
+                raise ValueError("The matrix is not n*n")
 
     def _is_tuple(self):
         """Check that matrix is made of a tuple of tuples."""
         if isinstance(self.__matrix, tuple):
             for mat_tuple in self.__matrix:
                 if not isinstance(mat_tuple, tuple):
-                    raise TypeError("The object is not a tuple's matrix.")
+                    raise TypeError("Object is not a tuple's matrix.")
 
         else:
-            raise TypeError("The given object is not a tuple's matrix.")
+            raise TypeError("Object is not a tuple's matrix.")
 
     def is_good_matrix(self):
         """Check that matrix given is valid."""
@@ -48,19 +45,9 @@ class Matrix:
         Returns:
             tuple: New tuple of tuples, matrix, main diagonal is 1, the rest 0.
         """
-        unity_matrix = []
-        for row_num, row in enumerate(range(size)):
-            tuple_nums = []
-
-            for column in range(size):
-                if column == row_num:
-                    tuple_nums.append(1)
-
-                else:
-                    tuple_nums.append(0)
-
-            unity_matrix.append(tuple(tuple_nums))
-        return cls(tuple(unity_matrix))
+        lis = [tuple(1 if col == row else 0 for col in range(size))
+               for row in range(size)]
+        return cls(tuple(lis))
 
     @classmethod
     def ones(cls, size):
@@ -72,8 +59,8 @@ class Matrix:
         Returns:
             tuple: Tuple of tuples filled with ones.
         """
-        ones_mat = [tuple([1 for num in range(size)]) for i in range(size)]
-        return cls(tuple(ones_mat))
+        ones_mat = (((1,) * size,) * size)
+        return cls(ones_mat)
 
     def _multiplication(self, sec_mat):
         """Calculate the multiplication of 2 matrices.
@@ -86,13 +73,13 @@ class Matrix:
         """
         result = [tuple(sum(n_a * n_b for n_a, n_b in zip(a_row, b_col))
                         for b_col in zip(*sec_mat))
-                  for a_row in self.tuples]
+                  for a_row in self]
         return tuple(result)
 
     def _multiply_by_scalar(self, scalar):
         """Return new matrix multiplied by scalar."""
         return Matrix(tuple((tuple((num * scalar for num in each_tuple))
-                             for each_tuple in self.tuples)))
+                             for each_tuple in self)))
 
     def __mul__(self, other):
         """Multiply matrix by scalar or another matrix.
@@ -103,38 +90,32 @@ class Matrix:
         Returns:
             Matrix: The result matrix.
         """
-        if isinstance(other, int):
-            return self._multiply_by_scalar(other)
-
-        elif isinstance(other, Matrix):
+        if isinstance(other, Matrix):
             return self._multiplication(other.tuples)
-
-        else:
-            raise TypeError("Second parameter must be int/matrix.")
+        return self._multiply_by_scalar(other)
 
     def __rmul__(self, other):
-        """Return the regular multiplication when the order is reversed."""
+        """Return the regular multiplication of the objects when in reversed order."""
         return self * other
 
     def __truediv__(self, other):
         """Return new matrix divided by scalar."""
         if other == 0:
             raise ZeroDivisionError("Cannot divide by 0.")
-        return Matrix(tuple((tuple((num / other for num in each_tuple))
-                             for each_tuple in self.tuples)))
+        return self * (1 / other)
 
     def __add__(self, other):
         """Return result of 2 matrices addition."""
-        return Matrix(tuple((tuple((x + y for x, y in zip(tuple1, tuple2))))
-                      for tuple1, tuple2 in zip(self.tuples, other)))
+        add_result = ((tuple((x + y for x, y in zip(tuple1, tuple2))))
+                      for tuple1, tuple2 in zip(self, other))
+        return Matrix(tuple(add_result))
 
     def __sub__(self, other):
         """Return result of 2 matrices subtraction."""
-        return Matrix(tuple((tuple((x - y for x, y in zip(tuple1, tuple2))))
-                      for tuple1, tuple2 in zip(self.tuples, other)))
+        return self + (-1 * other)
 
     def __iter__(self):
-        """Return an iterator on the matrix."""
+        """Return an iterator on the matrix"""
         return iter(self.tuples)
 
     def __eq__(self, other):
