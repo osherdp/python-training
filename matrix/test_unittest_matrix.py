@@ -1,6 +1,6 @@
 """Matrix class unit test.
 
-This module uses unittest and pytest to generate tests for the Matrix class
+This module uses unittest to generate tests for the Matrix class
 from matrix.py. Aspects which are tested: initialization, immutability,
 mathematical operations, boolean operations, iterations and is hashable.
 """
@@ -11,12 +11,13 @@ from matrix import Matrix
 
 
 class TestMatrixCreate(unittest.TestCase):
+    """Test the creation of a matrix and that an instance can't be modified."""
     def test_initialization(self):
         """Test init function of Matrix."""
-        matrix_data = (19, 48), (19, 67)
+        matrix_data = ((19, 48), (19, 67))
         m = Matrix(matrix_data)
 
-        self.assertEqual(str(m), str(matrix_data))
+        self.assertEqual(m.tuples, matrix_data)
 
         with self.assertRaises(ValueError):
             Matrix(((1, 2), (3, 4, 5)))
@@ -30,11 +31,13 @@ class TestMatrixCreate(unittest.TestCase):
 
 
 class TestMatrixFunctions(unittest.TestCase):
+    """Test the mathematical and boolean operations supported by Matrix."""
     def test_representation(self):
         """Test __str__  and __repr__ functions."""
         data = ((1, 1, 1), (2, 2, 2), (3, 3, 3))
         m = Matrix(data)
 
+        self.assertEqual(str(m), str(data))
         self.assertEqual(eval(repr(m)), f'Matrix({m.tuples})')
 
     def test_tuples(self):
@@ -62,6 +65,7 @@ class TestMatrixFunctions(unittest.TestCase):
 
 
 class TestMatrixOperators(unittest.TestCase):
+    """Test the mathematical and boolean operations supported by Matrix."""
     def test_add(self):
         """Test addition operator."""
         m1 = Matrix.ones(3)
@@ -106,7 +110,6 @@ class TestMatrixOperators(unittest.TestCase):
         self.assertEqual(m1 * m2, Matrix(((19, 22), (43, 50))))
         self.assertEqual(m1 * 10, Matrix(((10, 20), (30, 40))))
         self.assertEqual(m1 * 0.5, Matrix(((0.5, 1), (1.5, 2))))
-        # doesnt return the same as m1 * m2
         self.assertEqual(m2 * m1, Matrix(((23, 34), (31, 46))))
 
         # reverse mul
@@ -149,12 +152,14 @@ class TestMatrixOperators(unittest.TestCase):
 
 
 class TestMatrixIteration(unittest.TestCase):
+    """Test iteration support of Matrix."""
     def test_iteration(self):
         """Test __iter__ function."""
         self.assertEqual(tuple(Matrix.ones(2)), ((1, 1), (1, 1)))
 
 
 class TestMatrixHashable(unittest.TestCase):
+    """Test hash support of Matrix."""
     def test_hash(self):
         """Test __hash__ function and uses dictionary keys."""
         d = {Matrix(((1, 1), (2, 2))): 2, Matrix(((1, 1), (2, 3))): 3}

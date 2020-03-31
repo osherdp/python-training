@@ -1,7 +1,15 @@
 """Matrix data type class."""
 
 
-def _operation_method(func):
+def _validate_operator_method(func):
+    """Validate the other matrix given, in an operator method.
+
+    Args:
+        func (function): the operator function to validate.
+
+    Returns:
+        A wrapper function, which does the validation.
+    """
     def operation_wrapper(self, other):
         dimension = len(self.tuples)
 
@@ -41,12 +49,12 @@ class Matrix:
     @classmethod
     def unity(cls, dimension: int):
         """Generate a matrix with a main diagonal of 1's, elsewhere 0's."""
-        unity_matrix = []
+        unity_matrix = ()
 
         for i in range(dimension):
-            unity_matrix.append((0,) * i + (1,) + (0,) * (dimension - i - 1))
+            unity_matrix += ((0,) * i + (1,) + (0,) * (dimension - i - 1),)
 
-        return cls(tuple(unity_matrix))
+        return cls(unity_matrix)
 
     @classmethod
     def ones(cls, dimension):
@@ -65,7 +73,7 @@ class Matrix:
         """Return the matrix instance as a tuple of tuples."""
         return self._matrix
 
-    @_operation_method
+    @_validate_operator_method
     def _add_matrix(self, other):
         """Add two matrices.
 
@@ -76,7 +84,7 @@ class Matrix:
             Matrix: the result of the addition.
         """
         dimension = len(self.tuples)
-        empty_data = tuple([] for i in range(dimension))
+        empty_data = tuple([] * dimension for i in range(dimension))
 
         for i in range(dimension):
             for j in range(dimension):
@@ -84,7 +92,7 @@ class Matrix:
 
         return Matrix(tuple(map(tuple, empty_data)))
 
-    @_operation_method
+    @_validate_operator_method
     def _matrix_mul_matrix(self, other):
         """Multiply two matrices.
 
@@ -134,7 +142,7 @@ class Matrix:
         return self.tuples == other.tuples
 
     def __ne__(self, other):
-        """Compare two matrices. The opposite of equal."""
+        """The opposite of equal."""
         return not self == other
 
     def __iter__(self):
