@@ -75,6 +75,8 @@ Multiplication:
 ```
 >>> a * b
 Matrix(((15, 21), (33, 47)))
+
+
 ```
 
 Addition:
