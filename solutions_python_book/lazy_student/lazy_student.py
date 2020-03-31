@@ -1,27 +1,26 @@
-import sys
+FILE_HOME_WORK_NAME = "home_work.txt"
+FILE_SOLUTION_NAME = "solutions.txt"
 
 
 def main():
-    file_home_work_name = "home_work.txt"
-    file_solution_name = "solutions.txt"
     # file_home_work_name = sys.argv[1]
     # file_solution_name = sys.argv[2]
 
     try:
-        with open(file_home_work_name, "r") as f_read:
+        with open(FILE_HOME_WORK_NAME, "r") as f_read:
             all_exercises = f_read.readlines()
 
-            with open(file_solution_name, "w") as f_write:
-                for line in all_exercises:
-                    if check_line(line):
-                        exercise_lst = line[:-1].split(" ")
-                        try:
-                            result = str(simple_calc(exercise_lst))
-                            f_write.write(result + "\n")
-                        except ZeroDivisionError as e:
-                            f_write.write("The exercise is not valid, you cant divide by zero: %s" % line)
-                    else:
-                        f_write.write("The exercise was not written write!: %s" % line)
+        with open(FILE_SOLUTION_NAME, "w") as f_write:
+            for line in all_exercises:
+                if check_line(line):
+                    exercise_lst = line[:-1].split(" ")
+                    try:
+                        result = str(simple_calc(exercise_lst))
+                        f_write.write(result + "\n")
+                    except ZeroDivisionError as e:
+                        f_write.write("The exercise is not valid, you cant divide by zero: %s" % line)
+                else:
+                    f_write.write("The exercise was not written write!: %s" % line)
     except IOError as e:
         print("The path of the home work file is not correct try again", e)
 
@@ -72,11 +71,11 @@ def simple_calc(exercise_lst):
     num2 = int(exercise_lst[2])
     if op == "+":
         return num1 + num2
-    if op == "-":
+    elif op == "-":
         return num1 - num2
-    if op == "*":
+    elif op == "*":
         return num1 * num2
-    if op == "/":
+    elif op == "/":
         return num1 / num2
 
 
