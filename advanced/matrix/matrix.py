@@ -95,7 +95,7 @@ class Matrix:
         return self._multiply_by_scalar(other)
 
     def __rmul__(self, other):
-        """Return the regular multiplication of the objects when in reversed order."""
+        """Return the regular multiplication when order is reversed"""
         return self * other
 
     def __truediv__(self, other):
