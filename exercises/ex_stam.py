@@ -1,48 +1,43 @@
 # Stam Exercise
 
 import sys
-PATH = 1
+
+PATH_ORG = 1
+PATH_DES = 2
 FIRST_NAME = "Shira"
 LAST_NAME = "Vaknin"
-PATH_TO_OTHER_FILE = r"Z:\python\my_name.txt"
 
 
-def add_name(file_path, firs_name, last_name, other_path):
-    """
-    Get file address add my name to the line and save it in new location.
-
-    Add my first name to the beginning of each line.
-    Add my last name to the end of each line.
+def add_name(file_path, first_name, last_name, other_path):
+    """Add my name to each line in the original file and save in another file.
 
     Args:
-        file_path: a string,
-        firs_name:
-        last_name:
-        other_path:
+        file_path: a string, path to original file
+        first_name: a string, my first name
+        last_name: a string, my last name
+        other_path: a string, path to destination file
     """
     try:
-
         with open(file_path, 'r') as file_pointer:
-
             with open(other_path, 'w') as new_file:
-
                 for line in file_pointer:
-
                     new_file.write("{} {} {}\n".
-                                   format(firs_name, line.rstrip(), last_name))
+                                   format(first_name, line.rstrip(), last_name))
 
         print("new file saved in:" + other_path)
 
-    except Exception as e:
-        print(e)
+    except:
+        pass
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("need to have 1 argument- path to file")
+    if len(sys.argv) < 3:
+        print("need to have 2 argument- path to original file," +
+              "and path to destination file")
     else:
-        file_path = sys.argv[PATH]
-        add_name(file_path, FIRST_NAME, LAST_NAME, PATH_TO_OTHER_FILE)
+        file_path = sys.argv[PATH_ORG]
+        file_des_path = sys.argv[PATH_DES]
+        add_name(file_path, FIRST_NAME, LAST_NAME, file_des_path)
 
 
 if __name__ == '__main__':
