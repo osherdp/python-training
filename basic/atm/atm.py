@@ -12,7 +12,8 @@ class ATM:
                 data = line.strip().split(';')
                 customers[data[self.ID_INDEX]] = [data[self.NAME_INDEX],
                                                   data[self.PASSWORD_INDEX],
-                                                  int(data[self.BALANCE_INDEX])]
+                                                  int(data[
+                                                          self.BALANCE_INDEX])]
         return customers
 
     def check_balance(self, customers, ID):
