@@ -6,8 +6,10 @@
 3. Functional programing.
 
 ## Introduction
-Write a program that will simulate an ATM. When the program will initialize it will read a file containing
-all the customers of the bank. The file will specify for each customer its customer-ID, ATM password,
+Write a program that will simulate an ATM. When the program
+will initialize it will read a file containing
+all the customers of the bank. The file will specify for
+each customer its customer-ID, ATM password,
 and the consumer balance (that can be negative).
 
 The ATM will allow the following options to a using costumer:
@@ -16,12 +18,14 @@ The ATM will allow the following options to a using costumer:
 3. Cash deposit.
 4. Change password.
 
-To turn off the ATM, enter `-1` as the customer ID. When the ATM will be turned off, it will
+To turn off the ATM, enter `-1` as the customer ID. When the ATM
+will be turned off, it will
 save the current state of all the bank customers.
 
 ## Recommendations & Notes
 
-* Use a simple file for the customers data. Each customer will be a single line and their information
+* Use a simple file for the customers data. Each customer will
+be a single line and their information
 will come in a known order separated by a comma or a space.
 * Use dictionaries to find the user data based on the customer-ID.
 """
@@ -53,17 +57,20 @@ def save_file(filename, bank_dict):
     """
     fd_out = open(filename, 'w')
     for item in bank_dict:
-        fd_out.write(item + ',' + str(bank_dict[item][PASSWORD]) + ',' + str(bank_dict[item][BALANCE]) + "\n")
+        fd_out.write(item + ',' + str(bank_dict[item][PASSWORD]) +
+                     ',' + str(bank_dict[item][BALANCE]) + "\n")
     fd_out.close()
 
 
 def main():
     # txt file should be without spaces and only with ',' between details
     # call a function that reads all text file into dictionary
-    filename = r"C:\Users\guyha\PycharmProjects\python-training\basic\atm\Guy\atm.txt"
+    filename = r"C:\Users\guyha\PycharmProjects\python-training\basic" \
+               r"\atm\Guy\atm.txt"
     bank_dict = load_file(filename)
     # break from while true only if someone entered -1
-    user_input_id = raw_input("Welcome to ATM! Please insert your customer-ID \nFor Turning-off ATM please enter -1 \n")
+    user_input_id = raw_input("Welcome to ATM! Please insert your customer-ID"
+                              " \nFor Turning-off ATM please enter -1 \n")
     while user_input_id != '-1':
         # check id - if not valid print error
         if not (user_input_id in bank_dict):
@@ -77,20 +84,30 @@ def main():
                 # after verifying customer id and password
                 # get action from user
                 # do wanted task according to user input
-                user_input_act = raw_input("Please choose one of the following options \n 1.Check the balance. \n 2."
-                                           "Cash withdrawal.\n 3.Cash deposit. \n 4.Change password.\n")
+                user_input_act = raw_input("Please choose one of the following"
+                                           " options\n 1.Check the balance.\n"
+                                           " 2.Cash withdrawal.\n"
+                                           " 3.Cash deposit.\n"
+                                           " 4.Change password.\n")
                 if user_input_act == '1':
-                    print "Your Current Balance account is: {}".format(bank_dict[user_input_id][BALANCE])
+                    print "Your Current Balance account is: {}".\
+                        format(bank_dict[user_input_id][BALANCE])
                     print "Have a nice day! \n"
                 elif user_input_act == '2':
                     user_input_val = raw_input("Insert value to withdraw \n")
-                    bank_dict[user_input_id][BALANCE] = int(bank_dict[user_input_id][BALANCE]) - int(user_input_val)
-                    print "Your Current Balance account is: {} \n".format(bank_dict[user_input_id][BALANCE])
+                    bank_dict[user_input_id][BALANCE] = \
+                        int(bank_dict[user_input_id][BALANCE]) - \
+                        int(user_input_val)
+                    print "Your Current Balance account is: {} \n"\
+                        .format(bank_dict[user_input_id][BALANCE])
                     print "Have a nice day! \n"
                 elif user_input_act == '3':
                     user_input_val = raw_input("Insert value to deposit \n")
-                    bank_dict[user_input_id][BALANCE] = int(bank_dict[user_input_id][BALANCE]) + int(user_input_val)
-                    print "Your Current Balance account is: {} \n".format(bank_dict[user_input_id][BALANCE])
+                    bank_dict[user_input_id][BALANCE] = \
+                        int(bank_dict[user_input_id][BALANCE]) + \
+                        int(user_input_val)
+                    print "Your Current Balance account is: {} \n".\
+                        format(bank_dict[user_input_id][BALANCE])
                     print "Have a nice day! \n"
                 elif user_input_act == '4':
                     user_input_val = raw_input("Insert new password \n")
@@ -99,10 +116,9 @@ def main():
                     print "Have a nice day! \n"
                 else:
                     print "Error - not a valid action \n"
-        ##########################################################################
-        user_input_id = raw_input(
-            "Welcome to ATM! Please insert your customer-ID \nFor Turning-off ATM please enter -1 \n")
-        ##########################################################################
+        user_input_id = raw_input("Welcome to ATM! Please insert your"
+                                  " customer-ID \n" +
+                                  "For Turning-off ATM please enter -1 \n")
     # save changes to file.
     save_file(filename, bank_dict)
     print "Good Bye!"
