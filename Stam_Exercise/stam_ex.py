@@ -1,29 +1,25 @@
+"""A program that receive a file name, and add specific words to content. """
+
 import sys
 
-FILE1 = 1
-FILE2 = 2
+PATH_CONTENT_FILE = 1
+PATH_EMPTY_FILE = 2
+FIRST_NAME = 'liel'
+LAST_NAME = 'yaakobov'
 
 
 def main():
     try:
-        with open(sys.argv[FILE1], 'r') as f1:
-            with open(sys.argv[FILE2], 'w') as f2:
-                f_content = f1.read().split('\n')
-                print(f_content)
+        with open(sys.argv[PATH_CONTENT_FILE], 'r') as content_file:
+            with open(sys.argv[PATH_EMPTY_FILE], 'w') as empty_file:
+                for line in content_file:
+                    empty_file.write(f"{FIRST_NAME} {line.rstrip()}"
+                                     f" {LAST_NAME}\n")
 
-                new_content = (list(map(lambda x: 'liel' + ' ' + x + ' ' + 'yaakobov', f_content)))
-                print(new_content)
-
-                for i in new_content:
-                    # print(i)
-                    f2.writelines("{}\n".format(i))
-
-        with open(sys.argv[FILE2], 'r') as f:
-            print(f.read())
-
-    except Exception as e:
-        print(e)
+    except FileNotFoundError:
+        print("The path you entered is not correct. Please check it")
 
 
 if __name__ == '__main__':
     main()
+
