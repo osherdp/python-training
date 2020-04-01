@@ -5,7 +5,7 @@ from matrix import Matrix
 
 
 class TestMatrix(unittest.TestCase):
-    """Test that matrix is initialized properly, and it's methods work as expected."""
+    """Test matrix's initialization, validity and methods"""
 
     def setUp(self):
         """Initialize matrices a and b before tests."""
@@ -30,12 +30,14 @@ class TestMatrix(unittest.TestCase):
     def test_unity(self):
         """Test unity method - should return 1 on diagonal, 0 otherwise."""
         self.assertEqual(Matrix.unity(2), Matrix(((1, 0), (0, 1))))
-        self.assertEqual(Matrix.unity(3), Matrix(((1, 0, 0), (0, 1, 0), (0, 0, 1))))
+        self.assertEqual(Matrix.unity(3),
+                         Matrix(((1, 0, 0), (0, 1, 0), (0, 0, 1))))
 
     def test_ones(self):
         """Test ones method - should return matrix of 1's at given size."""
         self.assertEqual(Matrix.ones(2), Matrix(((1, 1), (1, 1))))
-        self.assertEqual(Matrix.ones(3), Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1))))
+        self.assertEqual(Matrix.ones(3),
+                         Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1))))
 
     def test_multiplication(self):
         """Test multiplication by scalar and of matrices."""
@@ -63,8 +65,8 @@ class TestMatrix(unittest.TestCase):
 
     def test_addition(self):
         """Test the method for addition of 2 matrices."""
-        # print("test_addition")
-        self.assertEqual(self.mat_a + Matrix.unity(2), Matrix(((2, 2), (3, 5))))
+        self.assertEqual(self.mat_a + Matrix.unity(2),
+                         Matrix(((2, 2), (3, 5))))
 
         with self.assertRaises(TypeError):
             self.mat_a + 1
@@ -74,7 +76,6 @@ class TestMatrix(unittest.TestCase):
 
     def test_subtraction(self):
         """Test the method for subtraction of 2 matrices."""
-        # print("test_subtraction")
         self.assertEqual(self.mat_a - self.mat_b, Matrix(((-2, -3), (-3, -4))))
 
         with self.assertRaises(TypeError):
@@ -85,7 +86,6 @@ class TestMatrix(unittest.TestCase):
 
     def test_iter(self):
         """Test the iterator of the matrix."""
-        # print("test_iter")
         lines = ""
         for line in self.mat_a:
             lines += f"{line}\n"
@@ -93,18 +93,17 @@ class TestMatrix(unittest.TestCase):
 
     def test_eq(self):
         """Test the equality check between matrices."""
-        # print("test_eq")
         self.assertEqual(self.mat_a == self.mat_b, False)
 
     def test_not_equal(self):
         """Test if two matrices are not equal."""
-        # print("test_not_equal")
         self.assertEqual(self.mat_a != self.mat_b, True)
 
     def test_hash(self):
         """Test if hash method."""
         # print("test_hash")
-        dictionary = {Matrix(((1, 1), (2, 2))): 2, Matrix(((1, 1), (2, 3))): 3}
+        dictionary = {Matrix(((1, 1), (2, 2))): 2,
+                      Matrix(((1, 1), (2, 3))): 3}
 
         self.assertEqual(dictionary, {Matrix(((1, 1), (2, 2))): 2,
                                       Matrix(((1, 1), (2, 3))): 3})

@@ -21,7 +21,9 @@ class Matrix:
     def _check_tuple(self):
         """Check that matrix is made of a tuple of tuples."""
         if isinstance(self.__matrix, tuple):
-            if not all(isinstance(mat_tuple, tuple) for mat_tuple in self.__matrix):
+            if not all(isinstance(mat_tuple, tuple)
+                       for mat_tuple in self.__matrix):
+
                 raise TypeError("Object is not a tuple's matrix.")
 
         else:
@@ -45,7 +47,7 @@ class Matrix:
             size (int): the number of rows and columns for new matrix.
 
         Returns:
-            tuple: New tuple of tuples, matrix, main diagonal is 1, the rest 0.
+            tuple: A New matrix where main diagonal is 1, the rest 0.
         """
         unity_matrix = tuple(tuple(1 if col == row else 0 for col in range(size))
                              for row in range(size))
@@ -115,13 +117,13 @@ class Matrix:
         """Check that 'other' is a matrix of the same size as self."""
         if isinstance(other, Matrix):
             if len(other.tuples) != len(self.tuples):
-                raise ValueError("Cannot perform operations on different sized matrices.")
+                raise ValueError("Cannot operate on different sized matrices.")
 
         else:
-            raise TypeError("Cannot perform operations on different sized matrices.")
+            raise TypeError("Cannot operate on different sized matrices.")
 
     def __rmul__(self, other):
-        """Return the regular multiplication of the objects when in reversed order."""
+        """Return the regular multiplication of objects when in reversed order."""
         return self * other
 
     def __truediv__(self, other):
