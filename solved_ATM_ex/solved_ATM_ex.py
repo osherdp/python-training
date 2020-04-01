@@ -95,8 +95,8 @@ def main():
                           f"{check_the_balance(costumer_id_st)}")
                 elif costumer_choice == 2:
                     amount_to_withdrawal = int(input("please enter the "
-                                                     "amount "                                                  
-                                                     "to withdrawal: "))
+                                                     "amount to withdrawal: "
+                                                     ""))
                     print(cash_withdrawal(costumer_id_st,
                                           amount_to_withdrawal))
                 elif costumer_choice == 3:
