@@ -12,10 +12,10 @@ def add_name(file_path, first_name, last_name, other_path):
     """Add my name to each line in the original file and save in another file.
 
     Args:
-    file_path (string): path to original file.
-    first_name (string): my first name.
-    last_name (string): my last name.
-    other_path (string): path to destination file.
+        file_path (string): path to original file.
+        first_name (string): my first name.
+        last_name (string): my last name.
+        other_path (string): path to destination file.
     """
     try:
         with open(file_path, 'r') as file_pointer:
