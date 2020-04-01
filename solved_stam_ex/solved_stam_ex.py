@@ -18,8 +18,6 @@ def main():
 
     except FileNotFoundError:
         print("The path you entered is not correct. Please check it")
-    except Exception as e:
-        print(e)
 
 
 if __name__ == '__main__':
