@@ -49,9 +49,10 @@ class Matrix:
         Returns:
             tuple: A New matrix where main diagonal is 1, the rest 0.
         """
-        unity_matrix = tuple(tuple(1 if col == row else 0 for col in range(size))
-                             for row in range(size))
-        return cls(unity_matrix)
+        u_matrix = tuple(tuple(1 if col == row else 0 for col in range(size))
+                         for row in range(size))
+
+        return cls(u_matrix)
 
     @classmethod
     def ones(cls, size):
@@ -123,7 +124,7 @@ class Matrix:
             raise TypeError("Cannot operate on different sized matrices.")
 
     def __rmul__(self, other):
-        """Return the regular multiplication of objects when in reversed order."""
+        """Return the regular multiplication when in reversed order."""
         return self * other
 
     def __truediv__(self, other):
