@@ -235,8 +235,8 @@ examples.
 
   Typical usage example:
 
-  foo = ClassFoo()
-  bar = foo.FunctionBar()
+  fred = BossMan()
+  rescheduled = fred.call_meeting()
 """
 ```
 <a id="s3.1-docstrings"></a>
@@ -256,7 +256,7 @@ Functions should be documented as follows
 
 ```python
 def function_name(argument, other_argument=None):
-    """One line descriptions with a period at the end.
+    """Gives a one line simple present tense description with a period at the end.
 
     More lines telling you in greater detail what the function does.
     Notice that the comments are all aligned. It is ok for long sentances 
@@ -299,17 +299,18 @@ class SampleClass(object):
     of every word is uppercase and there are no spaces or underscores.
     
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        yaakov_funny (bool): Indicates if Yaakov is funny.
+        bad_jokes (number): Count of Yaakovs bad jokes
     """
 
     def __init__(self, likes_spam=False):
         """Inits SampleClass with blah."""
-        self.likes_spam = likes_spam
-        self.eggs = 0
+        self.yaakov_funny = false
+        self.bad_jokes = 20
 
-    def public_method(self):
-        """Performs operation blah."""
+    def judge_natan(self):
+        """Gives Natan mishpat for breaking dress code."""
+        pass
 ```
 
 <a id="comments-in-block-and-inline"></a>
