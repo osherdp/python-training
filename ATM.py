@@ -44,18 +44,24 @@ class ATM:
                   'Bye Bye!')
 
         elif self.choice == DEPOSIT_CHOICE:
-            amount = float(input('How much would you like to deposit?\n'))
-            self.deposit(amount)
+            amount = input('How much would you like to deposit?\n')
+            while not amount.isnumeric():
+                amount = input('invalid input\n  please enter the'
+                               ' amount you would like to deposit\n')
+            self.deposit(float(amount))
+            print('The money was successfully deposited\n')
             self.update_data()
-            balance = self.balance_dict[self.id_num]
-            print('now your balance is {}'.format(balance))
+            self.get_balance()
 
         elif self.choice == WITHDRAW_CHOICE:
-            amount = float(input('How much would you like to withdraw?\n'))
-            self.withdraw(amount)
+            amount = input('How much would you like to withdraw?\n')
+            while not amount.isnumeric():
+                amount = input('invalid input\n  please enter the'
+                               ' amount you would like to withdraw\n')
+            self.withdraw(float(amount))
+            print('The money was successfully withdrawn\n')
             self.update_data()
-            balance = self.balance_dict[self.id_num]
-            print('now your balance is {}'.format(balance))
+            self.get_balance()
 
         elif self.choice == CHANGE_PASSWORD_CHOICE:
             new_password = '0'
@@ -70,6 +76,10 @@ class ATM:
 
         else:
             print('invalid input')
+
+    def get_balance(self):
+        self.balance = self.balance_dict[self.id_num]
+        print('Now your balance is {} $'.format(self.balance))
 
     def check_password(self, input_password):
         while self.pass_dict[format(self.id_num)] != input_password:
