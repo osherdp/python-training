@@ -11,11 +11,11 @@ def read_file_move_to_dict(file_path):
     """Read file and move atm information to dictionary.
 
     Args:
-    file_path (string): path to atm information file.
+        file_path (string): path to atm information file.
 
     Return:
-    A dictionary, the key is each users id.
-    the value is a list of user's password and balance.
+        A dictionary, the key is each users id.
+        the value is a list of user's password and balance.
     """
     try:
         atm_options_dict = {}
@@ -37,12 +37,13 @@ def check_input_execute(atm_dict, user_input, user_id):
     """Check user option input, and act accordingly, if input is correct.
 
     Args:
-    atm_dict (dictionary): the dictionary, containing all the atm information.
-    user_input (string): the option choice of the user.
-    user_id (string): the id of the user, to find him in the dictionary.
+        atm_dict (dictionary): the dictionary, containing all the atm
+                               information.
+        user_input (string): the option choice of the user.
+        user_id (string): the id of the user, to find him in the dictionary.
 
     Return:
-    The new changed dictionary of atm information.
+        The new changed dictionary of atm information.
     """
     try:
         # ['check', 'withdrawal', 'deposit', 'change']:
@@ -83,8 +84,9 @@ def read_dict_move_to_file(file_path, atm_dict):
     """Move the updated dictionary to the atm information file.
 
     Args:
-    file_path (string): path to atm information file.
-    atm_dict (dictionary): the dictionary, containing all the atm information.
+        file_path (string): path to atm information file.
+        atm_dict (dictionary): the dictionary, containing all the atm
+                               information.
     """
     try:
         with open(file_path, 'w') as file_pointer:
