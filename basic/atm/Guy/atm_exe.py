@@ -90,38 +90,38 @@ def main():
                                        " 3.Cash deposit.\n"
                                        " 4.Change password.\n")
                 if user_input_act == '1':
-                    print ("Your Current Balance account is: {}".
-                           format(bank_dict[user_input_id][BALANCE]))
-                    print ("Have a nice day! \n")
+                    print("Your Current Balance account is: {}".
+                          format(bank_dict[user_input_id][BALANCE]))
+                    print("Have a nice day! \n")
                 elif user_input_act == '2':
                     user_input_val = input("Insert value to withdraw \n")
                     bank_dict[user_input_id][BALANCE] = \
                         int(bank_dict[user_input_id][BALANCE]) - \
                         int(user_input_val)
-                    print ("Your Current Balance account is: {} \n"
-                           .format(bank_dict[user_input_id][BALANCE]))
-                    print ("Have a nice day! \n")
+                    print("Your Current Balance account is: {} \n"
+                          .format(bank_dict[user_input_id][BALANCE]))
+                    print("Have a nice day! \n")
                 elif user_input_act == '3':
                     user_input_val = input("Insert value to deposit \n")
                     bank_dict[user_input_id][BALANCE] = \
                         int(bank_dict[user_input_id][BALANCE]) + \
                         int(user_input_val)
-                    print ("Your Current Balance account is: {} \n".
-                           format(bank_dict[user_input_id][BALANCE]))
-                    print ("Have a nice day! \n")
+                    print("Your Current Balance account is: {} \n".
+                          format(bank_dict[user_input_id][BALANCE]))
+                    print("Have a nice day! \n")
                 elif user_input_act == '4':
                     user_input_val = input("Insert new password \n")
                     bank_dict[user_input_id][PASSWORD] = user_input_val
-                    print ("Your Password has been changed successfully\n")
-                    print ("Have a nice day! \n")
+                    print("Your Password has been changed successfully\n")
+                    print("Have a nice day! \n")
                 else:
-                    print ("Error - not a valid action \n")
+                    print("Error - not a valid action \n")
         user_input_id = input("Welcome to ATM! Please insert your"
                               " customer-ID \n" +
                               "For Turning-off ATM please enter -1 \n")
     # save changes to file.
     save_file(filename, bank_dict)
-    print ("Good Bye!")
+    print("Good Bye!")
 
 
 if __name__ == '__main__':
