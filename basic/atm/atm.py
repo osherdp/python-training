@@ -8,6 +8,7 @@ class ATM:
     def __init__(self, file_path):
         self.file_path = file_path
         self.customers = self.get_customers()
+        self.customer_ID = ''
 
     def get_customers(self):
         with open(self.file_path, 'r') as file:
@@ -20,36 +21,37 @@ class ATM:
                                                           self.BALANCE_INDEX])]
         return customers
 
-    def check_balance(self, ID):
+    def check_balance(self):
         print('Your balance is: {}'.format(
-            self.customers[ID][self.BALANCE_INDEX]))
+            self.customers[self.customer_ID][self.BALANCE_INDEX]))
 
-    def deposit(self, ID):
+    def deposit(self):
         try:
             amount = int(input('Enter amount to deposit: '))
             if amount > 0:
-                self.customers[ID][self.BALANCE_INDEX] += amount
+                self.customers[self.customer_ID][self.BALANCE_INDEX] += amount
             else:
                 print('Please enter a positive number')
         except ValueError:
             print('Please enter an integer')
 
-    def withdraw(self, ID):
+    def withdraw(self):
         try:
             amount = int(input('Enter amount to withdraw: '))
             if amount > 0:
-                self.customers[ID][self.BALANCE_INDEX] -= amount
+                self.customers[self.customer_ID][self.BALANCE_INDEX] -= amount
             else:
                 print('Please enter a positive number')
         except ValueError:
             print('Please enter an integer')
 
-    def change_password(self, ID):
+    def change_password(self):
         tries = 0
         while tries < 3:
             password = input('Enter old password: ')
-            if password == self.customers[ID][self.PASSWORD_INDEX]:
-                self.customers[ID][self.PASSWORD_INDEX] = input(
+            if password == self.customers[
+                            self.customer_ID][self.PASSWORD_INDEX]:
+                self.customers[self.customer_ID][self.PASSWORD_INDEX] = input(
                     'Enter new password: ')
                 break
             else:

@@ -24,15 +24,16 @@ def main():
         cust_ID = input(WELCOME_MESSAGE)
         if cust_ID in atm.customers.keys():
             print(HELLO_MESSAGE.format(atm.customers[cust_ID][NAME_INDEX]))
+            atm.customer_ID = cust_ID
             user_input = input(MENU_MESSAGE)
             if user_input == MENU_CHECK:
-                atm.check_balance(cust_ID)
+                atm.check_balance()
             elif user_input == MENU_DEPOSIT:
-                atm.deposit(cust_ID)
+                atm.deposit()
             elif user_input == MENU_WITHDRAW:
-                atm.withdraw(cust_ID)
+                atm.withdraw()
             elif user_input == MENU_CHANGE_PASS:
-                atm.change_password(cust_ID)
+                atm.change_password()
             else:
                 print('Invalid choice')
         elif cust_ID == '-1':
