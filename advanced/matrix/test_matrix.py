@@ -101,7 +101,6 @@ class TestMatrix(unittest.TestCase):
 
     def test_hash(self):
         """Test if hash method."""
-        # print("test_hash")
         dictionary = {Matrix(((1, 1), (2, 2))): 2,
                       Matrix(((1, 1), (2, 3))): 3}
 
@@ -110,12 +109,10 @@ class TestMatrix(unittest.TestCase):
 
     def test_repr(self):
         """Test matrix instance representation."""
-        # print("test_repr")
         self.assertEqual(self.mat_a.__repr__(), "Matrix(((1, 2), (3, 4)))")
 
     def test_str(self):
         """Test textual representation of matrix instance."""
-        # print("test_str")
         self.assertEqual(str(self.mat_a), "((1, 2), (3, 4))")
 
 
