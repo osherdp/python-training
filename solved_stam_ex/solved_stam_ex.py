@@ -1,4 +1,4 @@
-"""A program that receive a file name, and add specific words to content. """
+"""A program that receive a file name, and add specific words to content."""
 
 import sys
 
