@@ -91,9 +91,9 @@ def main():
                 costumer_choice = int(input("pressing: \n"))
 
                 if costumer_choice == 1:
-                    print(f"your balance is: "
-                          f"{check_the_balance(costumer_id, costumers_dictionary)}")
-
+                    print("your balance: ", end='')
+                    print(check_the_balance
+                          (costumer_id, costumers_dictionary))
                 elif costumer_choice == 2:
                     amount_to_withdrawal = int(input("please enter the "
                                                      "amount to withdrawal: "
