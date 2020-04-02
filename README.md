@@ -17,7 +17,7 @@
 
 ## Advanced Exercises
 
-### [Matrix Exercise](advanced/matrix/README.md)
+### [Matrix Exercise](advanced/matrix/Guy/README.md)
 ### [Calculator Exercise](advanced/calculator/README.md)
 ### [PathWalker Exercise](advanced/path_walker/README.md)
 ### [Chat Exercise](advanced/chat/README.md)
