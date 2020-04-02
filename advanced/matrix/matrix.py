@@ -163,7 +163,7 @@ class Matrix:
 
     def __ne__(self, other):
         """Check if the two matrices are not equal."""
-        return self.tuples != other.tuples
+        return not self == other
 
     def __hash__(self):
         """Get the hash value of matrix."""

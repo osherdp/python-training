@@ -5,72 +5,93 @@ from matrix import Matrix
 
 
 class TestMatrix(unittest.TestCase):
-    """Test matrix's initialization, validity and methods"""
+    """Test that matrix is initialized properly, and it's methods work as expected."""
 
     def setUp(self):
         """Initialize matrices a and b before tests."""
         self.mat_a = Matrix(((1, 2), (3, 4)))
         self.mat_b = Matrix(((3, 5), (6, 8)))
 
-    def test_initialize(self):
-        """Test initialization of matrix."""
-        matrix_tuples = ((2, 5), (8, 3))
-        my_matrix = Matrix(matrix_tuples)
+    def test_tuples_property(self):
+        """Test tuples property of matrix."""
+        self.assertEqual(self.mat_a.tuples, ((1, 2), (3, 4)))
 
-        self.assertEqual(my_matrix.tuples, matrix_tuples)
-
+    def test_type_validation(self):
+        """Test that only a tuple of tuples is allowed in Matrix."""
         with self.assertRaises(TypeError):
-            Matrix("hi")
             Matrix(((1, 2, 3), [4, 5, 6], 5))
 
+    def test_value_validation(self):
+        """Test that only n*n matrices are allowed."""
         with self.assertRaises(ValueError):
             Matrix(((1, 2, 3), (1, 2, 3)))
-            Matrix(((1, 2, 3), (1, 2)))
 
-    def test_unity(self):
-        """Test unity method - should return 1 on diagonal, 0 otherwise."""
+    def test_unity_2_dimensional(self):
+        """Test unity method on 2 by 2 matrix."""
         self.assertEqual(Matrix.unity(2), Matrix(((1, 0), (0, 1))))
-        self.assertEqual(Matrix.unity(3),
-                         Matrix(((1, 0, 0), (0, 1, 0), (0, 0, 1))))
 
-    def test_ones(self):
-        """Test ones method - should return matrix of 1's at given size."""
+    def test_unity_3_dimensional(self):
+        """Test unity method on 3 by 3 matrix."""
+        self.assertEqual(Matrix.unity(3), Matrix(((1, 0, 0), (0, 1, 0), (0, 0, 1))))
+
+    def test_ones_2_dimensional(self):
+        """Test ones method on 2 by 2 matrix."""
         self.assertEqual(Matrix.ones(2), Matrix(((1, 1), (1, 1))))
-        self.assertEqual(Matrix.ones(3),
-                         Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1))))
 
-    def test_multiplication(self):
-        """Test multiplication by scalar and of matrices."""
+    def test_ones_3_dimensional(self):
+        """Test ones method on 3 by 3 matrix."""
+        self.assertEqual(Matrix.ones(3), Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1))))
+
+    def test_multiplication_by_int(self):
+        """Test multiplication by int."""
         self.assertEqual(self.mat_a * 10, Matrix(((10, 20), (30, 40))))
+
+    def test_multiplication_by_float(self):
+        """Test multiplication by float."""
         self.assertEqual(self.mat_a * 0.9, Matrix(((0.9, 1.8), (2.7, 3.6))))
+
+    def test_multiplication_of_matrices(self):
+        """Test multiplication of matrices."""
         self.assertEqual(self.mat_a * self.mat_b, Matrix(((15, 21), (33, 47))))
+
+    def test_multiplication_reversed(self):
+        """Check reversed multiplication."""
         self.assertEqual(10 * self.mat_a, Matrix(((10, 20), (30, 40))))
 
+    def test_multiply_type_validation(self):
+        """Test that only numbers and matrices are allowed in multiplication."""
         with self.assertRaises(TypeError):
             self.mat_a * [1, 2, 3]
 
+    def test_multiply_value_validation(self):
+        """Test that the matrices multiplied are of the same size."""
         with self.assertRaises(ValueError):
             self.mat_a * Matrix(((1, 2, 3), (1, 2, 3), (1, 2, 3)))
 
-    def test_division(self):
-        """Test the method for division of matrix by scalar."""
+    def test_division_by_int(self):
+        """Test the method for division of matrix by int."""
         self.assertEqual(self.mat_a / 2, Matrix(((0.5, 1.0), (1.5, 2.0))))
+
+    def test_division_by_float(self):
+        """Test the method for division of matrix by float."""
         self.assertEqual(self.mat_a / 0.1, Matrix(((10, 20), (30, 40))))
 
-        with self.assertRaises(ZeroDivisionError):
-            self.mat_a / 0
-
+    def test_division_Type_validation(self):
+        """Test that division is only allowed with a number."""
         with self.assertRaises(TypeError):
             self.mat_a / self.mat_b
 
     def test_addition(self):
         """Test the method for addition of 2 matrices."""
-        self.assertEqual(self.mat_a + Matrix.unity(2),
-                         Matrix(((2, 2), (3, 5))))
+        self.assertEqual(self.mat_a + Matrix.unity(2), Matrix(((2, 2), (3, 5))))
 
+    def test_addition_type_validation(self):
+        """Test that addition is only allowed between 2 matrices."""
         with self.assertRaises(TypeError):
             self.mat_a + 1
 
+    def test_addition_value_validation(self):
+        """Test that only same sized matrices can be added."""
         with self.assertRaises(ValueError):
             self.mat_a + Matrix.ones(3)
 
@@ -78,18 +99,22 @@ class TestMatrix(unittest.TestCase):
         """Test the method for subtraction of 2 matrices."""
         self.assertEqual(self.mat_a - self.mat_b, Matrix(((-2, -3), (-3, -4))))
 
+    def test_subtraction_type_validation(self):
+        """Test that subtraction is only allowed between 2 matrices."""
         with self.assertRaises(TypeError):
             self.mat_a - 1
 
+    def test_subtraction_value_validation(self):
+        """Test that you can subtract only same sized matrices."""
         with self.assertRaises(ValueError):
             self.mat_a - Matrix.ones(3)
 
     def test_iter(self):
         """Test the iterator of the matrix."""
-        lines = ""
-        for line in self.mat_a:
-            lines += f"{line}\n"
-        self.assertEqual(lines, "(1, 2)\n(3, 4)\n")
+        mat_a_iter = iter(self.mat_a)
+        self.assertEqual(next(mat_a_iter), (1, 2))
+
+        self.assertEqual(next(mat_a_iter), (3, 4))
 
     def test_eq(self):
         """Test the equality check between matrices."""
@@ -101,11 +126,10 @@ class TestMatrix(unittest.TestCase):
 
     def test_hash(self):
         """Test if hash method."""
-        dictionary = {Matrix(((1, 1), (2, 2))): 2,
-                      Matrix(((1, 1), (2, 3))): 3}
+        dictionary = {self.mat_a: 2, self.mat_b: 3}
 
-        self.assertEqual(dictionary, {Matrix(((1, 1), (2, 2))): 2,
-                                      Matrix(((1, 1), (2, 3))): 3})
+        self.assertEqual(dictionary, {self.mat_a: 2,
+                                      self.mat_b: 3})
 
     def test_repr(self):
         """Test matrix instance representation."""
