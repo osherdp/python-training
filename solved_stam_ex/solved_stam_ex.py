@@ -7,6 +7,7 @@ PATH_EMPTY_FILE = 2
 LAST_NAME = 'yaakobov'
 PATH_CONTENT_FILE = 1
 
+
 def main():
     try:
         with open(sys.argv[PATH_CONTENT_FILE], 'r') as content_file:
