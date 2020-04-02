@@ -111,7 +111,7 @@ def main():
                     print("choose 1/2/3/4 ")
                 costumer_id = int(input("enter your id:\n"))
             else:
-                costumer_id = int(input("the id isn't exists/isn't right, "
+                costumer_id = int(input("the id isn't exists/isn't right,"
                                         "enter a new one:\n"))
 
         with open(sys.argv[ATM_FILE], 'w') as atm_file:
