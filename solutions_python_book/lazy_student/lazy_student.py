@@ -1,15 +1,16 @@
-import sys
-
-INPUT_FILE = "home_work.txt"
-OUTPUT_FILE = "solutions.txt"
+FILE_HOME_WORK_NAME = "home_work.txt"
+FILE_SOLUTION_NAME = "solutions.txt"
 
 
 def main():
+    # file_home_work_name = sys.argv[1]
+    # file_solution_name = sys.argv[2]
+
     try:
-        with open(INPUT_FILE, "r") as f_read:
+        with open(FILE_HOME_WORK_NAME, "r") as f_read:
             all_exercises = f_read.readlines()
 
-        with open(OUTPUT_FILE, "w") as f_write:
+        with open(FILE_SOLUTION_NAME, "w") as f_write:
             for line in all_exercises:
                 if check_line(line):
                     exercise_lst = line[:-1].split(" ")
@@ -30,6 +31,11 @@ def check_line(line):
     :param line: string exercise
     :return: boolean value.
     """
+    # check for "\n"
+
+    if line[-1] != "\n":
+        return False
+    line = line[:-1]
 
     # check if there is an operator, if so what it is and what's its index.
     op_list = ["+", "-", "*", "/"]
@@ -38,12 +44,11 @@ def check_line(line):
         if char in op_list:
             op_index = line.index(char)
             break
-
     if op_index is None or op_index == 0 or op_index == len(line) - 1:
         return False
 
     # checks for the spaces
-    elif line[op_index - 1] != " " or line[op_index + 1] != " ":
+    if line[op_index - 1] != " " or line[op_index + 1] != " ":
         return False
 
     # checks if there is more spaces then needed
