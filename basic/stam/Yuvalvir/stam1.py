@@ -1,34 +1,24 @@
 import sys
-import os
 
 
-def add_my_first_last(w2):
+def add_my_first_last(recive_list):
+    ret_list = []
     first = "Yuval"
     last = "virniki"
-    for i in w2:
-        i[:-2]
-        i += first
-        i[-1::-1]
+    for i in recive_list:
+        i = i[:-1]
+        i = first + i
         i += last
-    return w2
+        ret_list += [i]
+    return ret_list
 
 
 file_name = sys.argv[1]
 output_path = sys.argv[2]
-if file_name == output_path:
-    x = "r"
-else:
-    x = "r+"
-file_name = open(file_name, x)
-w = []
-for line in file_name:
-    w.append(file_name.readlines())
-add_my_first_last(w)
-output_path = open(output_path, 'w+')
-z = 1
-for line in output_path:
-    if len(w) < z:
-        output_path.write(w[z])
-        z += 1
-file_name.close()
-output_path.close()
+lines_lst = []
+with open(file_name, "r") as input_f:
+    lines_lst = input_f.readlines()
+lines_lst = add_my_first_last(lines_lst)
+with open(output_path, "w+") as output_f:
+    for line in lines_lst:
+        output_f.write(line + "\n")
