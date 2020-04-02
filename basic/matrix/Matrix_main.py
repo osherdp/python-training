@@ -1,0 +1,15 @@
+from Matrix_class import Matrix
+mat = Matrix(((1,2), (3,4)))
+mat2 = Matrix(((1,2), (3,4)))
+mat.tuples()
+print(mat)
+print(mat.unity(4))
+print(mat.ones(6))
+print(mat + mat2.tuples())
+print(mat - mat2.tuples())
+print(mat/10)
+print(mat != mat2.tuples())
+print(mat*10)
+print(mat*mat2.tuples())
+for line in mat.tuples():
+    print(line)
