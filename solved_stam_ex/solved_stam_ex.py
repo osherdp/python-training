@@ -2,11 +2,10 @@
 
 import sys
 
-PATH_CONTENT_FILE = 1
-PATH_EMPTY_FILE = 2
 FIRST_NAME = 'liel'
+PATH_EMPTY_FILE = 2
 LAST_NAME = 'yaakobov'
-
+PATH_CONTENT_FILE = 1
 
 def main():
     try:
