@@ -79,7 +79,7 @@ class Matrix:
         result = tuple(tuple(sum(n_a * n_b for n_a, n_b in zip(a_row, b_col))
                        for b_col in zip(*other_matrix))
                        for a_row in self)
-        return Matrix(result)
+        return self.__class__(result)
 
     def _multiply_by_scalar(self, scalar):
         """Return new matrix multiplied by scalar.
@@ -91,8 +91,8 @@ class Matrix:
             Matrix : The new matrix multiplied by scalar.
 
         """
-        return Matrix(tuple(tuple(num * scalar for num in each_tuple)
-                            for each_tuple in self))
+        return self.__class__(tuple(tuple(num * scalar for num in each_tuple)
+                              for each_tuple in self))
 
     def __mul__(self, other):
         """Multiply matrix by scalar or another matrix.
@@ -147,7 +147,7 @@ class Matrix:
         add_result = (tuple(x + y for x, y in zip(tuple1, tuple2))
                       for tuple1, tuple2 in zip(self, other))
 
-        return Matrix(tuple(add_result))
+        return self.__class__(tuple(add_result))
 
     def __sub__(self, other):
         """Return result of 2 matrices subtraction."""
