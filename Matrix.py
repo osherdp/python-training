@@ -60,20 +60,20 @@ class Matrix:
             ones_matrix.append(tuple(member))
         self.__init__(tuple(ones_matrix))
 
-    def tupels(self):
+    def tuples(self):
         return self.__matrix
 
     def scalar_multiplication(self, scalar):
-        result = [tuple(map(lambda x: x * scalar, i)) for i in self.__matrix]
+        result = [tuple([x*scalar for x in i]) for i in self.__matrix]
         return tuple(result)
 
     def addition(self, other_matrix):
         if self.size_comparision(other_matrix):
             result = []
             for i in xrange(self.get_size()):
-                matrix1 = [x for x in self.__matrix[i]]
-                matrix2 = [y for y in other_matrix[i]]
-                container = tuple(map(lambda x, y: x + y, matrix1, matrix2))
+                matrix1 = self.__matrix[i]
+                matrix2 = other_matrix.tuples()[i]
+                container = tuple([matrix1[j] + matrix2[j] for j in xrange(self.get_size())])
                 result.append(container)
             return tuple(result)
         else:
@@ -84,7 +84,7 @@ class Matrix:
             result = []
             for i in xrange(self.get_size()):
                 matrix1 = [x for x in self.__matrix[i]]
-                matrix2 = [y for y in other_matrix[i]]
+                matrix2 = [y for y in other_matrix.tuples()[i]]
                 container = tuple(map(lambda x, y: x - y, matrix1, matrix2))
                 result.append(container)
             return tuple(result)
@@ -95,8 +95,8 @@ class Matrix:
         if self.size_comparision(other_matrix):
             multiplication_result = []
             size = self.get_size()
-            matrix1 = self.tupels()
-            matrix2 = other_matrix.tupels()
+            matrix1 = self.tuples()
+            matrix2 = other_matrix.tuples()
             for i in xrange(size):
                 result = []
                 row = matrix2[i]
@@ -119,10 +119,13 @@ class Matrix:
         return self.__matrix.__len__()
 
     def compare(self, other_matrix):
-        return self.tupels().__eq__(other_matrix.tupels())
+        if type(other_matrix) == Matrix:
+            return self.tuples().__eq__(other_matrix.tuples())
+        else:
+            return False
 
     def repr(self):
-        matrix = self.tupels()
+        matrix = self.tuples()
         for i in matrix:
             line = str(i)
             line = line.replace('(', '| ')
@@ -137,4 +140,4 @@ class Matrix:
         return hash(self.__matrix)
 
     def __str__(self):
-        return "{}".format(self.tuples)
+        return "{}".format(self.tuples())
