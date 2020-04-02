@@ -32,8 +32,8 @@ class TestMatrix(unittest.TestCase):
 
     def test_unity_3_dimensional(self):
         """Test unity method on 3 by 3 matrix."""
-        self.assertEqual(Matrix.unity(3)
-                         , Matrix(((1, 0, 0), (0, 1, 0), (0, 0, 1))))
+        self.assertEqual(Matrix.unity(3),
+                         Matrix(((1, 0, 0), (0, 1, 0), (0, 0, 1))))
 
     def test_ones_2_dimensional(self):
         """Test ones method on 2 by 2 matrix."""
@@ -41,8 +41,8 @@ class TestMatrix(unittest.TestCase):
 
     def test_ones_3_dimensional(self):
         """Test ones method on 3 by 3 matrix."""
-        self.assertEqual(Matrix.ones(3)
-                         , Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1))))
+        self.assertEqual(Matrix.ones(3),
+                         Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1))))
 
     def test_multiplication_by_int(self):
         """Test multiplication by int."""
@@ -58,11 +58,11 @@ class TestMatrix(unittest.TestCase):
 
     def test_multiplication_reversed(self):
         """Check reversed multiplication."""
-        self.assertEqual(10 * self.mat_a
-                         , Matrix(((10, 20), (30, 40))))
+        self.assertEqual(10 * self.mat_a,
+                         Matrix(((10, 20), (30, 40))))
 
     def test_multiply_type_validation(self):
-        """Test that only numbers and matrices are allowed in multiplication."""
+        """Test that you can only multiply numbers and matrices."""
         with self.assertRaises(TypeError):
             self.mat_a * [1, 2, 3]
 
@@ -86,8 +86,8 @@ class TestMatrix(unittest.TestCase):
 
     def test_addition(self):
         """Test the method for addition of 2 matrices."""
-        self.assertEqual(self.mat_a + Matrix.unity(2)
-                         , Matrix(((2, 2), (3, 5))))
+        self.assertEqual(self.mat_a + Matrix.unity(2),
+                         Matrix(((2, 2), (3, 5))))
 
     def test_addition_type_validation(self):
         """Test that addition is only allowed between 2 matrices."""
