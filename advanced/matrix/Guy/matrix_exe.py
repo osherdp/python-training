@@ -178,9 +178,6 @@ class Matrix(object):
                 return False
 
     def __iter__(self):
-        return self.__tuple
-
-    def __iter__(self):
         self.n = 0
         return self
 
