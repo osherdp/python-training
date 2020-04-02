@@ -3,9 +3,6 @@ FILE_SOLUTION_NAME = "solutions.txt"
 
 
 def main():
-    # file_home_work_name = sys.argv[1]
-    # file_solution_name = sys.argv[2]
-
     try:
         with open(FILE_HOME_WORK_NAME, "r") as f_read:
             all_exercises = f_read.readlines()
@@ -31,12 +28,6 @@ def check_line(line):
     :param line: string exercise
     :return: boolean value.
     """
-    # check for "\n"
-
-    if line[-1] != "\n":
-        return False
-    line = line[:-1]
-
     # check if there is an operator, if so what it is and what's its index.
     op_list = ["+", "-", "*", "/"]
     op_index = None
