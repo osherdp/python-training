@@ -2,126 +2,142 @@
 
 import sys
 
-ATM_FILE = 1
-DICTIONARY = {}
+ATM_FILE = 1  # The number 1 refers to the place of the file as a parameter
 
 
-def check_the_balance(costumer_id_st):
+def check_the_balance(costumer_id, costumers_dictionary):
     """Check the state of costumer's money in the bank.
 
     Args:
-    costumer_id_st(string): costumer id.
+    costumer_id (string): costumer id.
+    costumers_dictionary (dictionary): dictionary of all costumers in
+                                       the bank.
     """
-    balance = ''
-    for i in DICTIONARY.keys():
-        if costumer_id_st in i:
-            balance = DICTIONARY[i][1]
+    balance = int(costumers_dictionary[costumer_id][1])
     return balance
 
 
-def cash_withdrawal(costumer_id_st, amount_to_withdrawal):
+def cash_withdrawal(costumer_id, amount_to_withdrawal, costumers_dictionary):
     """Withdrawal from the ATM amount of money.
 
     Args:
-    costumer_id_st(string): costumer id.
-    amount_to_withdrawal(integer): amount the costumer wants to withdrawal.
+    costumer_id (string): costumer id.
+    amount_to_withdrawal (integer): amount the costumer wants to withdrawal.
+    costumers_dictionary (dictionary): dictionary of all costumers in
+                                       the bank.
     """
-    balance_now = int(check_the_balance(costumer_id_st))
+    balance_now = check_the_balance(costumer_id, costumers_dictionary)
     if balance_now >= amount_to_withdrawal:
         new_balance = balance_now - amount_to_withdrawal
-        for i in DICTIONARY:
-            if costumer_id_st in i:
-                DICTIONARY[i][1] = str(new_balance)
-        return f"you have now: {new_balance}"
-    return f"You have now {balance_now}. " \
-           f"it's impossible to withdrawal more money than what you have"
+        costumers_dictionary[costumer_id][1] = str(new_balance)
+        return True
+    return False
 
 
-def cash_deposit(costumer_id_st, amount_to_deposit):
+def cash_deposit(costumer_id, amount_to_deposit, costumers_dictionary):
     """deposit to the bank some of money.
 
     Args:
-    costumer_id_st(string): costumer id.
-    amount_to_deposit(integer): amount the costumer wants to deposit.
+    costumer_id (string): costumer id.
+    amount_to_deposit (integer): amount the costumer wants to deposit.
+    costumers_dictionary (dictionary): dictionary of all costumers in
+                                       the bank.
     """
     if amount_to_deposit > 0:
-        balance_now = int(check_the_balance(costumer_id_st))
+        balance_now = check_the_balance(costumer_id, costumers_dictionary)
         new_balance = balance_now + amount_to_deposit
-        for i in DICTIONARY:
-            if costumer_id_st in i:
-                DICTIONARY[i][1] = str(new_balance)
-        return f"you have now {new_balance}"
-    return "the amount is not good"
+        costumers_dictionary[costumer_id][1] = str(new_balance)
+        return True
+    return False
 
 
-def change_password(costumer_id_st, new_password):
+def change_password(costumer_id, new_password, costumers_dictionary):
     """Changing the costumer's ATM password.
 
     Args:
-    costumer_id_st(string): costumer id.
-    new_password(integer): the new password the costumer wants to change to.
+    costumer_id (string): costumer id.
+    new_password (integer): the new password the costumer wants to change to.
+    costumers_dictionary (dictionary): dictionary of all costumers in
+                                       the bank.
     """
-    new_password_st = str(new_password)
-    if len(new_password_st) == 4:
-        for i in DICTIONARY:
-            if costumer_id_st in i:
-                DICTIONARY[i][0] = str(new_password_st)
-                return "password changed"
-    return "The password needs to be four digits."
+    change_password_type = str(new_password)
+    if len(change_password_type) == 4:
+        costumers_dictionary[costumer_id][0] = change_password_type
+        return True
+    return False
 
 
 def main():
+    costumers_dictionary = {}
     try:
         with open(sys.argv[ATM_FILE], 'r') as atm_file:
             for line in atm_file:
-                list_details = line.split()[1:]
-                DICTIONARY[line.split()[0]] = list_details
+                costumers_dictionary[line.split()[0]] = line.split()[1:]
 
+    except FileNotFoundError:
+        print("Your file path is incorrect. Please check it.")
+
+    try:
         print("welcome to bank!\n")
-        costumer_id = int(input("enter your id:\n"))
-
-        while costumer_id != -1:
-            costumer_id_st = str(costumer_id)
-            if costumer_id_st.isdigit() and len(costumer_id_st) == 9 and \
-                    DICTIONARY.get(costumer_id_st):
+        costumer_id_input = int(input("enter your id:\n"))
+        while costumer_id_input != -1:
+            costumer_id = str(costumer_id_input)
+            if len(costumer_id) == 9 and \
+                    costumers_dictionary.get(costumer_id):
                 print("for checking your balance press 1")
                 print("for cash withdrawal press 2")
                 print("for cash deposit press 3")
                 print("for change password press 4")
-                costumer_choice = int(input("pressing: "))
+                costumer_choice = int(input("pressing: \n"))
 
                 if costumer_choice == 1:
                     print(f"your balance is: "
-                          f"{check_the_balance(costumer_id_st)}")
+                          f"{check_the_balance(costumer_id, costumers_dictionary)}")
+
                 elif costumer_choice == 2:
                     amount_to_withdrawal = int(input("please enter the "
                                                      "amount to withdrawal: "
                                                      ""))
-                    print(cash_withdrawal(costumer_id_st,
-                                          amount_to_withdrawal))
+                    if cash_withdrawal(costumer_id, amount_to_withdrawal,
+                                       costumers_dictionary):
+                        print("The action was succeeded")
+                    else:
+                        print("failed-you can't take more than what you have")
+
                 elif costumer_choice == 3:
                     amount_to_deposit = int(input("please enter "
                                                   "the amount you want"
                                                   " to deposit: "))
-                    print(cash_deposit(costumer_id_st, amount_to_deposit))
+                    if cash_deposit(costumer_id, amount_to_deposit,
+                                    costumers_dictionary):
+                        print("The action was succeeded")
+                    else:
+                        print("failed - check your amount")
+
                 elif costumer_choice == 4:
                     new_password = int(input("enter a new password: "))
-                    print(change_password(costumer_id_st, new_password))
+                    if change_password(costumer_id, new_password,
+                                       costumers_dictionary):
+                        print("password changed")
+                    else:
+                        print("not a good password, needs to be 4 digits:")
                 else:
-                    print("choose 1/2/3/4 ")
-                costumer_id = int(input("enter your id:\n"))
+                    print("choose 1/2/3/4 option")
+
+                costumer_id_input = int(
+                    input("enter your id/ to stop and save"
+                          " changes press (-1):\n"))
             else:
-                costumer_id = int(input("the id isn't exists/isn't right,"
-                                        "enter a new one:\n"))
+                costumer_id_input = int(
+                    input("the id isn't exists/isn't right, "
+                          "enter a new one:\n"))
 
         with open(sys.argv[ATM_FILE], 'w') as atm_file:
-            for i in DICTIONARY:
-                atm_file.write(f"{i} {' '.join(DICTIONARY[i])}\n")
+            for i in costumers_dictionary:
+                atm_file.write(f"{i} {' '.join(costumers_dictionary[i])}\n")
 
-    except FileNotFoundError:
-        print("Your file path is incorrect. Please check it.")
     except ValueError:
-        print("Value Error! you need to enter an int value")
+        print("Value Error! your ID needs to be an int value")
     except Exception as e:
         print(e)
 
