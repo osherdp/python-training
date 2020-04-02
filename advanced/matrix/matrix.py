@@ -1,6 +1,3 @@
-from typing import Dict
-
-
 class Matrix:
     def __init__(self, *args):
         """
@@ -12,6 +9,7 @@ class Matrix:
         else:
             self._matrix = args
 
+        self.tuples = self._matrix
         self._check_input(self._matrix)
 
     @staticmethod
@@ -60,18 +58,18 @@ class Matrix:
         """
         return len(self._matrix)
 
-    def __getitem__(self, item=None):
+    def __getitem__(self, item):
         """
-        :param item: returns a specific item. Irrelevant in this case.
-        :return: The matrix object itself.
+        :param item: Integer number, refers to the index of the wanted tuple.
+        :return: Returns a specific item (tuple) from the Matrix.
         """
-        return self._matrix
-
-    def tuples(self):
-        """
-        Displays the matrix as a tuple.
-        """
-        return self._matrix
+        if type(item) != int:
+            raise TypeError("The index of a tuple in Matrix object has to be an integer number not '%s'."
+                            % item.__class__.__name__)
+        elif 0 <= item < len(self.tuples):
+            return self.tuples[item]
+        else:
+            raise IndexError("Matrix index out of range")
 
     @classmethod
     def unity(cls, len_tup):
@@ -145,7 +143,7 @@ class Matrix:
             return self._scalar_multiplication(other)
 
         if type(other) == Matrix:
-            return self.matrix_multiplication(other)
+            return self._matrix_multiplication(other)
 
         else:
             raise TypeError("Type error raised, can't multiply Matrix object by '%s' object."
@@ -168,11 +166,11 @@ class Matrix:
         """
         mat_result = ()
         for i in range(len(self._matrix)):
-            mat_result += (tuple(map((lambda x: x * scalar), self.tuples()[i])),)
+            mat_result += (tuple(map((lambda x: x * scalar), self.tuples[i])),)
 
         return Matrix(mat_result)
 
-    def matrix_multiplication(self, other):
+    def _matrix_multiplication(self, other):
         """
         Method that implement a Matrix multiplication.
         :param self: The first Matrix object.
@@ -196,7 +194,7 @@ class Matrix:
             # row_ind refers to the index of a tuple in the second Matrix (The opposite one)).
             for mat2_ind in range(mat_len):
                 # Adding the multiplication result of every value in the 2 tuples with the same index.
-                second_tup += (sum(list(map((lambda x, y: x * y), self.tuples()[mat1_ind], other.tuples()[mat2_ind]))),)
+                second_tup += (sum(list(map((lambda x, y: x * y), self.tuples[mat1_ind], other.tuples[mat2_ind]))),)
 
             ans_mat += (second_tup,)
 
@@ -214,7 +212,7 @@ class Matrix:
             second_tup = ()
 
             for tup_in_mat in range(len(self._matrix)):
-                second_tup += (self.tuples()[tup_in_mat][index_in_tup],)
+                second_tup += (self.tuples[tup_in_mat][index_in_tup],)
 
             opp_mat += (second_tup,)
 
@@ -232,7 +230,7 @@ class Matrix:
 
         mat_result = ()
         for i in range(len(self._matrix)):
-            mat_result += (tuple(map((lambda x, y: x + y), self.tuples()[i], other.tuples()[i])),)
+            mat_result += (tuple(map((lambda x, y: x + y), self.tuples[i], other.tuples[i])),)
 
         return Matrix(mat_result)
 
@@ -248,7 +246,7 @@ class Matrix:
 
         mat_result = ()
         for i in range(len(self._matrix)):
-            mat_result += (tuple(map((lambda x, y: x - y), self.tuples()[i], other.tuples()[i])),)
+            mat_result += (tuple(map((lambda x, y: x - y), self.tuples[i], other.tuples[i])),)
 
         return Matrix(mat_result)
 
@@ -274,7 +272,7 @@ class Matrix:
         """
         if type(other) != Matrix:
             return False
-        return self.tuples() == other.tuples()
+        return self.tuples == other.tuples
 
     def __ne__(self, other):
         """
@@ -286,23 +284,23 @@ class Matrix:
         if type(other) != Matrix:
             return True
 
-        return self.tuples() != other.tuples()
+        return self.tuples != other.tuples
 
     def __iter__(self):
-        return iter(self.tuples())
+        return iter(self.tuples)
 
     def __hash__(self):
-        return hash(self.tuples())
+        return hash(self.tuples)
 
 
 def main():
 
     a = Matrix((1, 2), (3, 4))
     b = Matrix((3, 5), (6, 8))
-
+    c = Matrix((1, 2), (3, 4))
     print(repr(a))
     print(a)
-    print(a.tuples())
+    print(a.tuples)
     print(Matrix.unity(2))
     print(Matrix.unity(3))
     print(repr(a * b))
@@ -314,6 +312,7 @@ def main():
     print(a / 10)
     print(a != b)
     print(a == b)
+    print(a == c)
     for line in a:
         print(line)
 
@@ -322,6 +321,8 @@ def main():
     dictionary[Matrix(((1, 1), (2, 2)))] = 2
     dictionary[Matrix(((1, 1), (2, 3)))] = 3
     print(repr(dictionary))
+
+
 
 
 if __name__ == '__main__':
