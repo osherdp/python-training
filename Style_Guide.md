@@ -269,7 +269,7 @@ def function_name(argument, other_argument=None):
             Note that this is different then the function description.
 
     Returns:
-        (type): A description of the thing that gets returned.
+        type: A description of the thing that gets returned.
             No need to mention the name of the returned variable since
             that doesn't matter to someone reading the doc. If you return
             multiple values then the type should be "tuple".
