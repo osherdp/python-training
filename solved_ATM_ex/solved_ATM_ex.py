@@ -27,10 +27,11 @@ def cash_withdrawal(costumer_id, amount_to_withdrawal, costumers_dictionary):
                                        the bank.
     """
     balance_now = check_the_balance(costumer_id, costumers_dictionary)
-    if balance_now >= amount_to_withdrawal:
-        new_balance = balance_now - amount_to_withdrawal
-        costumers_dictionary[costumer_id][1] = str(new_balance)
-        return True
+    if amount_to_withdrawal > 0:
+        if balance_now >= amount_to_withdrawal:
+            new_balance = balance_now - amount_to_withdrawal
+            costumers_dictionary[costumer_id][1] = str(new_balance)
+            return True
     return False
 
 
@@ -61,9 +62,10 @@ def change_password(costumer_id, new_password, costumers_dictionary):
                                        the bank.
     """
     change_password_type = str(new_password)
-    if len(change_password_type) == 4:
-        costumers_dictionary[costumer_id][0] = change_password_type
-        return True
+    if new_password > 0:
+        if len(change_password_type) == 4:
+            costumers_dictionary[costumer_id][0] = change_password_type
+            return True
     return False
 
 
@@ -79,10 +81,9 @@ def main():
 
     try:
         print("welcome to bank!\n")
-        costumer_id_input = int(input("enter your id:\n"))
-        while costumer_id_input != -1:
-            costumer_id = str(costumer_id_input)
-            if len(costumer_id) == 9 and \
+        costumer_id = input("enter your id:\n")
+        while costumer_id != str(-1):
+            if len(costumer_id) == 9 and costumer_id.isdigit() and \
                     costumers_dictionary.get(costumer_id):
                 print("for checking your balance press 1")
                 print("for cash withdrawal press 2")
@@ -94,52 +95,58 @@ def main():
                     print("your balance: ", end='')
                     print(check_the_balance
                           (costumer_id, costumers_dictionary))
+                    costumer_id = input("enter your id/ to stop and save"
+                                        " changes press (-1):\n")
+
                 elif costumer_choice == 2:
                     amount_to_withdrawal = int(input("please enter the "
-                                                     "amount to withdrawal: "
+                                                     "amount to withdrawal:\n"
                                                      ""))
                     if cash_withdrawal(costumer_id, amount_to_withdrawal,
                                        costumers_dictionary):
                         print("The action was succeeded")
+                        costumer_id = input("enter your id/ to stop and save"
+                                            " changes press (-1):\n")
                     else:
-                        print("failed-you can't take more than what you have")
+                        print("failed - check your amount\n")
 
                 elif costumer_choice == 3:
                     amount_to_deposit = int(input("please enter "
                                                   "the amount you want"
-                                                  " to deposit: "))
+                                                  " to deposit: \n "))
                     if cash_deposit(costumer_id, amount_to_deposit,
                                     costumers_dictionary):
                         print("The action was succeeded")
+                        costumer_id = input("enter your id/ to stop and save"
+                                            " changes press (-1):\n")
                     else:
-                        print("failed - check your amount")
+                        print("failed - check your amount\n")
 
                 elif costumer_choice == 4:
-                    new_password = int(input("enter a new password: "))
+                    new_password = int(input("enter a new password: \n"))
                     if change_password(costumer_id, new_password,
                                        costumers_dictionary):
                         print("password changed")
+                        costumer_id = input("enter your id/ to stop and save"
+                                            " changes press (-1):\n")
                     else:
                         print("not a good password, needs to be 4 digits:")
+
                 else:
-                    print("choose 1/2/3/4 option")
-
-                costumer_id_input = int(
-                    input("enter your id/ to stop and save"
-                          " changes press (-1):\n"))
+                    print("choose 1/2/3/4 option: ")
             else:
-                costumer_id_input = int(
-                    input("the id isn't exists/isn't right, "
-                          "enter a new one:\n"))
-
-        with open(sys.argv[ATM_FILE], 'w') as atm_file:
-            for i in costumers_dictionary:
-                atm_file.write(f"{i} {' '.join(costumers_dictionary[i])}\n")
+                costumer_id = input("the id isn't exists/isn't right, "
+                                    "enter a new one:\n")
 
     except ValueError:
-        print("Value Error! your ID needs to be an int value")
+        print("Value Error! your input needs to be digit value")
     except Exception as e:
         print(e)
+    finally:
+        with open(sys.argv[ATM_FILE], 'w') as atm_file:
+            for line in costumers_dictionary:
+                atm_file.write(f"{line} {' '.join(costumers_dictionary[line])}"
+                               f"\n")
 
 
 if __name__ == '__main__':
