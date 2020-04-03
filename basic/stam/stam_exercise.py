@@ -1,8 +1,6 @@
 import sys
 import os
 
-PATH = 1
-
 
 def open_file(directory, mode):
     input_file = open(directory, mode)
@@ -11,7 +9,7 @@ def open_file(directory, mode):
 
 def main():
     try:
-        directory = sys.argv[PATH]
+        directory = sys.argv[1]
         if ".txt" in directory:
             pass
         else:
@@ -19,23 +17,20 @@ def main():
             file_name = input("Enter file name from list above: ")
             directory += "\\" + file_name
 
-    except Exception as error_message:
-        print(error_message)
+    except:
+        print("Error")
         directory = input("Enter the file's directory you want to work with:")
 
-    input_file = open_file(directory, 'r')
-    new_data = ''
-    for line in input_file:
-        new_data += "Roei " + line.replace("\n", "") + " Zolberg" + "\n"
-        print(line)
-        print(new_data)
-    input_file.close()
+    with open(directory) as input_file:
+        new_data = ''
+        for line in input_file:
+            new_data += "Roei " + line.replace("\n", "") + " Zolberg" + "\n"
+            print(line)
+            print(new_data)
 
-    input_file = open_file(directory, 'w')
-    input_file.write(new_data)
-    input_file.close()
+    with open(directory,'w') as input_file:
+        input_file.write(new_data)
 
-    return
 
 if __name__ == '__main__':
     main()
