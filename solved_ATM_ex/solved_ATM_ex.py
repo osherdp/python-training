@@ -57,15 +57,13 @@ def change_password(costumer_id, new_password, costumers_dictionary):
 
     Args:
     costumer_id (string): costumer id.
-    new_password (integer): the new password the costumer wants to change to.
+    new_password (string): the new password the costumer wants to change to.
     costumers_dictionary (dictionary): dictionary of all costumers in
                                        the bank.
     """
-    change_password_type = str(new_password)
-    if new_password > 0:
-        if len(change_password_type) == 4:
-            costumers_dictionary[costumer_id][0] = change_password_type
-            return True
+    if len(new_password) == 4 and new_password.isdigit():
+        costumers_dictionary[costumer_id][0] = new_password
+        return True
     return False
 
 
@@ -123,7 +121,7 @@ def main():
                         print("failed - check your amount\n")
 
                 elif costumer_choice == 4:
-                    new_password = int(input("enter a new password: \n"))
+                    new_password = input("enter a new password: \n")
                     if change_password(costumer_id, new_password,
                                        costumers_dictionary):
                         print("password changed")
