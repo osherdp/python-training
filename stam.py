@@ -1,22 +1,13 @@
+"""
+
+the script accept a file as a parameter and adds
+a first name at the beginning of each line
+and a last name to the end of each line in the file.
+
+"""
+
 import os
 import sys
-
-
-def correct_parameter(path):
-    """
-
-    Arg:
-        path- the path received as parameter to the script
-
-    Returns:
-        True if the path is a file, False otherwise
-
-    """
-    if not os.path.isfile(path):
-        print("your file not foud")
-        return False
-
-    return True
 
 
 def add_name_to_filerows(filename, newfilename):
@@ -57,7 +48,7 @@ def main():
     """
     filename = sys.argv[1]
     newfile = sys.argv[2]
-    if correct_parameter(filename):
+    if os.path.isfile(filename):
         add_name_to_filerows(filename, newfile)
 
     else:
