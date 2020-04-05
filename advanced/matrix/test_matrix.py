@@ -50,11 +50,13 @@ class TestMatrix(unittest.TestCase):
 
     def test_multiplication_by_float(self):
         """Test multiplication by float."""
-        self.assertEqual((self.mat_a * 0.9).matrix_rows, ((0.9, 1.8), (2.7, 3.6)))
+        self.assertEqual((self.mat_a * 0.9).matrix_rows,
+                         ((0.9, 1.8), (2.7, 3.6)))
 
     def test_multiplication_of_matrices(self):
         """Test multiplication of matrices."""
-        self.assertEqual((self.mat_a * self.mat_b).matrix_rows, ((15, 21), (33, 47)))
+        self.assertEqual((self.mat_a * self.mat_b).matrix_rows,
+                         ((15, 21), (33, 47)))
 
     def test_multiply_scalar_reversed(self):
         """Check reversed multiplication by scalar."""
@@ -78,7 +80,8 @@ class TestMatrix(unittest.TestCase):
 
     def test_division_by_int(self):
         """Test the method for division of matrix by int."""
-        self.assertEqual((self.mat_a / 2).matrix_rows, ((0.5, 1.0), (1.5, 2.0)))
+        self.assertEqual((self.mat_a / 2).matrix_rows,
+                         ((0.5, 1.0), (1.5, 2.0)))
 
     def test_division_by_float(self):
         """Test the method for division of matrix by float."""
@@ -106,7 +109,8 @@ class TestMatrix(unittest.TestCase):
 
     def test_subtraction(self):
         """Test the method for subtraction of 2 matrices."""
-        self.assertEqual((self.mat_a - self.mat_b).matrix_rows, ((-2, -3), (-3, -4)))
+        self.assertEqual((self.mat_a - self.mat_b).matrix_rows,
+                         ((-2, -3), (-3, -4)))
 
     def test_subtraction_type_validation(self):
         """Test that subtraction is only allowed between 2 matrices."""
