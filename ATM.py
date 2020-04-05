@@ -8,10 +8,9 @@ password change.
 import os
 import sys
 
-
-PATH=1
-BALANCE=1
-PASSWORD=0
+PATH = 1
+BALANCE = 1
+PASSWORD = 0
 
 
 def file_to_dic(filename):
@@ -94,9 +93,9 @@ def main():
             atm_machine(id, atm_dic)
             id = input('please enter your ID\n')
 
-        with open(sys.argv[PATH],'w') as newfile:
+        with open(sys.argv[PATH], 'w') as newfile:
             for id in atm_dic:
-                newfile.writelines(f"{id} {atm_dic[id][PASSWORD]} {atm_dic[id][PASSWORD]}\n")
+                newfile.writelines(f"{id} {atm_dic[id][PASSWORD]} {atm_dic[id][BALANCE]}\n")
 
     else:
         print('file not found')
