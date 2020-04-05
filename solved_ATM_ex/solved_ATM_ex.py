@@ -60,7 +60,8 @@ def change_password(costumer_indent, new_password, costumers_dictionary):
 
     Args:
         costumer_indent (string): Costumer id.
-        new_password (string): The new password the costumer wants to change to.
+        new_password (string): The new password the costumer wants to
+                               change to.
         costumers_dictionary (dictionary): Contains bank costumer data.
 
     Returns:
