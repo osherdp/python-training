@@ -180,9 +180,9 @@ class Matrix:
             ValueError: other matrix isn't the same size as self matrix.
         """
         self._check_valid_matrix(other)
-        add_result = (tuple(matrix1_col + matrix2_col
-                            for matrix1_col, matrix2_col in zip(matrix1_row, matrix2_row))
-                      for matrix1_row, matrix2_row in zip(self, other))
+        add_result = (tuple(mat1_col + mat2_col
+                            for mat1_col, mat2_col in zip(mat1_row, mat2_row))
+                      for mat1_row, mat2_row in zip(self, other))
 
         return self.__class__(tuple(add_result))
 
