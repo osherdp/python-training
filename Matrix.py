@@ -58,7 +58,8 @@ class Matrix:
                                    for j in range(len(self))])
                             for i in range(len(self))])
         elif type(other) is Matrix:
-            tuples = tuple([tuple([sum([self.tuples[i][m] * other.tuples[m][j] for m in range(len(self))])
+            tuples = tuple([tuple([sum([self.tuples[i][m] * other.tuples[m][j]
+                                        for m in range(len(self))])
                                    for j in range(len(self))])
                             for i in range(len(self))])
         else:
