@@ -14,14 +14,14 @@ class TestMatrix(unittest.TestCase):
 
     def test_tuples_property(self):
         """Test tuples property of matrix."""
-        self.assertEqual(self.mat_a.matrix_rows, ((1, 2), (3, 4)))
+        self.assertEqual(self.mat_a.tuples, ((1, 2), (3, 4)))
 
-    def test_type_validation(self):
+    def test_invalid_type_constructor(self):
         """Test that only a tuple of tuples is allowed in Matrix."""
         with self.assertRaises(TypeError):
             Matrix(((1, 2, 3), [4, 5, 6], 5))
 
-    def test_value_validation(self):
+    def test_invalid_matrix_size_constructor(self):
         """Test that only n*n matrices are allowed."""
         with self.assertRaises(ValueError):
             Matrix(((1, 2, 3), (1, 2, 3)))

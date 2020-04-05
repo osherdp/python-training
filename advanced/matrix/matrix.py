@@ -8,19 +8,19 @@ class Matrix:
             matrix_rows (tuple): a tuple of tuples representing a matrix.
 
         Raises:
-            TypeError: self is not a tuple of tuples.
-            ValueError: self doesn't have an equal number of rows and columns.
+            TypeError: Given input is not a tuple of tuples.
+            ValueError: Given matrix is not of size n * n.
     """
-    def __init__(self, matrix_tuples):
+    def __init__(self, matrix_rows):
         """Initialize instance of matrix and check for validity."""
-        self.matrix_rows = matrix_tuples
+        self.matrix_rows = matrix_rows
         self.is_good_matrix()
 
     def _check_even(self):
         """Check that matrix has equal number of rows and columns.
 
         Raises:
-            ValueError: self doesn't have an equal number of rows and columns.
+            ValueError: Given matrix is not of size n * n.
         """
         for mat_tuple in self.matrix_rows:
             if len(mat_tuple) != len(self.matrix_rows):
@@ -30,7 +30,7 @@ class Matrix:
         """Check that matrix is made of a tuple of tuples.
 
         Raises:
-            TypeError: self is not a tuple of tuples.
+            TypeError: Given input is not a tuple of tuples.
         """
         if isinstance(self.matrix_rows, tuple):
             if not all(isinstance(matrix_row, tuple)
@@ -45,8 +45,8 @@ class Matrix:
         """Check that matrix given is valid.
 
         Raises:
-            TypeError: self is not a tuple of tuples.
-            ValueError: self doesn't have an equal number of rows and columns.
+            TypeError: Given input is not a tuple of tuples.
+            ValueError: Given matrix is not of size n * n.
         """
         self._check_tuple()
         self._check_even()
@@ -94,8 +94,8 @@ class Matrix:
                 tuple: Result matrix of the multiplication between 2 matrices.
 
             Raises:
-                TypeError: other is not a matrix.
-                ValueError: other matrix is not the same size as self.
+                TypeError: Given input is not a matrix.
+                ValueError: Other matrix is not the same size as self.
         """
         self._check_valid_matrix(other_matrix)
         result = tuple(tuple(sum(n_a * n_b for n_a, n_b in zip(a_row, b_col))
@@ -107,7 +107,7 @@ class Matrix:
         """Return new matrix multiplied by scalar.
 
         Args:
-            scalar (int/float): a number to multiply matrix with.
+            scalar (number): a number to multiply matrix with.
 
         Returns:
             Matrix : The new matrix multiplied by scalar.
@@ -119,13 +119,13 @@ class Matrix:
         """Multiply matrix by scalar or another matrix.
 
         Args:
-            other (float/int/Matrix): Scalar or another matrix.
+            other (number/Matrix): Scalar or another matrix.
 
         Returns:
             Matrix: The result matrix.
 
         Raises:
-            TypeError: other is not a scalar(int/float) or a matrix.
+            TypeError: Given input is not a scalar(number) or a matrix.
             ValueError: other matrix is not the same size as self.
         """
         if isinstance(other, Matrix):
@@ -141,8 +141,8 @@ class Matrix:
         """Check that 'other' is a matrix of the same size as self.
 
         Raises:
-            TypeError: other is not of Matrix type.
-            ValueError: other matrix isn't the same size as self matrix.
+            TypeError: Given input is not of Matrix type.
+            ValueError: Other matrix isn't the same size as self matrix.
         """
         if isinstance(other, Matrix):
             if len(other.tuples) != len(self.tuples):
@@ -158,13 +158,13 @@ class Matrix:
     def __truediv__(self, other):
         """Return new matrix divided by scalar.
         Args:
-            other (float/int): Scalar to divide by.
+            other (number): Scalar to divide by.
 
         Returns:
             Matrix: The matrix divided by the scalar.
 
         Raises:
-            TypeError: other is not a scalar(int/float).
+            TypeError: Given input is not a scalar(number).
         """
         if isinstance(other, int) or isinstance(other, float):
             return self * (1 / other)
@@ -176,8 +176,8 @@ class Matrix:
         """Return result of 2 matrices addition.
 
         Raises:
-            TypeError: other is not of Matrix type.
-            ValueError: other matrix isn't the same size as self matrix.
+            TypeError: Given input is not of Matrix type.
+            ValueError: Other matrix isn't the same size as self matrix.
         """
         self._check_valid_matrix(other)
         add_result = (tuple(mat1_col + mat2_col
@@ -190,8 +190,8 @@ class Matrix:
         """Return result of 2 matrices subtraction.
 
         Raises:
-            TypeError: other is not of Matrix type.
-            ValueError: other matrix isn't the same size as self matrix.
+            TypeError: Given input is not of Matrix type.
+            ValueError: Other matrix isn't the same size as self matrix.
         """
         return self + (-1 * other)
 
