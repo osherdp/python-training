@@ -1,25 +1,25 @@
 """
-
 The script simulates ATM that preforms the following:
 balance check, withdraw cash, deposit cash and
 password change.
-
 """
 import os
 import sys
 
-PATH = 1
 BALANCE = 1
 PASSWORD = 0
+ID_INDEX = 0
+PATH_TO_FILE = 1
+INDEX_START_OF_PASSWORD_AND_BALANCE = 1
 
 
 def file_to_dic(filename):
-    """
+    """Insert the ATM  data from the file into the dictionary
 
-    :arg
-        filename(.txt file) - parameter
+    Args:
+        filename (str): file name ending with '.txt'
 
-    :return:
+    Returns:
         a dictionary, key=id and value=[password, balance]
 
     """
@@ -27,24 +27,23 @@ def file_to_dic(filename):
     with open(filename, 'r') as file:
         for line in file:
             details = line.strip().split(' ')
-            atm[details[0]] = details[1:]
+            atm[details[ID_INDEX]] = details[INDEX_START_OF_PASSWORD_AND_BALANCE:]
 
     return atm
 
 
-def atm_machine(id, atm_dic):
-    """
+def operation_of_atm(id, atm_dic):
+    """Performs the desired ATM operation for the inserted id.
 
     Args:
-        id (str)- first parameter
-        atm_dic (dic)- second parameter
+        id (str): the id for which you want the ATM to work
+        atm_dic (dict): dictionary containing all ATM information
 
-    :return:
-        A dictionary with the updated values
+    Returns:
+        dict: dictionary with the updated values
         after performing the desired action
-
     """
-    if atm_dic.get(id):
+    if id in atm_dic:
         action = input("enter number of action:\n"
                        "1- for check the balance\n"
                        "2- for cash withdrawal\n"
@@ -77,7 +76,7 @@ def main():
     """
 
     :arg
-        id(int) - 9 digits ID (example: 322781145)
+        id (int): 9 digits ID (example: 322781145)
 
     :return:
         will do the desired ATM operation accordig to an
@@ -85,20 +84,20 @@ def main():
         all the chages will be saved to the ATM.
 
     """
-    if os.path.isfile(sys.argv[PATH]):
-        atm_dic = file_to_dic(sys.argv[PATH])
+    try:
+        atm_dic = file_to_dic(sys.argv[PATH_TO_FILE])
         id = input('please enter your ID\n')
 
         while id != '-1':
-            atm_machine(id, atm_dic)
+            operation_of_atm(id, atm_dic)
             id = input('please enter your ID\n')
 
         with open(sys.argv[PATH], 'w') as newfile:
             for id in atm_dic:
                 newfile.writelines(f"{id} {atm_dic[id][PASSWORD]} {atm_dic[id][BALANCE]}\n")
 
-    else:
-        print('file not found')
+    except Exception as e:
+        print(e)
 
 
 if __name__ == '__main__':
