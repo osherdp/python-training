@@ -23,7 +23,6 @@ def file_to_dic(filename):
 
     Returns:
         dictionary: key=id and value=[password, balance]
-
     """
     atm = {}
     with open(filename, 'r') as file:
