@@ -1,8 +1,18 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Yaron'
+"""
+Module Matrix
+This module includes the Matrix class and a main method used for testing it
+"""
 
 
 class Matrix:
+    """
+    This class is used to produces matrices and conduct operations on them.
+    The class only supports squared matrices
+    The matrix supports addition, subtraction, multiplication and division
+    by scalar and matrices multiplication.
+    """
     def __init__(self, tuples):
         self.__tuples = tuples
 
@@ -10,41 +20,50 @@ class Matrix:
         return len(self.tuples)
 
     def __repr__(self):
-        return 'Matrix('+str(self.tuples)+')'
+        return 'Matrix({})'.format(self.tuples)
 
     def __str__(self):
         return str(self.tuples)
 
     @classmethod
     def unity(cls, length):
-        def set_ind(x, y):
+        """
+        Creates unit matrix of size length*length
+        """
+        def similar_index(x, y):
+            """
+            returns 1 when indices x and y are same, otherwise returns 0
+            """
             if x == y:
                 return 1
             return 0
-        tuples = tuple([tuple([set_ind(i, j)
+        tuples = tuple([tuple([similar_index(i, j)
                                for i in range(length)])
                         for j in range(length)])
         return Matrix(tuples)
 
     @classmethod
     def ones(cls, length):
-        tuples = tuple([tuple([1] * length)]*length)
+        """
+        Creates matrix of size length*length where all elements equal 1
+        """
+        tuples = tuple([tuple([1] * length)] * length)
         return Matrix(tuples)
 
     def __add__(self, other):
-        tuples = tuple([tuple([self.tuples[i][j]+other.tuples[i][j]
+        tuples = tuple([tuple([self.tuples[i][j] + other.tuples[i][j]
                                for j in range(len(self))])
                         for i in range(len(self))])
         return Matrix(tuples)
 
     def __sub__(self, other):
-        tuples = tuple([tuple([self.tuples[i][j]-other.tuples[i][j]
+        tuples = tuple([tuple([self.tuples[i][j] - other.tuples[i][j]
                                for j in range(len(self))])
                         for i in range(len(self))])
         return Matrix(tuples)
 
     def __truediv__(self, value):
-        tuples = tuple([tuple([self.tuples[i][j]/value
+        tuples = tuple([tuple([self.tuples[i][j] / value
                                for j in range(len(self))])
                         for i in range(len(self))])
         return Matrix(tuples)
@@ -83,6 +102,9 @@ class Matrix:
 
     @property
     def tuples(self):
+        """
+        Holds the representation of the matrix as a tuple of tuples
+        """
         return self.__tuples
 
 
