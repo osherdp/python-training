@@ -1,10 +1,12 @@
-"""
+"""The script simulates ATM.
+
 The script simulates ATM that preforms the following:
 balance check, withdraw cash, deposit cash and
 password change.
 """
 import os
 import sys
+
 
 BALANCE = 1
 PASSWORD = 0
@@ -20,7 +22,7 @@ def file_to_dic(filename):
         filename (str): file name ending with '.txt'
 
     Returns:
-        a dictionary, key=id and value=[password, balance]
+        dictionary: key=id and value=[password, balance]
 
     """
     atm = {}
@@ -40,8 +42,8 @@ def operation_of_atm(id, atm_dic):
         atm_dic (dict): dictionary containing all ATM information
 
     Returns:
-        dict: dictionary with the updated values
-        after performing the desired action
+        dictionary: dictionary with the updated values
+            after performing the desired action
     """
     if id in atm_dic:
         action = input("enter number of action:\n"
@@ -55,7 +57,11 @@ def operation_of_atm(id, atm_dic):
 
         elif action == '2':
             money = input("enter the amount you want to withdraw\n")
-            atm_dic[id][BALANCE] = str(int(atm_dic[id][BALANCE]) - int(money))
+            if int(atm_dic[id][BALANCE]) > int(money):
+                atm_dic[id][BALANCE] = str(int(atm_dic[id][BALANCE]) - int(money))
+            else:
+                print('The account balance is less than the '
+                      'then the amount you wanted to withdraw')
 
         elif action == '3':
             money = input("enter the amount you want to deposit\n")
@@ -69,20 +75,22 @@ def operation_of_atm(id, atm_dic):
             print('action not detected')
 
     else:
-        print('there is an error i the ID you etered')
+        print('There is an error in the ID you entered')
 
 
 def main():
-    """
+    """Do the ATM operation and save the changes
 
-    :arg
+    will do the desired ATM operation according to an
+    ID that has been accepted until receive -1 as an ID.
+    all the changes will be saved to the ATM.
+
+    Arg:
         id (int): 9 digits ID (example: 322781145)
 
-    :return:
-        will do the desired ATM operation accordig to an
-        ID that has been accepted until receive -1 as an ID.
-        all the chages will be saved to the ATM.
-
+    Raises:
+        Exception as e: No such file or directory
+            if the path to the file not exist will be an error.
     """
     try:
         atm_dic = file_to_dic(sys.argv[PATH_TO_FILE])
@@ -94,7 +102,8 @@ def main():
 
         with open(sys.argv[PATH], 'w') as newfile:
             for id in atm_dic:
-                newfile.writelines(f"{id} {atm_dic[id][PASSWORD]} {atm_dic[id][BALANCE]}\n")
+                newfile.writelines(f"{id} {atm_dic[id][PASSWORD]} "
+                                   f"{atm_dic[id][BALANCE]}\n")
 
     except Exception as e:
         print(e)
