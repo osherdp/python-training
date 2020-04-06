@@ -1,6 +1,7 @@
-""" in this program Matrix is a tuple of tuples and the internal tuples must be as long as the external list is.
-data is the Matrix (tuple) received from the user, and this class has add, sub, mul, scalar_mul and division by
- scalar methods and non- mathemathic methods as repr, str, hash and eq."""
+""" in this program Matrix is a tuple of tuples and the internal tuples must be as long as the
+external list is.data is the Matrix (tuple) received from the user, and this class has add, sub,
+ mul, scalar_mul and division by scalar methods and non- mathemathic methods
+ as repr, str, hash and eq."""
 
 
 class Matrix:
@@ -42,7 +43,8 @@ class Matrix:
     # unity method creates a matrix of zeros with a diagonal of ones (unity is the Matrix's size)
     @staticmethod
     def unity(unit):
-        sub_list = [tuple(lt) for lt in [[1 if i == index else 0 for i in range(unit)] for index in range(unit)]]
+        major_list = [[1 if i == index else 0 for i in range(unit)] for index in range(unit)]
+        sub_list = [tuple(lt) for lt in major_list]
         # converts list of lists to type Matrix. lt are the inside lists
         matrix_to_return = Matrix((tuple(sub_list)))
         return matrix_to_return
@@ -69,7 +71,8 @@ class Matrix:
                 answer.append([])
                 for num in range(len(self.data)):
                     answer[tup].append(self.data[tup][num] + other[tup][num])
-            sub_list = [tuple(ls) for ls in answer]  # convert answer to type Matrix. ls are the inside lists
+            sub_list = [tuple(ls) for ls in answer]
+            # convert answer to type Matrix. ls are the inside lists
             return Matrix((tuple(sub_list)))
         else:
             raise SyntaxError("only matrix's can be added together")
@@ -88,7 +91,8 @@ class Matrix:
                 answer.append([])
                 for num in range(len(self.data)):
                     answer[tup].append(self.data[tup][num] - other[tup][num])
-            sub_list = [tuple(ls) for ls in answer]  # convert list of lists to type Matrix. ls are the inside lists
+            sub_list = [tuple(ls) for ls in answer]
+            # converts list of lists to type Matrix. ls are the inside lists
             return Matrix((tuple(sub_list)))
         else:
             raise SyntaxError("only matrix's subscription")
@@ -134,9 +138,11 @@ class Matrix:
                 for num in range(len(self.data)):
                     for i in range(len(self.data)):
                         answer[tup][num] += self.data[tup][i] * new_other[num][i]
-            # here the program adds to the zero the summery of the multiplications of any two numbers which
-            # their places in the matrices are fits by the matrices multiplication rules.
-            sub_list = [tuple(ls) for ls in answer]  # convert answer to type Matrix. ls are the inside lists.
+            """ here the program adds to the zero the summery of the multiplications of 
+            any two numbers which their places in the matrices are fits by the matrices 
+            multiplication rules."""
+            sub_list = [tuple(ls) for ls in answer]
+            # convert answer to type Matrix. ls are the inside lists.
             return Matrix((tuple(sub_list)))
 
     def scalar_mul(self, other):
@@ -152,7 +158,8 @@ class Matrix:
             answer.append([])
             for num in range(len(self.data)):
                 answer[tup].append(self.data[tup][num] * other)
-        sub_list = [tuple(ls) for ls in answer]  # convert ans to type Matrix. ls are the inside lists
+        sub_list = [tuple(ls) for ls in answer]
+        # convert ans to type Matrix. ls are the inside lists
         return Matrix((tuple(sub_list)))
 
     def __eq__(self, other):
