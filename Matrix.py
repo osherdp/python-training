@@ -139,8 +139,8 @@ class Matrix:
                     for i in range(len(self.data)):
                         answer[tup][num] += self.data[tup][i] * new_other[num][i]
             """ here the program adds to the zero the summery of the multiplications of 
-            any two numbers which their places in the matrices are fits by the matrices 
-            multiplication rules."""
+                any two numbers which their places in the matrices are fits by the matrices 
+                multiplication rules."""
             sub_list = [tuple(ls) for ls in answer]
             # convert answer to type Matrix. ls are the inside lists.
             return Matrix((tuple(sub_list)))
