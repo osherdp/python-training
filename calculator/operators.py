@@ -50,4 +50,4 @@ operators = {
 
 def is_operator(symbol: str) -> bool:
     """Return true if operation is supported else false."""
-    return symbol in operators.keys()
+    return symbol in operators
