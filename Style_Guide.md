@@ -284,7 +284,7 @@ def function_name(argument, other_argument=None):
 <a id="comments-in-classes"></a>
 
 <a id="class-docs"></a>
-#### 3.8.4 Classes 
+#### 3.3 Classes 
 
 Classes should have a docstring below the class definition describing the class.
 If your class has public attributes, they should be documented here in an
@@ -314,7 +314,7 @@ class SampleClass(object):
 ```
 
 <a id="comments-in-block-and-inline"></a>
-<a id="s3.8.5-comments-in-block-and-inline"></a>
-<a id="385-block-and-inline-comments"></a>
+<a id="s3.4.1-comments-in-block-and-inline"></a>
+<a id="341-block-and-inline-comments"></a>
 
 <a id="comments"></a>
