@@ -69,6 +69,10 @@ class Test_matrix(unittest.TestCase):
     def test_ones(self):
         self.assertEqual(Matrix.ones(3), Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1))))
 
+    def test_eq(self):
+        self.assertTrue(self.x.__eq__(self.x))
+        self.assertFalse(self.x.__eq__(self.y))
+
 
 if __name__ == '__main__':
     unittest.main()
