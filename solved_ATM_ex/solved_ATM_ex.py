@@ -91,14 +91,16 @@ def main():
     costumer_password = input("Enter your password: \n")
 
     while costumer_id != '-1':
-        if costumer_id in costumers_data and costumers_data[costumer_id] \
-                ['password'] == costumer_password:
+        if costumer_id in costumers_data and costumers_data[
+                        costumer_id]['password'] == costumer_password:
 
             try:
                 costumer_choice = int(input("For checking your balance press"
-                        " 1 \nFor cash withdrawal press 2 \nFor cash deposit"
-                        " press 3 \nFor change password press 4 \nTo finish "
-                        "actions press 5 \n"))
+                                            " 1 \nFor cash withdrawal press 2"
+                                            "\nFor cash deposit"
+                                            " press 3 \nFor change password "
+                                            "press 4 \nTo finish "
+                                            "actions press 5 \n"))
 
                 if costumer_choice == 1:
                     print(
