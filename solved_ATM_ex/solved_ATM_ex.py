@@ -1,9 +1,10 @@
 """Simulating an ATM. """
 
+import os
 import sys
 import json
 
-ATM_FILE = 1  # The number 1 refers to the place of the file as a parameter.
+ATM_FILE_PLACE = 1
 
 
 def cash_withdrawal(costumer_id, costumers_data):
@@ -69,30 +70,30 @@ def create_dictionary(path_of_file):
 
     Args:
         path_of_file (string): Path of the file that contains all bank
-        costumer data.
+            costumer data.
 
     Returns:
-        dictionary: A nested dictionary of bank costumer data, or an exception
-        if the file path is not correct.
+        dictionary: A nested dictionary of bank costumer data, or print a
+            message and exit if the file path is not correct.
     """
-    try:
+
+    if os.path.isfile(path_of_file):
         with open(path_of_file, 'r') as file_j:
             data = json.load(file_j)
             costumers_data = data
             return costumers_data
 
-    except FileNotFoundError:
-        return "Your file path is incorrect. Please check it."
+    print("Your file path is incorrect. Please check it.")
+    quit()
 
 
 def main():
-    costumers_data = create_dictionary(path_of_file=sys.argv[ATM_FILE])
+    costumers_data = create_dictionary(path_of_file=sys.argv[ATM_FILE_PLACE])
     costumer_id = input("Welcome to the bank\n\nEnter your id: \n")
     costumer_password = input("Enter your password: \n")
-
     while costumer_id != '-1':
         if costumer_id in costumers_data and costumers_data[
-                        costumer_id]['password'] == costumer_password:
+                costumer_id]['password'] == costumer_password:
 
             try:
                 costumer_choice = int(input("For checking your balance press"
@@ -148,7 +149,7 @@ def main():
             costumer_password = input("Enter your password: ")
 
     data = json.dumps(costumers_data)
-    with open(sys.argv[ATM_FILE], 'w') as atm_file:
+    with open(sys.argv[ATM_FILE_PLACE], 'w') as atm_file:
         atm_file.write(data)
 
 
