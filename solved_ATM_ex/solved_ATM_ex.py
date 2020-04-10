@@ -102,7 +102,6 @@ def main():
                                             " press 3 \nFor change password "
                                             "press 4 \nTo finish "
                                             "actions press 5 \n"))
-
                 if costumer_choice == 1:
                     print(
                         f"Balance: {costumers_data[costumer_id]['balance']}")
