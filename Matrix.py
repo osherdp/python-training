@@ -32,6 +32,9 @@ class Matrix:
     def __iter__(self):
         return iter(self.data)
 
+    def __get__(self, instance, owner):
+        return self.data
+
     def __getitem__(self, item):
         return self.data[item]
 
@@ -172,7 +175,7 @@ class Matrix:
     __rmul__ = __mul__
 
     def __eq__(self, other):
-        return tuple(self.data) == tuple(other)
+        return self.data == other.data
 
     def __hash__(self):
         return hash(self.data)
