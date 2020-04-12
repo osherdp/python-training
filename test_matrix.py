@@ -1,3 +1,6 @@
+"""Test file for the matrix calculator"""
+
+
 import unittest
 from Matrix import Matrix
 
@@ -11,6 +14,7 @@ class Test_matrix(unittest.TestCase):
         self.negative = Matrix(((-1, -1), (-1, -1)))
         self.three = Matrix(((1, 2, 0), (0, 1, 2), (2, 0, 1)))
         self.half = Matrix(((0.5, 0.5), (0.5, 0.5)))
+        self.s = Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1)))
 
     def test_init_failed(self):
         with self.assertRaises(ValueError):
@@ -29,13 +33,13 @@ class Test_matrix(unittest.TestCase):
 
     def test_mul(self):
         self.assertEqual(self.zeros * self.x, self.zeros)
-        s = Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1)))
-        self.assertEqual(s * self.three, Matrix(((3, 3, 3), (3, 3, 3), (3, 3, 3))))
+        self.assertEqual(self.s * self.three, Matrix(((3, 3, 3), (3, 3, 3), (3, 3, 3))))
         self.assertEqual(self.tens * self.half, self.tens)
         self.assertEqual(self.negative * self.negative, Matrix(((2, 2), (2, 2))))
         self.assertEqual(self.x * 3, Matrix(((3, 6), (9, 12))))
         self.assertEqual(self.x * 0, Matrix(((0, 0), (0, 0))))
         self.assertEqual(self.x * -0.5, Matrix(((-0.5, -1), (-1.5, -2))))
+        self.assertEqual(2 * self.x, Matrix(((2, 4), (6, 8))))
 
     def test_mul_failed(self):
         with self.assertRaises(SyntaxError):

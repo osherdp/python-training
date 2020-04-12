@@ -1,17 +1,32 @@
-"""matrices calculator class."""
+"""Matrices calculator class.
+
+The matrices calculator can be used to add, sub, multiplication (by scalars or matrices) and scalar
+division. also you can compare matrices or using them as a dictionary key. the program only works
+with squared matrices.
+
+    Typical usage example:
+
+    x = Matrix(((1,2,3),(4,5,6),(6,7,8)))
+    y = Matrix.unity(3)
+    new_matrix = x * y
+    """
 
 
 class Matrix:
-    """A matrices calculator for basic math actions
+    """A matrices calculator for basic math actions.
+
         Attributes:
-            data(tuple of tuples): a Matrix- each line is a tuple in the major tuple """
+            data(tuple of tuples): a Matrix- each line is a tuple in the major tuple.
+    """
 
     def __init__(self, data):
         if type(data) is not tuple:
-            raise ValueError("Invalid matrix")
+            raise ValueError("Invalid matrix- not a tuple")
+
         for line in data:
             if len(line) != len(data) or type(line) is not tuple:
-                raise ValueError("Invalid matrix")
+                raise ValueError("Invalid matrix- lines must be tuples and as long as the matrix")
+
         self.data = data
 
     def __iter__(self):
@@ -21,7 +36,6 @@ class Matrix:
         return self.data[item]
 
     def __repr__(self):
-        """prints the matrix in a format that can be used for build another Matrix"""
         return f"{self.__class__.__name__}({self.data})"
 
     def __str__(self):
@@ -32,11 +46,19 @@ class Matrix:
 
     @staticmethod
     def unity(size):
-        """ unity method creates a matrix of zeros with a diagonal of ones
-        args: size(int)- the size of the matrix and lines.
-        returns: a matrix full of 0 and 1's diagonal
-        exceptions: ValueError for non-ints"""
+        """ Unity method creates a matrix of zeros with a diagonal of ones.
+
+        Args:
+            size(int)- the size of the matrix and lines.
+
+        Returns:
+            A matrix full of 0 and 1's diagonal.
+
+        Exceptions:
+            ValueError: for non-integers.
+        """
         if type(size) is int:
+            # major_list will append sub lists with zeros and one if the index= major index.
             major_list = [[1 if i == index else 0 for i in range(size)] for index in range(size)]
             # converts list of lists to type Matrix. lt are the inside lists
             return Matrix((tuple([tuple(lt) for lt in major_list])))
@@ -45,10 +67,17 @@ class Matrix:
 
     @staticmethod
     def ones(size):
-        """ones method returns a Matrix full of ones whose size determined by size variable
-        args: size(int)- the size of the matrix and the lines
-        returns: a matrix full of ones
-        exceptions: ValueError for non-ints"""
+        """Ones method returns a Matrix full of ones whose size determined by size variable.
+
+        Args:
+            size(int)- the size of the matrix and the lines.
+
+        Returns:
+            A matrix full of ones.
+
+        Exceptions:
+            ValueError: for non-ints.
+        """
         if type(size) is int:
             sub_list = [tuple(lt) for lt in [([1] * size) for i in range(size)]]
             matrix_to_return = Matrix((tuple(sub_list)))
@@ -57,14 +86,7 @@ class Matrix:
             raise ValueError("size must be an integer")
 
     def __add__(self, other):
-        """add a matrix to another one
-            args: self.data (tuple)- A matrix
-                other(tuple) -A matrix
-
-            returns: return the new matrix (tuple)
-
-             raises: syntaxerror if "other" isn't a matrix"""
-        if type(other) is Matrix:
+        if isinstance(other, Matrix):
             answer = []
             for line in range(len(self.data)):
                 answer.append([])
@@ -77,14 +99,7 @@ class Matrix:
             raise SyntaxError("only matrix's can be added together")
 
     def __sub__(self, other):
-        """subtracting a matrix from another
-                    args: self.data (tuple)- A matrix
-                        other(tuple) -A matrix
-
-                    returns: return the new matrix (tuple)
-
-                     raises: syntaxerror if "other" isn't a matrix"""
-        if type(other) is Matrix:
+        if isinstance(other, Matrix):
             answer = []
             for line in range(len(self.data)):
                 answer.append([])
@@ -96,25 +111,24 @@ class Matrix:
             raise SyntaxError("only matrix's subscription")
 
     def __truediv__(self, other):
-        """divides a matrix by scalar
-                    args: self.data (tuple)- A matrix
-                        other(int/float) -A scalar
-
-                    returns: return the new matrix (tuple)
-
-                     raises: syntaxerror if "other" isn't a scalar"""
-        if type(other) is float or int:  # the program doesnt support division by other Matrix
+        if type(other) is int or float:  # the program doesnt support division by other Matrix
             return self.scalar_mul(1 / other)
         else:
             raise SyntaxError("only scalar division")
 
     def __mul__(self, other):
-        """mul function decides which multiply method is needed for each call
-        args: self.data(matrix)- the first factor
-         other(int/float/matrix)- the second factor
-         no returns
-         exceptions: SyntaxError if other isn't a matrix or a scalar"""
-        if type(other) is Matrix:
+        """Mul function decides which multiply method is needed for each call.
+
+            Args:
+                self.data(matrix)- the first factor.
+                other(number/matrix)- the second factor.
+
+            no returns.
+
+            Exceptions:
+                SyntaxError if other isn't a matrix or a scalar.
+            """
+        if isinstance(other, Matrix):
             return self.matrices_mul(other)
         elif type(other) is float or type(other) is int:
             return self.scalar_mul(other)
@@ -122,33 +136,32 @@ class Matrix:
             raise SyntaxError("invalid input")
 
     def matrices_mul(self, other):
-        """multiply a matrix by matrix
-                    args: self.data (tuple)- A matrix
-                        other(tuple) -A matrix
-                    returns: return the new matrix (tuple)"""
+        """Multiply a matrix by matrix.
+
+            Args:
+                self.data (tuple)- A matrix.
+                other(tuple) -A matrix.
+
+            Returns:
+                Return the new matrix (tuple).
+            """
         answer = []
-        new_other = []
-        # this loop convert "other" from Matrix type to a list of lists named "new_other".
         for line in range(len(self.data)):
-            new_other.append([])
             answer.append([0] * len(self.data))
             for num in range(len(self.data)):
-                new_other[line].append(other[num][line])
-        # this is the multiplication process->
-        for line in range(len(self.data)):
-            for num in range(len(self.data)):
                 for i in range(len(self.data)):
-                    answer[line][num] += self.data[line][i] * new_other[num][i]
-#                   here the program adds to the zero the summery of the multiplications of
-#                   any two numbers which their places in the matrices are fits by the matrices
-#                   multiplication rules.
+                    answer[line][num] += self.data[line][i] * other[i][num]
         return Matrix((tuple([tuple(ls) for ls in answer])))
 
     def scalar_mul(self, other):
-        """multiply a matrix by a scalar
-                args: self.data (tuple)- A matrix
-                    other(int/float) -A scalar
-                returns: return the new matrix (tuple)"""
+        """Multiply a matrix by a scalar/
+            Args:
+                self.data (tuple)- A matrix.
+                other(number) -A scalar.
+
+            Returns:
+                return the new matrix (tuple).
+            """
         answer = []
         for line in range(len(self.data)):
             answer.append([])
@@ -156,13 +169,10 @@ class Matrix:
                 answer[line].append(self.data[line][num] * other)
         return Matrix((tuple([tuple(ls) for ls in answer])))
 
+    __rmul__ = __mul__
+
     def __eq__(self, other):
-        """checks if two matrices are equal
-                    args: self.data (tuple)- A matrix
-                        other- anything
-                    returns: True/False """
-        return self.data == other
+        return tuple(self.data) == tuple(other)
 
     def __hash__(self):
-        """let matrix instances to be a key in a dictionary."""
         return hash(self.data)
