@@ -29,9 +29,6 @@ def add_name(file_path, first_name, last_name, other_path):
     except FileNotFoundError:
         print("The path to the file you have entered was incorrect.")
 
-    except Exception as e:
-        print(e)
-
 
 def main():
     if len(sys.argv) < 3:
