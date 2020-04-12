@@ -1,26 +1,21 @@
+"""The script adds firs and last name to the file's rows.
 """
-
-the script accept a file as a parameter and adds
-a first name at the beginning of each line
-and a last name to the end of each line in the file.
-
-"""
-
-import os
 import sys
 
 
+PATH_TO_ORIGINAL_FILE = 1
+PATH_TO_NEW_FILE = 2
+
+
 def add_name_to_filerows(filename, newfilename):
-    """
+    """Adds name to file's rows
+
+    Adds a first name at the beginning of each line
+    and a last name to the end of each line in the new file.
 
     Args:
-        filename(.txt file)- the path to the original file, first parameter
-        newfilename(.txt file)- the path to the new file, second parameter
-
-    Returns:
-        the function adds a first name at the beginning of each line
-        and a last name to the end of each line.
-
+        filename (str): file name ending with '.txt'.
+        newfilename (str): file name ending with '.txt'.
     """
     with open(filename, 'r') as file:
         for line in file:
@@ -29,30 +24,11 @@ def add_name_to_filerows(filename, newfilename):
 
 
 def main():
+    """Adds name to the new file's rows.
     """
-
-    Args:
-        filename (.txt file): the path to the original file
-            example:
-                C:\Users\User\Desktop\stam.txt
-        newfile (.txt file): the path to the new file
-            example:
-                C:\Users\User\Desktop\newstam1.txt
-
-    :return:
-        if filename is a file,
-        adds a first name at the beginning of each line and
-        a last name to the end of each line in the file newfile.
-        else, an error message will be printed.
-
-    """
-    filename = sys.argv[1]
-    newfile = sys.argv[2]
-    if os.path.isfile(filename):
-        add_name_to_filerows(filename, newfile)
-
-    else:
-        print("please check your parameters")
+    filename = sys.argv[PATH_TO_ORIGINAL_FILE]
+    newfile = sys.argv[PATH_TO_NEW_FILE]
+    add_name_to_filerows(filename, newfile)
 
 
 if __name__ == '__main__':
