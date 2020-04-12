@@ -64,7 +64,7 @@ class Matrix:
             # major_list will append sub lists with zeros and one if the index= major index.
             major_list = [[1 if i == index else 0 for i in range(size)] for index in range(size)]
             # converts list of lists to type Matrix. lt are the inside lists
-            return Matrix((tuple([tuple(lt) for lt in major_list])))
+            return __class__((tuple([tuple(lt) for lt in major_list])))
         else:
             raise ValueError("size must be an integer")
 
@@ -83,7 +83,7 @@ class Matrix:
         """
         if type(size) is int:
             sub_list = [tuple(lt) for lt in [([1] * size) for i in range(size)]]
-            matrix_to_return = Matrix((tuple(sub_list)))
+            matrix_to_return = __class__((tuple(sub_list)))
             return matrix_to_return
         else:
             raise ValueError("size must be an integer")
@@ -97,7 +97,7 @@ class Matrix:
                     answer[line].append(self.data[line][num] + other[line][num])
             sub_list = [tuple(ls) for ls in answer]
             # convert answer to type Matrix. ls are the inside lists
-            return Matrix((tuple(sub_list)))
+            return __class__((tuple(sub_list)))
         else:
             raise SyntaxError("only matrix's can be added together")
 
@@ -109,7 +109,7 @@ class Matrix:
                 for num in range(len(self.data)):
                     answer[line].append(self.data[line][num] - other[line][num])
             # converts list of lists to type Matrix. ls are the inside lists
-            return Matrix((tuple([tuple(ls) for ls in answer])))
+            return __class__((tuple([tuple(ls) for ls in answer])))
         else:
             raise SyntaxError("only matrix's subscription")
 
@@ -154,7 +154,7 @@ class Matrix:
             for num in range(len(self.data)):
                 for i in range(len(self.data)):
                     answer[line][num] += self.data[line][i] * other[i][num]
-        return Matrix((tuple([tuple(ls) for ls in answer])))
+        return __class__((tuple([tuple(ls) for ls in answer])))
 
     def scalar_mul(self, other):
         """Multiply a matrix by a scalar/
@@ -170,7 +170,7 @@ class Matrix:
             answer.append([])
             for num in range(len(self.data)):
                 answer[line].append(self.data[line][num] * other)
-        return Matrix((tuple([tuple(ls) for ls in answer])))
+        return __class__((tuple([tuple(ls) for ls in answer])))
 
     __rmul__ = __mul__
 
