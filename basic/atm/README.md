@@ -8,7 +8,7 @@
 
 ## Introduction
 
-Write a program that will simulate an ATM. When the program will initialize it will read a file containing all the customers of the bank. The file will specify for each customer its customer-ID, ATM password, and the consumer balance (that can be negative).
+Write a program that will simulate an ATM. When the program will initialize it will read a file containing all the customers of the bank. The file will specify for each customer its customer-ID, ATM password, and the consumer balance (that can't be negative).
 
 The ATM will allow the following options to a using costumer:
 1. Check the balance.
