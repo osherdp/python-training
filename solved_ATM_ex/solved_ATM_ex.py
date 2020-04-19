@@ -115,8 +115,9 @@ def check_costumer_choice(costumer_choice, costumers_data, costumer_id,
             costumer_id, costumers_data) else "Failed - check amount\n")
 
     elif costumer_choice == 3:
-        print("Action succeeded\n" if cash_deposit(costumer_id,
-                               costumers_data) else "Failed - check amount\n")
+        print(
+            "Action succeeded\n" if cash_deposit(costumer_id, costumers_data)
+            else "Failed - check amount\n")
 
     elif costumer_choice == 4:
         new_password = input("New password: ")
@@ -147,7 +148,7 @@ def manage_costumer_actions(costumer_id, costumers_data, costumer_password):
     """
     while costumer_id != '-1':
         if costumer_id in costumers_data and costumers_data[
-                costumer_id]['password'] == costumer_password:
+            costumer_id]['password'] == costumer_password:
             try:
                 costumer_choice = int(input(COSTUMER_CHOICE_OPTIONS))
                 if costumer_choice == 4:
@@ -178,7 +179,8 @@ def main():
     costumers_data = create_dictionary(path_of_file=sys.argv[ATM_FILE_PLACE])
     if costumers_data is not None:
         costumer_id, costumer_password = input("id: "), input("Password: ")
-        manage_costumer_actions(costumer_id, costumers_data, costumer_password)
+        manage_costumer_actions(costumer_id, costumers_data,
+                                costumer_password)
 
         with open(sys.argv[ATM_FILE_PLACE], 'w') as atm_file:
             atm_file.write(json.dumps(costumers_data))
