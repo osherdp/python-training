@@ -121,8 +121,8 @@ def check_costumer_choice(costumer_choice, costumers_data, costumer_id,
 
     elif costumer_choice == 4:
         new_password = input("New password: ")
-        costumer_password = new_password if change_password \
-            (costumer_id, costumers_data, new_password) else costumer_password
+        costumer_password = new_password if change_password(
+            costumer_id, costumers_data, new_password) else costumer_password
         return costumer_password
 
     elif costumer_choice == 5:
@@ -148,7 +148,7 @@ def manage_costumer_actions(costumer_id, costumers_data, costumer_password):
     """
     while costumer_id != '-1':
         if costumer_id in costumers_data and costumers_data[
-            costumer_id]['password'] == costumer_password:
+                costumer_id]['password'] == costumer_password:
             try:
                 costumer_choice = int(input(COSTUMER_CHOICE_OPTIONS))
                 if costumer_choice == 4:
