@@ -131,7 +131,7 @@ def check_costumer_choice(costumer_choice, costumers_data, costumer_id,
         return costumer_id, costumer_password
 
     else:
-        print("Choose 1/2/3/4/5 option: ")
+        print("Please choose 1/2/3/4/5 option: ")
 
 
 def manage_costumer_actions(costumer_id, costumers_data, costumer_password):
