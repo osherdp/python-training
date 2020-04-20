@@ -1,3 +1,19 @@
+"""Calculator module.
+
+This module allows evaluation of strings which represent mathematical
+expressions. The supported operations are declared in operators.py.
+
+Example:
+    To use this module, import the evaluate() function:
+
+        from calculator import evaluate
+
+    The parameter of this function is a mathematical expression (str). For
+    example, "(1 + (3^-2) * (4! - 5$ 2))". Putting parentheses around the
+    entire expression is necessary.
+
+"""
+
 import re
 
 from operators import operators, is_operator
@@ -174,3 +190,34 @@ def evaluate(expression: str) -> str:
                                        updated_sub_expression)
 
     return evaluate(expression)
+
+
+class Calculator:
+    """A class which represents a single calculator.
+
+    Args:
+        expression (str): a mathematical expression to evaluate.
+            This argument can be with separating spaces.
+
+    Attributes:
+        expression (str): the mathematical expression to evaluate.
+            Outer parentheses are added in setter.
+
+    Note:
+        After the creation of an Calculator instance there is no need to
+        create a new one to calculate another expression. Just modify the
+        expression property to the new expression.
+    """
+    def __init__(self, expression=""):
+        self.expression = expression
+
+    @property
+    def expression(self):
+        return self._expression
+
+    @expression.setter
+    def expression(self, expression):
+        self._expression = f"({remove_spaces(expression)})"
+
+    def calculate(self):
+        return float(evaluate(self._expression))
