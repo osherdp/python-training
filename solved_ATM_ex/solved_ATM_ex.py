@@ -122,7 +122,7 @@ def check_costumer_choice(costumer_choice, costumers_data):
 
 
 def manage_costumer_actions(costumers_data):
-    """Manages costumer actions.
+    """Manage costumer actions.
 
      Args:
         costumers_data (dictionary): Bank costumer data.
