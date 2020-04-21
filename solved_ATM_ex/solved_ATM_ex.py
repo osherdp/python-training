@@ -14,7 +14,7 @@ def check_convert_to_float(amount):
     """Check if variable can be converted to float.
 
     Args:
-        amount (string): costumer's input.
+        amount (string): Costumer's input.
 
     Returns:
         float: Change the type of the variable 'amount' and return it,
