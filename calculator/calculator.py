@@ -1,7 +1,7 @@
 """Calculator module.
 
 This module allows evaluation of strings which represent mathematical
-expressions. The supported operations are declared in operators.py.
+expressions. The supported operations are declared in operators dictionary.
 
 Example:
     To use this module, import the evaluate() function:
@@ -9,19 +9,66 @@ Example:
         from calculator import evaluate
 
     The parameter of this function is a mathematical expression (str). For
-    example, "(1 + (3^-2) * (4! - 5$ 2))". Putting parentheses around the
-    entire expression is necessary.
-
+    example, "1 + (3^-2) * (4! - 5$ 2)".
 """
 
 import re
+import math
+import operator
+from sys import maxsize
 
-from operators import operators, is_operator
+any_number_regex = r"-?\d+(\.\d+)?"
+
+
+class Operator:
+    """Representation of a single mathematical operator.
+
+    Attributes:
+        operation (function): the function that does the operation.
+        precedence (int): the priority of the operation.
+        regex (str): regex to find a pattern which suits to the operator.
+
+    Note:
+        Precedence determines which operation goes after another.
+    """
+
+    def __init__(self, operation, precedence, regex):
+        self.operation = operation
+        self.precedence = precedence
+        self.regex = re.compile(regex)
+
+
+def average(num1, num2):
+    """Return the average of two numbers (int/float).
+
+    Note:
+        Same as using mean() from statistics module.
+    """
+    return float(num1 + num2) / 2.0
 
 
 def remove_spaces(expression: str) -> str:
     """Remove the spaces between characters in a string."""
     return ''.join(expression.split())
+
+
+def get_sub_expression_by_symbol(symbol: str, expression: str) -> str:
+    """Find the sub expression the current operator.
+
+    Args:
+        symbol: the current operator symbol.
+        expression: the entire expression to search.
+
+    Returns:
+         The desired sub expression of the operator. If nothing is found
+         returns an empty string.
+    """
+    match = operators[symbol].regex.search(expression)
+
+    if not match:
+        return ""
+
+    return match.group()
 
 
 def check_operands(func):
@@ -41,9 +88,8 @@ def check_operands(func):
             return func(operator_symbol, operands)
 
         elif not left_operand and right_operand:
-            if any([operator_symbol == "+", operator_symbol == "-"]):
-                return float(f"{operator_symbol}{right_operand}")
-
+            # if any([operator_symbol == "+", operator_symbol == "-"]):
+            #     return float(f"{operator_symbol}{right_operand}")
             return func(operator_symbol, [right_operand])
 
         elif not right_operand and left_operand:
@@ -52,172 +98,121 @@ def check_operands(func):
     return operands_wrapper
 
 
-def get_inner_parentheses(expression: str) -> str:
-    """Return the most inner parentheses in an expression."""
-    pattern = re.compile(r"\([^()]*\)")
-    without_outer_parentheses = [inner_expr[1:-1] for inner_expr in
-                                 pattern.findall(expression)]
-
-    if without_outer_parentheses:
-        return without_outer_parentheses[-1]
-
-    return expression
-
-
 @check_operands
-def calculate_sub_expression(operator_symbol, operands):
+def calculate_sub_expression(symbol: str, operands: list) -> float:
     """Evaluate an expression.
 
     Args:
         operands (list): the operands, can be 2 or 1 according to operation.
-        operator_symbol (str): a symbol represents the mathematical operation.
+        symbol (str): a symbol represents the mathematical operation.
 
     Returns:
         A float, the result of the mathematical operation.
+
+    Note:
+        Brackets need a string operand (_evaluate() takes a string) and the
+        others a float (factorial and negate).
     """
     if len(operands) == 2:
-        return operators[operator_symbol].operation(float(operands[0]),
-                                                    float(operands[1]))
+        return operators[symbol].operation(float(operands[0]),
+                                           float(operands[1]))
 
-    return operators[operator_symbol].operation(float(operands[0]))
+    operand = operands[0]
+    operation_to_do = operators[symbol].operation
 
+    if operation_to_do is not _evaluate:
+        operand = float(operands[0])
 
-def get_highest_precedence_operator(expression: str) -> str:
-    """Return the highest priority operator in a given expression."""
-    without_operands = filter_operands_out(expression)
-    return sorted(without_operands, key=lambda ch: operators[ch].precedence,
-                  reverse=True)[0]
-
-
-def filter_operands_out(sub_expression: str) -> list:
-    """Remove operands from sub expression, leaves only operators."""
-    return [ch for ch in sub_expression if is_operator(ch)]
+    return operation_to_do(operand)
 
 
-def parse_sub_expression_by_operator(sub_expression, operator):
+def parse_sub_expression(symbol: str, sub_expr: str) -> list:
     """Analyze a sub expression to its operands, by its operator.
 
     Args:
-        sub_expression (str): the expression to analyze.
-        operator (str): the operator of the sub expression.
+        symbol: the operator of the sub expression.
+        sub_expr: the expression to analyze.
 
     Returns:
-        A tuple of both operands, left and right.
+        A list of both operands, left and right.
     """
-    any_int_or_float = r"-?\d+(\.\d+)?"
+    parsed_expr = sub_expr.split(symbol)
 
-    pattern = re.compile(rf"(?P<left_operand>{any_int_or_float})?\{operator}("
-                         rf"?P<right_operand>{any_int_or_float})?")
+    if symbol == "(":
+        parsed_expr[1] = parsed_expr[1][:-1]  # removes ")"
 
-    matches = pattern.search(sub_expression).groupdict()
-    # replace None with ""
-    matches = {k: ("" if not v else v) for k, v in matches.items()}
-
-    return matches["left_operand"], matches["right_operand"]
+    return parsed_expr
 
 
 def has_operations(expression: str) -> bool:
     """Return True if the expression has operations in it else, false."""
-    return any([True if is_operator(ch) else False for ch in expression])
+    for symbol in get_operators_by_precedence():
+        if operators[symbol].regex.search(expression):
+            return True
+
+    return False
 
 
-def is_number(s: str) -> bool:
-    """Return true if a string can be a number else, false."""
-    try:
-        num = float(s)
+def _evaluate(expression: str) -> float:
+    """Calculate the value of a mathematical expression."""
+    for operator_symbol in get_operators_by_precedence():
+        if not has_operations(expression):
+            return float(expression)
 
-    except ValueError:
-        return False
+        sub_expression = get_sub_expression_by_symbol(operator_symbol,
+                                                      expression)
+        if not sub_expression:
+            continue
 
-    return True
+        operands = parse_sub_expression(operator_symbol, sub_expression)
+        result = calculate_sub_expression(operator_symbol, operands)
 
-
-def parse_sub_expression(sub_expr: str) -> tuple:
-    """Parse an expression according to its highest priority operator.
-
-    Args:
-        sub_expr: the part of the expression to parsed.
-
-    Returns:
-        The left operand, the operator and the right operand.
-
-    Note:
-        The left operand or right operand can be "" if the operator is unary.
-    """
-    operator = get_highest_precedence_operator(sub_expr)
-
-    left_operand, right_operand = parse_sub_expression_by_operator(
-        sub_expr, operator)
-
-    return left_operand, right_operand, operator
+        new_expression = expression.replace(sub_expression, str(result))
+        return _evaluate(new_expression)
 
 
-def replace_in_expression(old_expr, old_sub_expr, new_sub_expr):
-    """Replace sub expression in the entire expression.
-
-    Args:
-        old_expr (str): the entire expression.
-        old_sub_expr (str): the expression to be replaced.
-        new_sub_expr (Str): the new expression to be put in.
-
-    Returns:
-        str: the new entire expression.
-    """
-    if is_number(new_sub_expr):
-        return old_expr.replace(f"({old_sub_expr})", new_sub_expr)
-
-    return old_expr.replace(f"{old_sub_expr}", new_sub_expr)
-
-
-def evaluate(expression: str) -> str:
-    """Calculates the value of a mathematical expression."""
-    if is_number(expression):
-        return expression
-
-    sub_expression = get_inner_parentheses(expression)
-
-    left_operand, right_operand, current_operator = parse_sub_expression(
-        sub_expression)
-
-    current_result = calculate_sub_expression(current_operator,
-                                              [left_operand, right_operand])
-
-    updated_sub_expression = sub_expression.replace(
-        f"{left_operand}{current_operator}{right_operand}",
-        str(current_result))
-
-    expression = replace_in_expression(expression, sub_expression,
-                                       updated_sub_expression)
-
-    return evaluate(expression)
-
-
-class Calculator:
-    """A class which represents a single calculator.
-
-    Args:
-        expression (str): a mathematical expression to evaluate.
-            This argument can be with separating spaces.
-
-    Attributes:
-        expression (str): the mathematical expression to evaluate.
-            Outer parentheses are added in setter.
+def evaluate(expression: str) -> float:
+    """Evaluates a mathematical equation.
 
     Note:
-        After the creation of an Calculator instance there is no need to
-        create a new one to calculate another expression. Just modify the
-        expression property to the new expression.
+        This is a wrapper function used to remove spaces from the given
+        expression.
     """
-    def __init__(self, expression=""):
-        self.expression = expression
+    return _evaluate(remove_spaces(expression))
 
-    @property
-    def expression(self):
-        return self._expression
 
-    @expression.setter
-    def expression(self, expression):
-        self._expression = f"({remove_spaces(expression)})"
+# dictionary containing the information about supported operations.
+operators = {
+    '+': Operator(operator.add, 1,
+                  fr"{any_number_regex}\+{any_number_regex}"),
+    '-': Operator(operator.sub, 1,
+                  fr"{any_number_regex}-{any_number_regex}"),
 
-    def calculate(self):
-        return float(evaluate(self._expression))
+    '*': Operator(operator.mul, 2,
+                  fr"{any_number_regex}\*{any_number_regex}"),
+    '/': Operator(operator.truediv, 2,
+                  fr"{any_number_regex}/{any_number_regex}"),
+
+    '^': Operator(math.pow, 3,
+                  fr"{any_number_regex}\^{any_number_regex}"),
+    '%': Operator(math.fmod, 4,
+                  fr"{any_number_regex}%{any_number_regex}"),
+
+    '@': Operator(average, 5,
+                  fr"{any_number_regex}@{any_number_regex}"),
+    '$': Operator(max, 5,
+                  fr"{any_number_regex}\${any_number_regex}"),
+    '&': Operator(min, 5,
+                  fr"{any_number_regex}&{any_number_regex}"),
+
+    '~': Operator(operator.neg, 6, fr"~{any_number_regex}"),
+    '!': Operator(math.factorial, 7, fr"{any_number_regex}!"),
+
+    '(': Operator(_evaluate, maxsize, r"\([^()]*\)")
+}
+
+
+def get_operators_by_precedence() -> list:
+    """Return all supported operators by their priority."""
+    return sorted(operators, key=lambda ch: operators[ch].precedence,
+                  reverse=True)
