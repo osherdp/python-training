@@ -10,6 +10,23 @@ costumer_id = ""
 costumer_password = ""
 
 
+def check_convert_to_float(amount):
+    """Check if variable can be converted to float.
+
+    Args:
+        amount (string): costumer's input.
+
+    Returns:
+        float: Change the type of the variable 'amount' and return it,
+            else if couldn't- return None.
+    """
+    try:
+        convert_type = float(amount)
+        return convert_type
+    except ValueError:
+        return None
+
+
 def cash_withdraw(costumers_data):
     """Withdraw amount of money from the ATM .
 
@@ -19,12 +36,14 @@ def cash_withdraw(costumers_data):
     Returns:
         boolean: True for success withdraw action, False otherwise.
     """
-    amount_to_withdrawal = float(input("Amount to withdrawal: "))
-    balance_now = float(costumers_data[costumer_id]['balance'])
-    if 0 < amount_to_withdrawal <= balance_now:
-        new_balance = balance_now - amount_to_withdrawal
-        costumers_data[costumer_id]['balance'] = new_balance
-        return True
+    amount_to_withdrawal = input("Amount to withdrawal: ")
+    check_amount = check_convert_to_float(amount_to_withdrawal)
+    if check_amount is not None:
+        balance_now = float(costumers_data[costumer_id]['balance'])
+        if 0 < check_amount <= balance_now:
+            new_balance = balance_now - check_amount
+            costumers_data[costumer_id]['balance'] = new_balance
+            return True
 
     print("Failed - check amount\n")
     return False
@@ -39,12 +58,14 @@ def cash_deposit(costumers_data):
     Returns:
         boolean: True for success deposit action, False otherwise.
     """
-    amount_to_deposit = float(input("Amount to deposit: "))
-    if amount_to_deposit > 0:
-        balance_now = float(costumers_data[costumer_id]['balance'])
-        new_balance = balance_now + amount_to_deposit
-        costumers_data[costumer_id]['balance'] = new_balance
-        return True
+    amount_to_deposit = input("Amount to deposit: ")
+    check_amount = check_convert_to_float(amount_to_deposit)
+    if check_amount is not None:
+        if check_amount > 0:
+            balance_now = float(costumers_data[costumer_id]['balance'])
+            new_balance = balance_now + check_amount
+            costumers_data[costumer_id]['balance'] = new_balance
+            return True
 
     print("Failed - check amount\n")
     return False
@@ -103,7 +124,7 @@ def check_costumer_choice(costumer_choice, costumers_data):
     """Check costumer's choice and act accordingly.
 
     Args:
-        costumer_choice (integer): Costumer choice from 1/2/3/4/5 options,
+        costumer_choice (string): Costumer choice from 1/2/3/4/5 options,
             references to the action he wants to do in ATM.
         costumers_data (dictionary): Bank costumer data.
 
@@ -111,11 +132,11 @@ def check_costumer_choice(costumer_choice, costumers_data):
         string: An error message if costumer's choice is not in range.
     """
     switcher = {
-        1: lambda: print(costumers_data[costumer_id]['balance']),
-        2: lambda: cash_withdraw(costumers_data),
-        3: lambda: cash_deposit(costumers_data),
-        4: lambda: change_password(costumers_data),
-        5: lambda: main()
+        '1': lambda: print(costumers_data[costumer_id]['balance']),
+        '2': lambda: cash_withdraw(costumers_data),
+        '3': lambda: cash_deposit(costumers_data),
+        '4': lambda: change_password(costumers_data),
+        '5': lambda: main()
     }
 
     return switcher.get(costumer_choice, lambda: print("Invalid option"))()
@@ -131,12 +152,8 @@ def manage_costumer_actions(costumers_data):
     while costumer_id != '-1':
         if costumer_id in costumers_data and costumers_data[
                 costumer_id]['password'] == costumer_password:
-            try:
-                costumer_choice = int(input(COSTUMER_CHOICE_OPTIONS))
-                check_costumer_choice(costumer_choice, costumers_data)
-
-            except ValueError:
-                print("Value Error! your input needs to be digit value\n")
+            costumer_choice = input(COSTUMER_CHOICE_OPTIONS)
+            check_costumer_choice(costumer_choice, costumers_data)
 
         else:
             print("id or password is not correct. Try again:\n")
