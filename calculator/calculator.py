@@ -3,16 +3,15 @@
 This module allows evaluation of strings which represent mathematical
 expressions. The supported operators are declared in operators dictionary.
 """
+import re
 import math
 import operator
-import re
-from collections import namedtuple
 from sys import maxsize
+from collections import namedtuple
 
 ANY_NUMBER = r"-?\d+(?:\.\d+)?"
-USER_MSG = "Enter expression to evaluate (enter 'quit' to exit) >>> "
 
-# higher precedence means the operator stronger (will be done first)
+# higher precedence means the operator is stronger (will be done first)
 Operator = namedtuple("Operator", ["operation", "precedence", "regex"])
 
 OPERATORS = {
@@ -43,69 +42,54 @@ OPERATORS = {
     '!': Operator(precedence=7, operation=math.factorial,
                   regex=fr"({ANY_NUMBER})!"),
 
-    '(': Operator(precedence=maxsize, operation=lambda expr: _evaluate(expr),
+    '(': Operator(precedence=maxsize, operation=lambda expr: evaluate(expr),
                   regex=r"\(([^()]*)\)")
 }
 
 
-def operators_info_by_precedence() -> list:
-    """Sort the value of each item in OPERATORS by its priority.
-
-    Returns:
-        List of Operator named tuples by priority, strong to weak.
-    """
-    return sorted(OPERATORS.values(), key=operator.attrgetter("precedence"),
-                  reverse=True)
-
-
-def replace_in_expression(operator_regex: str, expression: str,
-                          new_expr: str) -> str:
-    """Change the old sub expression to a new one according to pattern.
+def evaluate(expression: str) -> float:
+    """Calculate the value of a mathematical expression.
 
     Args:
-        operator_regex: pattern to find a sub expression of the operator.
-        expression: the entire expression.
-        new_expr: the expression to put instead of the old one.
+        expression: the entire mathematical expression to calculate.
 
     Returns:
-        A new whole expression, changed according to pattern.
+         The calculated result of the given expression.
     """
-    old_expression = re.search(operator_regex, expression).group()
-    return expression.replace(old_expression, new_expr)
-
-
-def _evaluate(expression: str) -> float:
-    """Calculate the value of a mathematical expression."""
-    expression = str(re.sub(r"\s+", "", expression))
-    operators_by_precedence = operators_info_by_precedence()
+    expression = expression.replace(" ", "")
+    operators_by_precedence = sorted(OPERATORS.values(),
+                                     key=operator.attrgetter("precedence"),
+                                     reverse=True)
 
     for operator_info in operators_by_precedence:
         operator_regex = operator_info.regex
 
-        try:
-            operands = list(re.search(operator_regex, expression).groups())
+        search_result = re.search(operator_regex, expression)
 
-        except AttributeError:
+        if search_result is None:
             continue
 
-        if operator_info.precedence != maxsize:
-            operands = list(map(float, operands))
+        operands = search_result.groups()
 
-        result = operator_info.operation(*operands)
+        if operator_info.operation is not OPERATORS["("].operation:
+            operands = [float(op) for op in operands]
 
-        expression = replace_in_expression(
-            operator_regex, expression, str(result))
+        operation_result = operator_info.operation(*operands)
 
-        return _evaluate(expression)
+        old_expression = search_result.group()
+        expression = expression.replace(old_expression, str(operation_result))
+
+        return evaluate(expression)
+
     return float(expression)
 
 
 def main():
-    raw_expression = input(USER_MSG)
+    print("Welcome! Enter expressions to evaluate ('quit' to exit) >>> ")
 
-    while raw_expression.lower() != "quit":
-        print(_evaluate(raw_expression))
-        raw_expression = input(USER_MSG)
+    for expression in iter(input, "quit"):
+        print(evaluate(expression))
+        print("Enter expression to evaluate ('quit' to exit) >>> ")
 
 
 if __name__ == '__main__':
