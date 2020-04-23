@@ -3,11 +3,11 @@
 This module allows evaluation of strings which represent mathematical
 expressions. The supported operators are declared in operators dictionary.
 """
+import re
 import math
 import operator
-import re
-from collections import namedtuple
 from sys import maxsize
+from collections import namedtuple
 
 ANY_NUMBER = r"[-+]?\d+(?:\.\d+)?"
 
@@ -40,16 +40,6 @@ OPERATORS = [
     Operator(precedence=maxsize, operation=lambda expr: evaluate(expr),
              regex=r"\(([^()]*)\)")
 ]
-
-
-def is_number(obj) -> bool:
-    try:
-        float(obj)
-
-    except TypeError:
-        return False
-
-    return True
 
 
 def evaluate(expression: str) -> float:
