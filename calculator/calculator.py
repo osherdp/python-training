@@ -7,6 +7,7 @@ import re
 import math
 import operator
 from sys import maxsize
+from functools import partial
 from collections import namedtuple
 
 ANY_NUMBER = r"[-+]?\d+(?:\.\d+)?"
@@ -46,10 +47,10 @@ def evaluate(expression: str) -> float:
     """Calculate the value of a mathematical expression.
 
     Args:
-        expression: the entire mathematical expression to calculate.
+        expression (str): the entire mathematical expression to calculate.
 
     Returns:
-         The calculated result of the given expression.
+         float: the calculated result of the given expression.
     """
     expression = expression.replace(" ", "")
     operators_by_precedence = sorted(OPERATORS, reverse=True,
@@ -58,13 +59,12 @@ def evaluate(expression: str) -> float:
     for operator_info in operators_by_precedence:
         operator_regex = operator_info.regex
 
-        search_result = re.search(operator_regex, expression)
+        search_result = re.search(operator_regex, str(expression))
 
         if search_result is not None:
             operands = search_result.groups()
 
-            if all(True if re.match(f"^{ANY_NUMBER}$", op) else False for op
-                   in operands):
+            if all(re.fullmatch(ANY_NUMBER, op) for op in operands):
                 operands = [float(op) for op in operands]
 
             operation_result = operator_info.operation(*operands)
@@ -83,11 +83,10 @@ def evaluate(expression: str) -> float:
 
 
 def main():
-    print("Welcome! Enter expressions to evaluate ('quit' to exit) >>> ")
+    msg_user = "Enter expression to evaluate ('quit' to exit) >>> "
 
-    for expression in iter(input, "quit"):
+    for expression in iter(partial(input, msg_user), "quit"):
         print(evaluate(expression))
-        print("Enter expression to evaluate ('quit' to exit) >>> ")
 
 
 if __name__ == '__main__':
