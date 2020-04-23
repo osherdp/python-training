@@ -69,11 +69,10 @@ def evaluate(expression: str) -> float:
 
             operation_result = operator_info.operation(*operands)
 
+            new_sub_expr = str(operation_result)
+
             if operation_result > 0:
                 new_sub_expr = f"+{operation_result}"
-
-            else:
-                new_sub_expr = str(operation_result)
 
             old_expression = search_result.group()
             expression = expression.replace(old_expression, new_sub_expr)
