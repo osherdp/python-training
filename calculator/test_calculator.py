@@ -55,6 +55,8 @@ class TestEdgeCases(unittest.TestCase):
         with self.assertRaises(ValueError):
             evaluate('1+a*76')
 
+        self.assertEqual(evaluate("-1-2*-2"), 3.0)
+
 
 if __name__ == '__main__':
     unittest.main()
