@@ -50,7 +50,7 @@ def evaluate(expression: str) -> float:
         expression (str): the entire mathematical expression to calculate.
 
     Returns:
-         float: the calculated result of the given expression.
+         float. The calculated result of the given expression.
     """
     expression = expression.replace(" ", "")
     operators_by_precedence = sorted(OPERATORS, reverse=True,
