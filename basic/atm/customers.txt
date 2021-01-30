@@ -1,0 +1,4 @@
+Luke Skywalker;noooo;987;001
+Darth Vader;iamyourfather;-345;002
+Obi-wan Kenobi;notthedroidsyourelookingfor;463;003
+Yoda;thereisnotry;-7;004
