@@ -27,15 +27,15 @@ The purpose of this exercise is to implement class for the datatype `Matrix` whi
 You can initialize the matrix using a `tuple` of `tuple`s:
 
 ```
->>> a = Matrix((1, 2), (3, 4))
->>> b = Matrix((3, 5), (6, 8))
+>>> a = Matrix(((1, 2), (3, 4)))
+>>> b = Matrix(((3, 5), (6, 8)))
 ```
 
 or represent it via the `repr()` function, and printing it via `str()`:
 
 ```
 >>> a
-Matrix((1, 2), (3, 4))
+Matrix(((1, 2), (3, 4)))
 >>> print(a)
 ((1, 2), (3, 4))
 ```
@@ -65,17 +65,16 @@ Another `classmethod` that creates a matrix which is full of ones:
 Matrix(((1, 1, 1), (1, 1, 1), (1, 1, 1)))
 ```
 
-> :pencil:
-  If you are not familiar with matrix multiplication operation, it probably doesn't work as you think.
-
-  Read about it somewhere before implementing it.
-
 Multiplication:
 
 ```
 >>> a * b
 Matrix(((15, 21), (33, 47)))
 ```
+
+> :warning:
+  If you are not familiar with matrix multiplication operation, it probably doesn't work as you think.
+  Read about it somewhere before implementing it.
 
 Addition:
 
